@@ -9,18 +9,22 @@ class profile extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'email', 
-        'name', 
+        'name',
         'age',
         'gender',
         'position',
         'department',
         'phone_number',
         'images',
+        'user_id',
     ];
     public $timestamps = false;
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+    public function event()
+    {
+        return $this->hasMany(Event::class);
     }
 }

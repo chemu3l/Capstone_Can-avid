@@ -20,9 +20,9 @@
             </figure>
         </a>
         <a class="menu" id="menu1" href="{{ route('user.user_table') }}">Users</a>
-        <a class="menu" href="#news">News</a>
+        <a class="menu" href="{{ route('user.news_table') }}">News</a>
         <a class="menu" href="#announcements">Announcements</a>
-        <a class="menu" href="{{ route('user.event_table') }}">Events</a>
+        <a class="menu" href="{{ route('user.events_table') }}">Events</a>
         <a class="menu" href="#careers">Careers</a>
         <a class="menu" href="#applicant">Applicant</a>
         <a class="menu" href="#Request">Requested School Form</a>
@@ -35,14 +35,13 @@
         <div class="dropdown" id="menu2">
             <a class="dropdown-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
                 aria-expanded="false">
-                {{ Auth::guard('web')->user()->name }}
+                {{ Auth::guard('web')->user()->profile->name }}
             </a>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 <!-- Dropdown menu items -->
-                <a class="dropdown-item" href="#">Profile</a>
-                <a class="dropdown-item" href="#">Settings</a>
+                <a class="dropdown-item" href="{{ route('user.setting') }}">Options</a>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">Logout</a>
+                <a class="dropdown-item" href="{{ route('user.logout') }}">Logout</a>
             </div>
         </div>
         </a>
