@@ -1,5 +1,4 @@
-@extends('dashboard.user.admin.admin_dashboard')
-
+@extends('dashboard.dashboard')
 
 @section('content')
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -370,7 +369,6 @@
                     </form>
                 </div>
 
-
                 <div id="VIEWUser" class="w3-container actions viewUSER" style="display:none">
                     <div class="col">
                         <span class="span_view_user">ID: </span><span class="value" id="view-user-id"></span><br>
@@ -392,7 +390,6 @@
                         <img id="view-user-picture" src="" alt="User Picture"><br><br>
                     </div>
                 </div>
-
 
                 <div id="DELETEUser" class="w3-container actions" style="display:none">
                     <h2>Other actions</h2>
@@ -418,7 +415,7 @@
 
         </div>
     </div>
-    <script src="{{ asset('js/User/menu_user.js') }}"></script>
+    <script src="{{ asset('js/home_function/menu.js') }}"></script>
     <script src="{{ asset('js/User/edit_user.js') }}"></script>
     <script src="{{ asset('js/User/view_user.js') }}"></script>
     <script src="{{ asset('js/User/delete_user.js') }}"></script>

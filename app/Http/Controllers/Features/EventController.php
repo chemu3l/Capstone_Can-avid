@@ -17,7 +17,7 @@ class EventController extends Controller
     {
         if (Auth::check()) {
             $events = Event::with('profile')->get();
-            return view('dashboard.user.admin.admin_tables.events_table', compact('events'));
+            return view('tables.events_table', compact('events'));
         } else {
             return redirect()->route('user.login');
         }
@@ -87,7 +87,6 @@ class EventController extends Controller
         // If no new images uploaded, retain the existing images from the database
         if (!$request->hasFile('media_files')) {
             $mediaUrls = json_decode($event->events_images);
-
             // You can also perform validation here to ensure URLs are valid before updating
             $event->events_images = json_encode($mediaUrls);
         }

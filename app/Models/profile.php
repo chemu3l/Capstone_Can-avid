@@ -27,4 +27,8 @@ class profile extends Model
     {
         return $this->hasMany(Event::class);
     }
+    public function new()
+    {
+        return $this->hasMany(News::class);
+    }
 }

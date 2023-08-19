@@ -17,15 +17,13 @@ class MyCustomEmail extends Mailable
      * @return void
      */
     protected $token;
-    public function __construct($token)
+    public function __construct()
     {
-        $this->token = $token;
     }
 
     public function build()
     {
-        return $this->subject('Set Your Password')
-                    ->view('emails.my_custom_email')
-                    ->with(['token' => $this->token]);
+        return $this->view('emails.my_custom_email')
+                    ->subject('SendGrid Test Email');
     }
 }

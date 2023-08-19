@@ -38,11 +38,9 @@
                 @if (Auth::user()->role === 'Admin')
                     <a class="navigation" href="{{ route('user.user_table') }}">ADMINISTER</a>
                 @elseif(Auth::user()->role === 'Principal')
-                    <a href="{{ route('user.principal_dashboard') }}" class="btn btn-primary">ADMINISTER</a>
-                @elseif(Auth::user()->role === 'Registrar')
-                    <a href="{{ route('student_dashboard') }}" class="btn btn-primary">ADMINISTER</a>
+                    <a href="{{ route('user.events_table') }}" class="btn btn-primary">ADMINISTER</a>
                 @else
-                    <a href="{{ route('student_dashboard') }}" class="btn btn-primary">ADMINISTER</a>
+                    <a href="{{ route('user.events_table') }}" class="btn btn-primary">ADMINISTER</a>
                 @endif
                 <a class="navigation" href="#contact_us">CONTACT US</a>
                 <div class="navigation">

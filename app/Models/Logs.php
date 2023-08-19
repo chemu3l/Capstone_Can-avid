@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class News extends Model
+class Logs extends Model
 {
     use HasFactory;
     protected $fillable = [
@@ -16,9 +16,5 @@ class News extends Model
         'news_images',
         'personnel added',
     ];
-    public $timestamps = false;
-    public function profile()
-    {
-        return $this->belongsTo(Profile::class);
-    }
+
 }

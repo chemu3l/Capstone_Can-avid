@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Features;
 
 use App\Http\Controllers\Controller;
+use App\Models\News;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class NewsController extends Controller
 {
@@ -14,7 +17,12 @@ class NewsController extends Controller
      */
     public function index()
     {
-        //
+        if (Auth::check()) {
+            $news = News::with('profile')->get();
+            return view('tables.news_table', compact('news'));
+        } else {
+            return redirect()->route('user.login');
+        }
     }
 
     /**
@@ -24,7 +32,12 @@ class NewsController extends Controller
      */
     public function create()
     {
-        //
+        if (Auth::check()) {
+            $news = News::with('profile')->get();
+            return view('tables.news_table', compact('news'));
+        } else {
+            return redirect()->route('user.login');
+        }
     }
 
     /**
@@ -35,7 +48,35 @@ class NewsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $validate = $request->validate([
+            'news' => 'required|string|max:12',
+            'news_description' => 'required|string|min:12',
+            'news_update' => 'required|date',
+            'media_files.*' => 'required|file|mimes:jpeg,png,jpg,gif,mp4,mov|max:2048',
+        ]);
+        if (!$validate) {
+            return redirect()->back()->with('fail', 'Failed to add News!');
+        }
+        $news = new News();
+        $news->news = $request->input('news');
+        $news->news_description = $request->input('news_description');
+        $news->news_updated = $request->input('news_update');
+        $mediaUrls = [];
+        if ($request->hasFile('media_files')) {
+            foreach ($request->file('media_files') as $file) {
+                $filename = time() . '_' . $file->getClientOriginalName();
+                $path = $file->storeAs('images/news/', $filename, 'public');
+                $mediaUrls[] = $path;
+            }
+        }
+        $news->news_images = json_encode($mediaUrls);
+        $news->profile_id = $request->input('personnel_added');
+        if ($news->save()) {
+            return redirect()->back()->with('success', 'Added News!');
+        } else {
+            return redirect()->back()->with('error', 'Failed to add News!');
+        }
     }
 
     /**
@@ -67,9 +108,48 @@ class NewsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $validate = $request->validate([
+            'id' => 'required'
+        ]);
+        $news = News::find($validate['id']);
+        if (!$news) {
+            return redirect()->back()->with('fail', 'Event not found.');
+        }
+
+        $news->news = $request->input('news', $news->news);
+        $news->news_description = $request->input('news_description', $news->news_description);
+        $news->news_updated = $request->input('news_updated', $news->news_updated);
+        $mediaUrls = [];
+        if ($request->hasFile('media_files')) {
+            $newsId = $news->id;
+            if ($this->deleteNewsMedia($newsId)) {
+                foreach ($request->file('media_files') as $file) {
+                    $filename = time() . '_' . $file->getClientOriginalName();
+                    $path = $file->storeAs('images/news/', $filename, 'public');
+                    $mediaUrls[] = $path;
+                }
+                $news->news_images = json_encode($mediaUrls);
+            }
+            else {
+                return redirect()->back()->with('error', 'Failed to update Event!');
+            }
+        }
+        // If no new images uploaded, retain the existing images from the database
+        if (!$request->hasFile('media_files')) {
+            $mediaUrls = json_decode($news->news_images);
+
+            // You can also perform validation here to ensure URLs are valid before updating
+            $news->news_images = json_encode($mediaUrls);
+        }
+        $news->profile_id = $request->input('personnel_added', $news->profile_id);
+
+        if ($news->save()) {
+            return redirect()->back()->with('success', 'Update Event Successful!');
+        } else {
+            return redirect()->back()->with('error', 'Failed to update Event!');
+        }
     }
 
     /**
@@ -78,8 +158,34 @@ class NewsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        $validate = $request->validate([
+            'id' => 'required'
+        ]);
+        $news = News::find($validate['id']);
+        if ($news) {
+            $newsId = $news->id;
+            if ($this->deletenewsMedia($newsId)) {
+                $news->delete(); // Delete the news
+                return redirect()->back()->with('success', 'news and associated images deleted successfully!');
+            }
+            return redirect()->back()->with('error', 'Failed to delete the news.');
+        }
+        return redirect()->back()->with('error', 'Failed to delete the news.');
+    }
+
+    private function deleteNewsMedia($newsId)
+    {
+        $news = News::find($newsId);
+        if ($news) {
+            $imagesToDelete = json_decode($news->news_images);
+            foreach ($imagesToDelete as $image) {
+                $storagePath = str_replace('storage/', '', $image);
+                Storage::disk('public')->delete($storagePath);
+            }
+            return true;
+        }
+        return false;
     }
 }

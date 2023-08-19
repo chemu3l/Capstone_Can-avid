@@ -6,6 +6,6 @@
 <body>
     <h1>Set Your Password</h1>
     <p>Please click the button below to set your password.</p>
-    <a href="{{ route('password.reset', ['token' => $token]) }}">Set Password</a>
+    <a href="#">Set Password</a>
 </body>
 </html>

@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 class CreateNewsTable extends Migration
 {
@@ -17,7 +18,8 @@ class CreateNewsTable extends Migration
             $table->id();
             $table->string('news');
             $table->string('news_description');
-            $table->date('news_uploaded');
+            $table->date('news_updated');
+            $table->date('news_uploaded')->default(DB::raw('CURRENT_DATE'));
             $table->string('news_images');
             $table->unsignedBigInteger('profile_id');
         });

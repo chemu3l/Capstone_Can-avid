@@ -1,4 +1,4 @@
-@extends('dashboard.user.admin.admin_dashboard')
+@extends('dashboard.dashboard')
 
 @section('content')
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -240,12 +240,12 @@
                         <div class="form-group">
                             <label for="id">Event ID</label>
                             <input type="text" class="form-control @error('id') is-invalid @enderror" name="id"
-                                id="view-event-id" value="{{ old('id') }}">
+                                id="view-event-id" value="{{ old('id') }}" readonly>
                         </div>
                         <div class="form-group">
                             <label for="events">Event Title</label>
                             <input type="text" class="form-control @error('events') is-invalid @enderror"
-                                name="events" id="view-events" value="{{ old('events') }}" required>
+                                name="events" id="view-events" value="{{ old('events') }}" required readonly>
                             <span class="text-danger">
                                 @error('events')
                                     {{ $message }}
@@ -256,7 +256,7 @@
                             <label for="events_description">Events Description:</label>
                             <input type="text" class="form-control @error('events_description') is-invalid @enderror"
                                 name="events_description" id="view-events-description"
-                                value="{{ old('events_description') }}" required>
+                                value="{{ old('events_description') }}" required readonly>
                             <span class="text-danger">
                                 @error('events_description')
                                     {{ $message }}
@@ -268,7 +268,7 @@
                             <label for="events_scheduled">Events Schedule:</label>
                             <input type="date" class="form-control @error('events_scheduled') is-invalid @enderror"
                                 name="events_scheduled" id="view-events-scheduled" value="{{ old('events_scheduled') }}"
-                                required>
+                                required readonly>
                             <span class="text-danger">
                                 @error('events_scheduled')
                                     {{ $message }}
@@ -280,7 +280,7 @@
                             <label for="events_uploaded">Events Uploaded:</label>
                             <input type="date" class="form-control @error('events_uploaded') is-invalid @enderror"
                                 name="events_uploaded" id="view-events-uploaded" value="{{ old('events_uploaded') }}"
-                                required>
+                                required readonly>
                             <span class="text-danger">
                                 @error('events_scheduled')
                                     {{ $message }}
@@ -318,17 +318,12 @@
                         <button type="submit" class="delete-user-btn"
                             style="background-color: #DC0000; width:100px; height: 35px; border-radius: 5px;">DELETE</button>
                     </form>
-
-
                     <br><br>
                 </div>
             </div>
-
-
         </div>
     </div>
-
-    <script src="{{ asset('js/Event/menu_event.js') }}"></script>
+    <script src="{{ asset('js/home_function/menu.js') }}"></script>
     <script src="{{ asset('js/Event/edit_event.js') }}"></script>
     <script src="{{ asset('js/Event/view_event.js') }}"></script>
     <script src="{{ asset('js/Event/delete_event.js') }}"></script>
