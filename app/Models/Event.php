@@ -15,7 +15,8 @@ class Event extends Model
         'events',
         'events_description',
         'events_uploaded',
-        'events_scheduled',
+        'events_started',
+        'events_end',
         'events_images',
         'profile_id',
     ];

@@ -1,0 +1,62 @@
+.alumni-list-container {
+    padding: 50px; /* Add space around the alumni list */
+}
+.alumni-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    font-size:medium;
+}
+
+.alumnus {
+    background-color: #f0f0f0;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.alumnus-details {
+    display: flex;
+    align-items: center;
+}
+
+.left-details {
+    flex: 1;
+}
+
+.center-details {
+    flex: 2;
+    text-align: center;
+}
+
+.right-details {
+    flex: 1;
+    text-align: right;
+}
+
+.section {
+    color: #666;
+}
+
+.specialization {
+    background-color: #f39c12;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.class-year {
+    background-color: #3490dc;
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+#search{
+    border-radius: 10px;
+    margin-bottom: 20px;
+    margin-left: 80%;
+    border-color: #3490dc;
+    border-style: solid;
+    
+}
+
+

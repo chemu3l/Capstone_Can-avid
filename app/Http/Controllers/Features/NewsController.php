@@ -19,9 +19,9 @@ class NewsController extends Controller
     {
         if (Auth::check()) {
             $news = News::with('profile')->get();
-            return view('tables.news_table', compact('news'));
+            return view('News.index_news', compact('news'));
         } else {
-            return redirect()->route('user.login');
+            return redirect()->route('login');
         }
     }
 
@@ -32,12 +32,7 @@ class NewsController extends Controller
      */
     public function create()
     {
-        if (Auth::check()) {
-            $news = News::with('profile')->get();
-            return view('tables.news_table', compact('news'));
-        } else {
-            return redirect()->route('user.login');
-        }
+        return view('News.add_news');
     }
 
     /**
@@ -48,7 +43,6 @@ class NewsController extends Controller
      */
     public function store(Request $request)
     {
-
         $validate = $request->validate([
             'news' => 'required|string|max:12',
             'news_description' => 'required|string|min:12',
@@ -73,9 +67,9 @@ class NewsController extends Controller
         $news->news_images = json_encode($mediaUrls);
         $news->profile_id = $request->input('personnel_added');
         if ($news->save()) {
-            return redirect()->back()->with('success', 'Added News!');
+            return redirect()->route('news.index')->with('success', 'Added News!');
         } else {
-            return redirect()->back()->with('error', 'Failed to add News!');
+            return redirect()->route('news.index')->with('error', 'Failed to add News!');
         }
     }
 
@@ -85,9 +79,9 @@ class NewsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(News $news)
     {
-        //
+        return view('News.view_news')->with('news', $news);
     }
 
     /**
@@ -96,9 +90,13 @@ class NewsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(News $news)
     {
-        //
+        if (Auth::check()) {
+            return view('News.edit_news')->with('news', $news);
+        } else {
+            return redirect()->route('login');
+        }
     }
 
     /**
@@ -108,12 +106,8 @@ class NewsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(Request $request, News $news)
     {
-        $validate = $request->validate([
-            'id' => 'required'
-        ]);
-        $news = News::find($validate['id']);
         if (!$news) {
             return redirect()->back()->with('fail', 'Event not found.');
         }
@@ -123,8 +117,7 @@ class NewsController extends Controller
         $news->news_updated = $request->input('news_updated', $news->news_updated);
         $mediaUrls = [];
         if ($request->hasFile('media_files')) {
-            $newsId = $news->id;
-            if ($this->deleteNewsMedia($newsId)) {
+            if ($this->deleteNewsMedia($news)) {
                 foreach ($request->file('media_files') as $file) {
                     $filename = time() . '_' . $file->getClientOriginalName();
                     $path = $file->storeAs('images/news/', $filename, 'public');
@@ -133,7 +126,7 @@ class NewsController extends Controller
                 $news->news_images = json_encode($mediaUrls);
             }
             else {
-                return redirect()->back()->with('error', 'Failed to update Event!');
+                return redirect()->route('news.index')->with('error', 'Failed to update News!');
             }
         }
         // If no new images uploaded, retain the existing images from the database
@@ -146,9 +139,10 @@ class NewsController extends Controller
         $news->profile_id = $request->input('personnel_added', $news->profile_id);
 
         if ($news->save()) {
-            return redirect()->back()->with('success', 'Update Event Successful!');
+            return redirect()->route('news.index')->with('success', 'Update News Successful!');
         } else {
-            return redirect()->back()->with('error', 'Failed to update Event!');
+            return redirect()->route('news.index')->with('error', 'Failed to update News!');
+
         }
     }
 
@@ -158,26 +152,19 @@ class NewsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request)
+    public function destroy(News $news)
     {
-        $validate = $request->validate([
-            'id' => 'required'
-        ]);
-        $news = News::find($validate['id']);
         if ($news) {
-            $newsId = $news->id;
-            if ($this->deletenewsMedia($newsId)) {
-                $news->delete(); // Delete the news
-                return redirect()->back()->with('success', 'news and associated images deleted successfully!');
+            if ($this->deleteNewsMedia($news)) {
+                $news->delete(); // Delete the event
+                return redirect()->back()->with('success', 'Event deleted successfully!');
             }
-            return redirect()->back()->with('error', 'Failed to delete the news.');
+            return redirect()->back()->with('error', 'Failed to delete the News.');
         }
-        return redirect()->back()->with('error', 'Failed to delete the news.');
+        return redirect()->back()->with('error', 'Failed to delete the News.');
     }
-
-    private function deleteNewsMedia($newsId)
+    private function deleteNewsMedia(News $news)
     {
-        $news = News::find($newsId);
         if ($news) {
             $imagesToDelete = json_decode($news->news_images);
             foreach ($imagesToDelete as $image) {

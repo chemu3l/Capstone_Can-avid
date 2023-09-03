@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'default' => env('MAIL_MAILER', 'sendgrid'),
+    'default' => env('MAIL_MAILER', 'smtp'),
 
     /*
     |--------------------------------------------------------------------------
@@ -34,6 +34,9 @@ return [
     */
 
     'mailers' => [
+        'mailtrap' => [
+            'transport' => 'mailtrap'
+        ],
         'smtp' => [
             'transport' => 'smtp',
             'host' => env('MAIL_HOST', 'smtp.mailgun.org'),
@@ -70,9 +73,6 @@ return [
         'array' => [
             'transport' => 'array',
         ],
-        'sendgrid' => [
-            'transport' => 'sendgrid'
-        ],
     ],
 
     /*
@@ -87,8 +87,8 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'chemuelgodes@gmail.com'),
-        'name' => env('MAIL_FROM_NAME', 'Can-avid National High School'),
+        'address' => env('MAIL_FROM_ADDRESS', 'cnhs@gmail.com'),
+        'name' => env('MAIL_FROM_NAME', 'CNHS'),
     ],
     /*
     |--------------------------------------------------------------------------

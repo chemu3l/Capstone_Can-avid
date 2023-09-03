@@ -3,7 +3,7 @@
 @section('content')
 <link rel="stylesheet" href="{{ asset('css/login.css') }}">
 <link rel="stylesheet" href="{{ asset('node_modules/bootstrap/dist/css/bootstrap.min.css') }}">
-<section class="vh-100 gradient-custom">
+<section class="vh-100 gradient-custom" id="loginDIV">
     <div class="container py-2 h-100">
         <div class="row d-flex justify-content-center align-items-center h-10">
             <div class="col-12 col-md-8 col-lg-6 col-xl-5">
@@ -14,7 +14,7 @@
 
                             <h2 class="fw-bold mb-2 text-uppercase">Login</h2>
                             <p class="text-white-50 mb-5">Please enter your login and password!</p>
-                            <form action="{{ route('user.check_user') }}" method="post">
+                            <form action="{{ route('check_user') }}" method="post">
                                 @if(Session::get('fail'))
                                 <div class="alert alert-danger">
                                     {{ Session::get('fail') }}

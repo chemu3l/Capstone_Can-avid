@@ -3,65 +3,55 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
-use App\Models\profile;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Hash;
+use App\Models\User;
+use App\Models\Profile;
 use Illuminate\Support\Facades\Mail;
-use App\Mail\MyCustomEmail;
+use App\Mail\ChangePassword;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
+
+
 
 
 class UserController extends Controller
 {
-    //These is the Controller to Get all data from Database Except it's Own Data
-    public function GetData()
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
     {
         if (Auth::check()) {
             $user = Auth::user();
-            $profiles = Profile::where('id', '<>', $user->profile->id)->get();
-            return view('tables.user_table', compact('profiles'));
+            $users = Profile::where('id', '<>', $user->profile->id)->get();
+            return view('User.index_user', compact('users'));
         } else {
-            return redirect()->route('user.login');
+            return redirect()->route('login');
         }
     }
-    // Get Own Data
-    public function GetOwnData()
-    {
-        if (Auth::check()) {
-            $user = Auth::user();
-            $profiles = Profile::where('id', $user->profile->id)->get();
-            return view('settings', compact('profiles'));
-        } else {
-            return redirect()->route('user.login');
-        }
-    }
-    // Login
-    public function Check_User(Request $request)
-    {
-        $request->validate([
-            'email' => 'required|email|exists:users,email',
-            'password' => 'required|min:8|max:30'
-        ]);
-        $credentials = $request->only('email', 'password');
-        if (Auth::guard('web')->attempt($credentials)) {
-            return redirect()->route('user.home');
-        } else {
-            return redirect()->route('user.login')->with('fail', 'Incorrect Credentials');
-        }
-    }
-    //Log out
-    public function logout(Request $request)
-    {
-        Auth::guard('web')->logout();
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
 
-        return redirect()->route('user.Guest'); // Redirect to the login page after logout
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        return view('User.add_user');
     }
-    //To Create User
-    public function CreateUser(Request $request)
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
     {
         $validate = $request->validate([
             'name' => 'required|string|max:255',
@@ -81,7 +71,8 @@ class UserController extends Controller
         $user->email = $request->input('email');
         $user->password = Hash::make('12345678');
         $user->role = $request->input('role');
-        $user->save();
+        $user->save(); // Save the user before sending the email
+        $user->load('profile'); // Assuming you have a profile relationship
         $profile = new Profile();
         $profile->name = $request->input('name');
         $profile->age = $request->input('age');
@@ -95,53 +86,78 @@ class UserController extends Controller
         }
         $profile->user_id = $user->id;
         $user->profile()->save($profile);
+        $token = Str::random(10);
+        Mail::to($user->email)->send(new ChangePassword($profile, $user->email));
         return redirect()->back()->with('success', 'Form submitted successfully.');
     }
-    //To EDIT User
-    public function updateUser(Request $request)
-    {
-        $validate = $request->validate([
-            'age' => 'required|integer|min:18',
-            'gender' => 'required|in:Male,Female',
-            'position' => 'required|string|max:255',
-            'department' => 'required|string|max:255',
-            'role' => 'string|max:255',
-            'phone_number' => 'required|numeric',
-        ]);
-        if (!$validate) {
-            return redirect()->back()->with('error', 'Unable to Update User!');
-        }
-        $findUser = Profile::find(Auth::user()->id);
-        if (!$findUser) {
-            return redirect()->route('user.home')->with('error', 'User not found!');
-        }
-        $findUser->user()->update([
-            'email' => $findUser->user->email,
-            'role' => $findUser->user->role
-        ]);
-        $findUser->update([
-            'age' => $validate['age'],
-            'gender' => $validate['gender'],
-            'position' => $validate['position'],
-            'department' => $validate['department'],
-            'phone_number' => $validate['phone_number'],
-        ]);
-        return redirect()->back()->with('success', 'User updated successfully.');
-    }
-    //To Delete User
-    public function deleteUser(Request $request)
-    {
-        $validate = $request->validate([
-            'id' => 'required',
-            'file_path' => 'required'
-        ]);
 
-        $filePath = $request->input('file_path');
-        $storagePath = str_replace('storage/', '', $filePath);
-        if (Storage::disk('public')->exists($storagePath)) {
-            Storage::disk('public')->delete($storagePath);
-            $user = User::with('profile')->find($validate['id']);
-            if ($user) {
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show(User $user)
+    {
+        return view('User.view_user')->with('user', $user);
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(User $user)
+    {
+        if (Auth::check()) {
+            return view('User.edit_user')->with('user', $user);
+        } else {
+            return redirect()->route('login');
+        }
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, User $user)
+    {
+        if (!$user) {
+            return redirect()->route('users.index')->with('error', 'Unable to Update User!');
+        }
+        $user->profile->name = $request->input('name', $user->profile->name);
+        $user->email = $request->input('email', $user->email);
+        $user->role = $request->input('role', $user->role);
+
+        $profile = $user->profile;
+        $profile->age = $request->input('age', $user->profile->age);
+        $profile->gender = $request->input('gender', $user->profile->gender);
+        $profile->position = $request->input('position', $profile->position);
+        $profile->department = $request->input('department', $profile->department);
+        $profile->phone_number = $request->input('phone_number', $profile->phone_number);
+        if ($user->save() && $profile->save()) {
+            return redirect()->route('users.index')->with('success', 'User updated successfully.');
+        }
+        return redirect()->route('users.index')->with('error', 'User update failed.');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(User $user)
+    {
+        if ($user) {
+            $filePath = $user->profile->images;
+            $storagePath = str_replace('storage/', '', $filePath);
+            if (Storage::disk('public')->exists($storagePath)) {
+                Storage::disk('public')->delete($storagePath);
                 $profile = $user->profile;
                 if ($profile) {
                     $user->delete();
@@ -149,50 +165,8 @@ class UserController extends Controller
                     return redirect()->back()->with('success', 'User deleted successfully!');
                 }
             }
+            return redirect()->back()->with('error', 'Failed to delete the user.');
         }
-        return redirect()->back()->with('fail', 'Failed to delete the user.');
+        return redirect()->back()->with('errror', 'Failed to delete the user.');
     }
-
-    public function updateProfilePicture(Request $request)
-    {
-        $validate = $request->validate([
-            'profile_picture' => 'required|image|mimes:jpeg,png,jpg,gif|max:4048',
-        ]);
-        if (!$validate) {
-            return redirect()->back()->with('fail', 'Unable to Update User!');
-        }
-        $findUser = Profile::find(Auth::user()->id);
-        if (!$findUser) {
-            return redirect()->back()->with('fail', 'User not found!');
-        }
-        $newImages = null;
-        if ($findUser->images) {
-            Storage::delete('public/' . $findUser->images);
-        }
-        if ($request->hasFile('profile_picture')) {
-            $picturePath = $request->file('profile_picture')->store('images/profile_pictures', 'public');
-            $newImages = $picturePath;
-        }
-
-        $findUser->user()->update([
-            'email' => $findUser->user->email,
-            'role' => $findUser->user->role
-        ]);
-        $findUser->update([
-            'age' => $findUser->age,
-            'gender' => $findUser->gender,
-            'position' => $findUser->position,
-            'department' => $findUser->department,
-            'phone_number' => $findUser->phone_number,
-            'images' => $newImages
-        ]);
-        return redirect()->back()->with('success', 'Profile Picture Updated');
-    }
-    public function sendEmail()
-{
-    $email = Auth::user()->email;
-    Mail::to($email)->send(new MyCustomEmail());
-
-    return "Email sent successfully!";
-}
 }

@@ -21,11 +21,11 @@ class RedirectBasedOnRole
             if(auth()->user()->role == $userRole){
                 return $next($request);
             }else{
-                return redirect()->route('user.home');
+                return redirect()->route('home');
             }
         } else {
             // Redirect unauthenticated users to login dashboard
-            return redirect()->route('user.login');
+            return redirect()->route('login');
         }
     }
 }

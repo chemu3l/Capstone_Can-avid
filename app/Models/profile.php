@@ -31,4 +31,17 @@ class profile extends Model
     {
         return $this->hasMany(News::class);
     }
+    public function announcement()
+    {
+        return $this->hasMany(Announcement::class);
+    }
+    public function career()
+    {
+        return $this->hasMany(Career::class);
+    }
+
+    public function organizational_chart()
+    {
+        return $this->hasMany(OrganizationalChart::class);
+    }
 }

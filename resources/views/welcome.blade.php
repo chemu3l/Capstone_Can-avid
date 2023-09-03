@@ -32,7 +32,7 @@
 
 <body>
     <nav class="navbar navbar-white bg-light">
-        <a class="navbar-brand" href="{{ route('user.home') }}">
+        <a class="navbar-brand" href="{{ route('home') }}">
             <img src="{{ asset('images/logo.png') }}" width="100" height="100" alt="logo">
             <b>CAN-AVID NATIONAL HIGH SCHOOL</b>
         </a>
@@ -43,20 +43,20 @@
                 </button>
                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     <a class="dropdown-item" href="#">Announcements</a>
-                    <a class="dropdown-item" href="#">Careers</a>
-                    <a class="dropdown-item" href="#">Alumni</a>
+                    <a class="dropdown-item" href="{{ route('guest_career')}}">Careers</a>
+                    <a class="dropdown-item" href="{{ route('filtered_alumni')}}">Alumni</a>
                     <a class="dropdown-item" href="#">Departments</a>
-                    <a class="dropdown-item" href="#">Organizational Chart</a>
-                    <a class="dropdown-item" href="{{ route('user.request_form') }}">Request Document</a>
+                    <a class="dropdown-item" href="{{ route('guest_chart')}}">Organizational Chart</a>
+                    <a class="dropdown-item" href="{{ route('requests.create') }}">Request Document</a>
+                    <a class="dropdown-item" href="{{ route('school-calendar') }}">School Calendar</a>
+
                 </div>
                 <a class="navigation" href="#admission">ADMISSION</a>
-                <a class="navigation" href="{{ route('user.login') }}">LOGIN</a>
+                <a class="navigation" href="{{ route('login') }}">LOGIN</a>
                 <a class="navigation" href="#contact_us">CONTACT US</a>
             </div>
         </div>
     </nav>
-
-
     <div>
         @yield('content')
     </div>

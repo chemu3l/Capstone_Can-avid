@@ -60,7 +60,7 @@
                                                 class="rounded-circle img-responsive mt-2" width="128" height="128">
                                             <div class="mt-2">
                                                 <span class="btn btn-primary">
-                                                    <form action="{{ route('user.update_profile_picture') }}" method="POST"
+                                                    <form action="{{ route('update_profile_picture') }}" method="POST"
                                                         enctype="multipart/form-data">
                                                         @csrf
                                                         @method('PUT')
@@ -86,7 +86,7 @@
                             </div>
                             <div class="card-body">
                                 @foreach ($profiles as $profile)
-                                <form action="{{ route('user.update_user') }}" method="POST" enctype="multipart/form-data">
+                                <form action="{{ route('update_user') }}" method="POST" enctype="multipart/form-data">
                                     @if (Session::has('success'))
                                         <div class="alert alert-success">
                                             {{ Session::get('success') }}
