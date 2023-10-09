@@ -8,6 +8,7 @@ use App\Models\Applicant;
 use App\Models\Career;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Controllers\Features\LogsController;
 
 class ApplicantController extends Controller
 {
@@ -125,6 +126,15 @@ class ApplicantController extends Controller
             $image = json_decode($applicant->applicant_resume);
             $storagePath = str_replace('storage/', '', $image);
             Storage::disk('public')->delete($storagePath);
+            $historyRequest = new Request([
+                'action' => 'Delete',
+                'type' => 'Applicant',
+                'oldData' => null,
+                'newData' => $applicant->applicant_name,
+                'date' => date('Y-m-d H:i:s')
+            ]);
+            $history = new LogsController();
+            $history->store($historyRequest);
             $applicant->delete();
             return redirect()->route('alumnis.index')->with('success', 'Deleted Successfully!');
         } else {

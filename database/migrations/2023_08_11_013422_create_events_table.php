@@ -19,9 +19,10 @@ class CreateEventsTable extends Migration
             $table->id();
             $table->string('events');
             $table->string('events_description');
+            $table->string('status');
             $table->date('events_uploaded')->default(DB::raw('CURRENT_DATE'));
-            $table->dateTime('events_started');
-            $table->dateTime('events_end');
+            $table->date('events_started');
+            $table->date('events_end');
             $table->json('events_images');
             $table->unsignedBigInteger('profile_id');
         });

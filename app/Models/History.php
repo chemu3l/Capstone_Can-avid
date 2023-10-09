@@ -13,6 +13,12 @@ class History extends Model
         'Type',
         'Old_data',
         'New_data',
+        'profile_id',
         'Date'
     ];
+    public $timestamps = false;
+    public function profile()
+    {
+        return $this->belongsTo(Profile::class);
+    }
 }

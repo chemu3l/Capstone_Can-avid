@@ -1,13 +1,7 @@
-@extends('dashboard.dashboard')
+@extends('dashboard.sidebar')
 
-@section('content')
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="{{ asset('css/admin/table.css') }}">
-
-    <div class="container">
+@section('sub-content')
+    <div class="tables-administer">
         <h1>Logs Table </h1>
         <table class="table table-x1 table-striped table-dark ">
             <thead>

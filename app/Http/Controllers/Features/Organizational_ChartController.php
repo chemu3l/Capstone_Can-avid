@@ -52,8 +52,16 @@ class Organizational_ChartController extends Controller
                 $picturePath = $request->file('picture')->store('images/organizational_chart', 'public');
                 $member->organizational_image = json_encode($picturePath);
             }
-
             $member->profile_id = Auth::user()->profile->id;
+            $historyRequest = new Request([
+                'action' => 'Store',
+                'type' => 'Organizational Chart',
+                'oldData' => null,
+                'newData' => 'Added Organizational Picture',
+                'date' => date('Y-m-d H:i:s')
+            ]);
+            $history = new LogsController();
+            $history->store($historyRequest);
             if ($member->save()) {
                 return redirect()->route('organizational_chart.index')->with('success', 'Succesfully Added a member!');
             } else {
@@ -105,17 +113,7 @@ class Organizational_ChartController extends Controller
      */
     public function update(Request $request, OrganizationalChart $organizational_chart)
     {
-        if (!$organizational_chart) {
-            return redirect()->back()->with('fail', 'Event not found.');
-        }
-        $organizational_chart->name = $request->input('name', $organizational_chart->name);
-        $organizational_chart->position = $request->input('position', $organizational_chart->position);
-        $organizational_chart->department = $request->input('department', $organizational_chart->department);
-        if ($organizational_chart->save()) {
-            return redirect()->route('organizational_chart.index')->with('success', 'Update Member Successful!');
-        } else {
-            return redirect()->route('organizational_chart.index')->with('error', 'Failed to update Member!');
-        }
+        //
     }
 
     /**
@@ -128,6 +126,15 @@ class Organizational_ChartController extends Controller
     {
         if (Auth::check()) {
             if ($organizational_chart) {
+                $historyRequest = new Request([
+                    'action' => 'Delete',
+                    'type' => 'Organizational Chart',
+                    'oldData' => null,
+                    'newData' => 'Deleted organizational picture',
+                    'date' => date('Y-m-d H:i:s')
+                ]);
+                $history = new LogsController();
+                $history->store($historyRequest);
                 if ($organizational_chart->delete()) {
                     return redirect()->route('organizational_chart.index')->with('success', 'Deleted Successfully!');
                 } else {

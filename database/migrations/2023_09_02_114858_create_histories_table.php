@@ -17,8 +17,9 @@ class CreateHistoriesTable extends Migration
             $table->id();
             $table->string('Action');
             $table->string('Type');
-            $table->string('Old_data');
+            $table->string('Old_data')->nullable();
             $table->string('New_data');
+            $table->unsignedBigInteger('profile_id');
             $table->date('Date');
         });
     }

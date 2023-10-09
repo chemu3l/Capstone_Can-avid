@@ -1,7 +1,8 @@
-@extends('dashboard.dashboard')
+@extends('dashboard.sidebar')
 
 @section('sub-content')
-    <a href="{{ route('announcements.index') }}" class="btn btn-info btn-lg">Go Back</a>
+<div class="tables-administer">
+    <a href="{{ route('announcements.index') }}" class="btn btn-info btn-lg" style="background-color: green; margin-bottom:3%">Go Back</a>
     <form action="{{ route('announcements.store') }}" method="post" enctype="multipart/form-data">
         @csrf
         <div class="form-group">
@@ -54,7 +55,7 @@
                 @enderror
             </span>
         </div>
-        <input type="file" name="media_files[]" accept="image/*, video/*" multiple required>
+        <input type="file" name="media_files[]" accept="image/*, video/*" required>
         <span class="text-danger">
             @error('media_files')
                 {{ $message }}
@@ -62,7 +63,8 @@
         </span>
         <br>
         <div class="form-group text-center">
-            <button type="submit" class="btn btn-primary btn-block">Add Announcement</button>
+            <button type="submit" class="btn btn-primary btn-block" style="background-color: green; margin-top:2%">Add Announcement</button>
         </div>
     </form>
+</div>
 @endsection

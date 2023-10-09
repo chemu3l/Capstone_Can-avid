@@ -10,14 +10,30 @@
         integrity="sha256-4iQZ6BVL4qNKlQ27TExEhBN1HFPvAvAMbFavKKosSWQ=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.9.0/fullcalendar.js"></script>
 </head>
+
 <style>
+body{
+    background-color: #CCEEBC;
+    width: 100%;
+}
+.heading{
+    background-color: #004225;
+    padding: 0;
+    text-align: center;
+    font-size: 50px;
+    color: white;
+}
 #calendar{
-    width: 1000px;
-    height: 50px;
+    width: 100%;
+    height: 100%;
+    margin-top: 10px;
 }
 </style>
 
 <body>
+    <div class="heading white-heading sticky-top" style="width: 100%;">
+        Calendars
+    </div>
     <div class="container">
         <div class="response alert alert-success mt-2" style="display: none;">HUHUHU</div>
         <div id='calendar'></div>

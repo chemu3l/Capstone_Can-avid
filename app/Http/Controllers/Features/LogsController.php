@@ -1,8 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Features;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Models\History;
+
 
 class LogsController extends Controller
 {
@@ -13,7 +17,14 @@ class LogsController extends Controller
      */
     public function index()
     {
-        //
+        if (Auth::check()) {
+            $logs = History::with('profile')
+                ->orderBy('id', 'desc')
+                ->get();
+            return view('History.index_log', compact('logs'));
+        } else {
+            return redirect()->route('login');
+        }
     }
 
     /**
@@ -34,7 +45,18 @@ class LogsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if (Auth::check()) {
+            $history = new History();
+            $history->Action = $request->input('action');
+            $history->Type = $request->input('type');
+            $history->Old_data = $request->input('oldData');
+            $history->New_data = $request->input('newData');
+            $history->profile_id = Auth::user()->profile->user_id;
+            $history->Date = $request->input('date');
+            $history->save();
+        } else {
+            return redirect()->route('Guest');
+        }
     }
 
     /**

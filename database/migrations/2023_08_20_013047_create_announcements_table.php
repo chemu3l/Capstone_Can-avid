@@ -23,6 +23,7 @@ class CreateAnnouncementsTable extends Migration
             $table->string('announcements_where');
             $table->string('announcements_why');
             $table->string('announcements_how');
+            $table->string('status');
             $table->unsignedBigInteger('profile_id');
             $table->json('announcements_images');
             $table->date('announcements_uploaded')->default(DB::raw('CURRENT_DATE'));

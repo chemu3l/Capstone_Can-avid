@@ -7,6 +7,7 @@ use App\Models\News;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Controllers\Features\LogsController;
 
 class NewsController extends Controller
 {
@@ -18,10 +19,21 @@ class NewsController extends Controller
     public function index()
     {
         if (Auth::check()) {
-            $news = News::with('profile')->get();
+            if (Auth::user()->role == "Admin" || Auth::user()->role == "Principal") {
+                $news = News::with('profile')->get();
+            } elseif (Auth::user()->role == "Registrar") {
+                $news = News::with('profile')
+                    ->where(function ($query) {
+                        $query->where('status', 'Registrar Verified')
+                            ->orWhere('status', 'Pending');
+                    })
+                    ->get();
+            } else {
+                $news = News::with('profile')->where('status', 'Pending')->get();
+            }
             return view('News.index_news', compact('news'));
         } else {
-            return redirect()->route('login');
+            return redirect()->route('Landing_page');
         }
     }
 
@@ -56,6 +68,13 @@ class NewsController extends Controller
         $news->news = $request->input('news');
         $news->news_description = $request->input('news_description');
         $news->news_updated = $request->input('news_update');
+        if (Auth::user()->role == "Faculty") {
+            $news->status = "Pending";
+        } elseif (Auth::user()->role == "Registrar") {
+            $news->status = "Registrar Verified";
+        } else {
+            $news->status = "Posted";
+        }
         $mediaUrls = [];
         if ($request->hasFile('media_files')) {
             foreach ($request->file('media_files') as $file) {
@@ -66,6 +85,15 @@ class NewsController extends Controller
         }
         $news->news_images = json_encode($mediaUrls);
         $news->profile_id = $request->input('personnel_added');
+        $historyRequest = new Request([
+            'action' => 'Store',
+            'type' => 'News',
+            'oldData' => null,
+            'newData' => $request->input('news'),
+            'date' => date('Y-m-d H:i:s')
+        ]);
+        $history = new LogsController();
+        $history->store($historyRequest);
         if ($news->save()) {
             return redirect()->route('news.index')->with('success', 'Added News!');
         } else {
@@ -114,6 +142,7 @@ class NewsController extends Controller
 
         $news->news = $request->input('news', $news->news);
         $news->news_description = $request->input('news_description', $news->news_description);
+        $news->status = $request->input('status', $news->status);
         $news->news_updated = $request->input('news_updated', $news->news_updated);
         $mediaUrls = [];
         if ($request->hasFile('media_files')) {
@@ -137,7 +166,15 @@ class NewsController extends Controller
             $news->news_images = json_encode($mediaUrls);
         }
         $news->profile_id = $request->input('personnel_added', $news->profile_id);
-
+        $historyRequest = new Request([
+            'action' => 'Update',
+            'type' => 'News',
+            'oldData' => $news->news,
+            'newData' => $request->input('news'),
+            'date' => date('Y-m-d H:i:s')
+        ]);
+        $history = new LogsController();
+        $history->store($historyRequest);
         if ($news->save()) {
             return redirect()->route('news.index')->with('success', 'Update News Successful!');
         } else {
@@ -156,6 +193,15 @@ class NewsController extends Controller
     {
         if ($news) {
             if ($this->deleteNewsMedia($news)) {
+                $historyRequest = new Request([
+                    'action' => 'Delete',
+                    'type' => 'News',
+                    'oldData' => null,
+                    'newData' => $news->news,
+                    'date' => date('Y-m-d H:i:s')
+                ]);
+                $history = new LogsController();
+                $history->store($historyRequest);
                 $news->delete(); // Delete the event
                 return redirect()->back()->with('success', 'Event deleted successfully!');
             }

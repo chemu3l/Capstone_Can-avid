@@ -1,0 +1,38 @@
+.menu-department {
+    background-color: #a8df8e;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    margin-top: 50px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: center;
+}
+
+.sub-menu-department {
+    display: grid;
+    flex-direction: column;
+    justify-content: center; /* Center vertically */
+    align-items: center; /* Center horizontally */
+}
+#department-input{
+    height: 50px;
+}
+.circle {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.circle-img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 2px solid #333;
+}
+
+.name {
+    margin-top: 10px;
+    font-weight: bold;
+}
+#h3SelectedDepartment {
+    text-align: center;
+}

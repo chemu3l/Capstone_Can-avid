@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Career;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Features\LogsController;
 
 class CareerController extends Controller
 {
@@ -17,7 +18,19 @@ class CareerController extends Controller
     public function index()
     {
         if (Auth::check()) {
-            $careers = Career::with('profile')->get();
+            if (Auth::user()->role == "Admin" || Auth::user()->role == "Principal") {
+                $careers = Career::with('profile')->get();
+        } elseif (Auth::user()->role == "Registrar") {
+            $careers = Career::with('profile')
+                ->where(function ($query) {
+                    $query->where('status', 'Registrar Verified')
+                        ->orWhere('status', 'Pending');
+                })
+                ->get();
+        } else {
+            $careers = Career::with('profile')->where('status', 'Pending')->get();
+        }
+
             return view('Career.index_career', compact('careers'));
         } else {
             return redirect()->route('login');
@@ -54,7 +67,23 @@ class CareerController extends Controller
         $careers->career_position = $request->input(['career_position']);
         $careers->career_description = $request->input(['career_description']);
         $careers->career_requirements = $request->input(['career_requirements']);
+        if (Auth::user()->role == "Faculty") {
+            $careers->status = "Pending";
+        } elseif (Auth::user()->role == "Registrar") {
+            $careers->status = "Registrar Verified";
+        } else {
+            $careers->status = "Posted";
+        }
         $careers->profile_id = Auth::user()->profile->id;
+        $historyRequest = new Request([
+            'action' => 'Store',
+            'type' => 'Career',
+            'oldData' => null,
+            'newData' => $request->input('career_position'),
+            'date' => date('Y-m-d H:i:s')
+        ]);
+        $history = new LogsController();
+        $history->store($historyRequest);
         if ($careers->save()){
             return redirect()->route('careers.index')->with('success','Succesfully Added Career');
         }else{
@@ -100,7 +129,18 @@ class CareerController extends Controller
         $career->career_position = $request->input(['career_position'], $career->career_position);
         $career->career_description = $request->input(['career_description'], $career->career_description);
         $career->career_requirements = $request->input(['career_requirements'], $career->career_requirements);
+        $career->status = $request->input(['status'], $career->status);
+
         $career->profile_id = Auth::user()->profile->id;
+        $historyRequest = new Request([
+            'action' => 'Update',
+            'type' => 'Career',
+            'oldData' => $career->career_position,
+            'newData' => $request->input('career_position'),
+            'date' => date('Y-m-d H:i:s')
+        ]);
+        $history = new LogsController();
+        $history->store($historyRequest);
         if ($career->save()) {
             return redirect()->route('careers.index')->with('success', 'Update Careers Successful!');
         } else {
@@ -118,6 +158,15 @@ class CareerController extends Controller
     {
         if (Auth::check()) {
             if ($career) {
+                $historyRequest = new Request([
+                    'action' => 'Delete',
+                    'type' => 'Career',
+                    'oldData' => null,
+                    'newData' => $career->career_position,
+                    'date' => date('Y-m-d H:i:s')
+                ]);
+                $history = new LogsController();
+                $history->store($historyRequest);
                 $career->delete(); // Delete the event
                 return redirect()->route('careers.index')->with('success', 'Career deleted successfully!');
             } else {

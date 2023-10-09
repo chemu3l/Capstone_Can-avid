@@ -11,11 +11,6 @@ use App\Models\User;
 use App\Models\Profile;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\ChangePassword;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
-
-
-
 
 class UserController extends Controller
 {
@@ -86,7 +81,6 @@ class UserController extends Controller
         }
         $profile->user_id = $user->id;
         $user->profile()->save($profile);
-        $token = Str::random(10);
         Mail::to($user->email)->send(new ChangePassword($profile, $user->email));
         return redirect()->back()->with('success', 'Form submitted successfully.');
     }
@@ -140,9 +134,9 @@ class UserController extends Controller
         $profile->department = $request->input('department', $profile->department);
         $profile->phone_number = $request->input('phone_number', $profile->phone_number);
         if ($user->save() && $profile->save()) {
-            return redirect()->route('users.index')->with('success', 'User updated successfully.');
+            return redirect()->back()->with('success', 'User updated successfully.');
         }
-        return redirect()->route('users.index')->with('error', 'User update failed.');
+        return redirect()->back()->with('error', 'User update failed.');
     }
 
     /**

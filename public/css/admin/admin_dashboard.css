@@ -1,41 +1,12 @@
-body {
-    font-family: "Lato", sans-serif;
-  }
-  #menu1{
-    margin-top: 10px;
-  }
+
   /* Fixed sidenav, full height */
-  .sidenav {
-    height: 200%;
-    width: 200px;
-    position: fixed;
-    top: 0;
-    left: 0;
-    background-color: #46b61e;
-    overflow: hidden;
-    padding-top: 0px;
-  }
+
 
   /* Style the sidenav links and the dropdown button */
-  .sidenav a, .dropdown-btn {
-    padding: 6px 8px 6px 16px;
-    text-decoration: none;
-    font-size: 16px;
-    color: black;
-    /* display: block; */
-    display: flex;
-    border: none;
-    background: none;
-    width: 200%;
-    text-align: left;
-    cursor: pointer;
-  }
+
 
   /* On mouse-over */
-  .sidenav a:hover, .dropdown-btn:hover {
-    color:   rgb(93, 201, 251);
-    text-decoration: none;
-  }
+
 
   /* Some media queries for responsiveness */
   @media screen and (max-height: 450px) {

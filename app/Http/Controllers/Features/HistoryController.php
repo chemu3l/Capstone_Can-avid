@@ -19,7 +19,9 @@ class HistoryController extends Controller
     {
         if (Auth::check()) {
             $user = Auth::user();
-            $histories = History::where('id', $user->profile->id)->get();
+            $histories = History::where('profile_id', Auth::user()->profile->user_id)
+            ->orderBy('id', 'desc')
+            ->get();
             return view('History.index_history', compact('histories'));
         } else {
             return redirect()->route('login');

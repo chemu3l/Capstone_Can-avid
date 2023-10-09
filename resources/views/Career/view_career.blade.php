@@ -1,15 +1,17 @@
-@extends('dashboard.dashboard')
+@extends('dashboard.sidebar')
 
 @section('sub-content')
-<a href="{{ route('careers.index') }}" class="btn btn-info btn-lg">Go Back</a><br>
-    <div class="row">
-        <div class="col-sm-8">
-            <h4>{{ $career->id }}</h4>
-            <h1>{{ $career->career_position }}</h1>
-            <p> {{ $career->career_description }}</p>
-            <p> {{ $career->career_requirements  }}</p>
-            <p> {{ $career->career_uploaded }}</p>
-            <p> {{ $career->profile->name }}</p>
+    <div class="tables-administer">
+        <a href="{{ route('careers.index') }}" class="btn btn-info btn-lg" style="background-color: green; margin-bottom:3%">Go
+            Back</a>
+        <div class="row">
+            <div class="col-sm-8">
+                <h1>{{ $career->career_position }}</h1>
+                <p> {{ $career->career_description }}</p>
+                <p> {{ $career->career_requirements }}</p>
+                <p> {{ $career->career_uploaded }}</p>
+                <p> {{ $career->profile->name }}</p>
+            </div>
         </div>
-      </div>
+    </div>
 @endsection

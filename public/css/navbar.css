@@ -1,0 +1,91 @@
+.navbar {
+    z-index: 999;
+    background-color: #46b61e;
+}
+.navbar a {
+    color: white;
+}
+.navbar .topnav .dropdown-menu {
+    margin-top: -65px;
+}
+.navbar .topnav .dropdown-menu .dropdown-item {
+    color: black;
+}
+.navbar .topnav .navigation .user-profile .hover-menu ul li {
+    color: black;
+}
+
+.topnav .dropdown {
+    padding: auto;
+    display: block;
+}
+.topnav .dropdown .navigation {
+    margin: 20px;
+}
+#navbar-dropdown {
+    color: white;
+}
+.topnav .dropdown .navigation:hover {
+    color: green;
+    text-decoration: none;
+}
+.topnav .dropdown #name {
+    color: green;
+}
+.topnav .dropdown #name:hover {
+    text-decoration: none;
+    font-style: oblique;
+}
+.user-profile {
+    position: relative;
+}
+
+.hover-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    padding: 10px;
+}
+
+.user-profile:hover .hover-menu {
+    display: block;
+    margin-left: 50px;
+    margin-top: -15px;
+    background-color: white;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.hover-menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.hover-menu li {
+    margin-bottom: 8px;
+}
+.hover-menu li a {
+    color: black;
+}
+.navigation .user-profile #name {
+    color: white;
+}
+.header_authenticated{
+    width: 100%;
+}
+@media (max-width: 768px) {
+    .navbar {
+        flex-direction: row; /* Display items horizontally */
+      }
+      .navbar-brand b{
+        font-size: 12px;
+      }
+      .btn.dropdown-toggle {
+        width: auto; /* Allow button to take its natural width */
+        margin-right: 20px; /* Add spacing between items */
+      }
+      .navbar .topnav .dropdown-menu{
+        margin-top: -40%;
+      }
+}

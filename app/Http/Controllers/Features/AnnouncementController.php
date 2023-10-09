@@ -7,9 +7,14 @@ use App\Http\Controllers\Controller;
 use App\Models\Announcement;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Controllers\Features\LogsController;
 
 class AnnouncementController extends Controller
 {
+    public function search(Announcement $announcement)
+    {
+        return view('Announcement.view_announcement')->with('announcement', $announcement);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -18,7 +23,18 @@ class AnnouncementController extends Controller
     public function index()
     {
         if (Auth::check()) {
-            $announcements = Announcement::with('profile')->get();
+            if (Auth::user()->role == "Admin" || Auth::user()->role == "Principal") {
+                    $announcements = Announcement::with('profile')->get();
+            } elseif (Auth::user()->role == "Registrar") {
+                $announcements = Announcement::with('profile')
+                    ->where(function ($query) {
+                        $query->where('status', 'Registrar Verified')
+                            ->orWhere('status', 'Pending');
+                    })
+                    ->get();
+            } else {
+                $announcements = Announcement::with('profile')->where('status', 'Pending')->get();
+            }
             return view('Announcement.index_announcement', compact('announcements'));
         } else {
             return redirect()->route('login');
@@ -64,7 +80,13 @@ class AnnouncementController extends Controller
         $announcements->announcements_where = $request->input('announcements_where');
         $announcements->announcements_why = $request->input('announcements_why');
         $announcements->announcements_how = $request->input('announcements_how');
-
+        if (Auth::user()->role == "Faculty") {
+            $announcements->status = "Pending";
+        } elseif (Auth::user()->role == "Registrar") {
+            $announcements->status = "Registrar Verified";
+        } else {
+            $announcements->status = "Posted";
+        }
         $mediaUrls = [];
         if ($request->hasFile('media_files')) {
             foreach ($request->file('media_files') as $file) {
@@ -75,6 +97,15 @@ class AnnouncementController extends Controller
         }
         $announcements->announcements_images = json_encode($mediaUrls);
         $announcements->profile_id = $request->input('profile_id');
+        $historyRequest = new Request([
+            'action' => 'Store',
+            'type' => 'Announcement',
+            'oldData' => $announcements->announcements,
+            'newData' => $request->input('announcements'),
+            'date' => date('Y-m-d H:i:s')
+        ]);
+        $history = new LogsController();
+        $history->store($historyRequest);
         if ($announcements->save()) {
             return redirect()->back()->with('success', 'Added Announcements!');
         } else {
@@ -127,6 +158,7 @@ class AnnouncementController extends Controller
         $announcement->announcements_where = $request->input('announcements_where', $announcement->announcements_where);
         $announcement->announcements_why = $request->input('announcements_why', $announcement->announcements_why);
         $announcement->announcements_how = $request->input('announcements_how', $announcement->announcements_how);
+        $announcement->status = $request->input('status', $announcement->status);
         $mediaUrls = [];
         if ($request->hasFile('media_files')) {
             if ($this->deleteAnnouncementMedia($announcement)) {
@@ -148,7 +180,15 @@ class AnnouncementController extends Controller
             $announcement->announcements_images = json_encode($mediaUrls);
         }
         $announcement->profile_id = $request->input('profile_id', $announcement->profile_id);
-
+        $historyRequest = new Request([
+            'action' => 'Update',
+            'type' => 'Announcement',
+            'oldData' => $announcement->announcements,
+            'newData' => $request->input('announcements'),
+            'date' => date('Y-m-d H:i:s')
+        ]);
+        $history = new LogsController();
+        $history->store($historyRequest);
         if ($announcement->save()) {
             return redirect()->route('announcements.index')->with('success', 'Update Announcement Successful!');
         } else {
@@ -168,6 +208,15 @@ class AnnouncementController extends Controller
             return redirect()->route('announcements.index')->with('error', 'Failed to delete the Announcement.');
         } else {
             if ($this->deleteAnnouncementMedia($announcement)) {
+                $historyRequest = new Request([
+                    'action' => 'Delete',
+                    'type' => 'Announcement',
+                    'oldData' => null,
+                    'newData' => $announcement->announcements,
+                    'date' => date('Y-m-d H:i:s')
+                ]);
+                $history = new LogsController();
+                $history->store($historyRequest);
                 $announcement->delete();
                 return redirect()->route('announcements.index')->with('success', 'Announcement deleted successfully!');
             } else {

@@ -18,7 +18,8 @@ class Announcement extends Model
         'announcements_how',
         'profile_id',
         'announcements_images',
-        'announcements_uploaded'
+        'announcements_uploaded',
+        'status'
     ];
     public $timestamps = false;
     public function profile()

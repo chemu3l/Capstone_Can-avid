@@ -18,6 +18,7 @@ class CreateNewsTable extends Migration
             $table->id();
             $table->string('news');
             $table->string('news_description');
+            $table->string('status');
             $table->date('news_updated');
             $table->date('news_uploaded')->default(DB::raw('CURRENT_DATE'));
             $table->json('news_images');

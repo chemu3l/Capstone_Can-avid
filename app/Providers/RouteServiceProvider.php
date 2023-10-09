@@ -35,6 +35,10 @@ class RouteServiceProvider extends ServiceProvider
             Route::prefix('api')
                 ->middleware('api')
                 ->group(base_path('routes/api.php'));
+
+            Route::fallback(function () {
+                return redirect()->route('page_not_found');
+            });
         });
     }
 

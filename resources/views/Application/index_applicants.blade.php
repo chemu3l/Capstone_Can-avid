@@ -1,13 +1,7 @@
-@extends('dashboard.dashboard')
+@extends('dashboard.sidebar')
 
-@section('content')
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="{{ asset('css/admin/table.css') }}">
-
-    <div class="container">
+@section('sub-content')
+    <div class="tables-administer">
         @if (session('success'))
             <div class="alert alert-success">
                 {{ session('success') }}
@@ -18,11 +12,16 @@
                 {{ session('error') }}
             </div>
         @endif
-        <h1>Applicants Table </h1>
-        <table class="table table-x1 table-striped table-dark ">
+        <div class="header-tables-page">
+            <h1>Applicants Table </h1>
+            <form action="{{ route('applicant_Filter') }}" method="GET" id="searchForm" style="margin-buttom:20px;">
+                <input type="text" name="search" placeholder="Search...">
+                <button type="submit">Search</button>
+            </form>
+        </div>
+        <table style="background-color: #A8DF8E; font-size: 12px; width: 100%; border-collapse: collapse;">
             <thead>
                 <tr>
-                    <th scope="col">ID</th>
                     <th scope="col">Applicants Name</th>
                     <th scope="col">Applicants Email</th>
                     <th scope="col">Job Applied</th>
@@ -34,18 +33,13 @@
             <tbody>
                 @foreach ($applicants as $applicant)
                     <tr>
-                        <td>{{ $applicant->id }}</td>
                         <td>{{ $applicant->applicant_name }}</td>
                         <td>{{ $applicant->applicant_email }}</td>
                         <td>{{ $applicant->career->career_position }}</td>
                         <td>{{ date('m-d-Y', strtotime($applicant->date_applied)) }}</td>
                         <td>
-                            <a href="{{ route('applicants.edit', $applicant) }}"
-                                class="btn btn-primary">EDIT</a>
-                        </td>
-                        <td>
-                            <a href="{{ route('applicants.show', $applicant) }}"
-                                class="btn btn-primary">VIEW Application</a>
+                            <a href="{{ route('applicants.show', $applicant) }}" class="btn btn-primary">VIEW
+                                Application</a>
                         </td>
                         <td>
                             <form action="{{ route('applicants.destroy', $applicant) }}" method="POST">
@@ -60,7 +54,4 @@
             </tbody>
         </table>
     </div>
-    <script src="{{ asset('js/home_function/menu.js') }}"></script>
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 @endsection

@@ -11,10 +11,11 @@ class News extends Model
     protected $fillable = [
         'news',
         'news_description',
+        'status',
         'news_updated',
         'news_uploaded',
         'news_images',
-        'personnel added',
+        'profile_id',
     ];
     public $timestamps = false;
     public function profile()

@@ -44,4 +44,8 @@ class profile extends Model
     {
         return $this->hasMany(OrganizationalChart::class);
     }
+    public function history()
+    {
+        return $this->hasMany(History::class);
+    }
 }

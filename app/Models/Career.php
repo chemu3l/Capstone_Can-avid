@@ -13,6 +13,7 @@ class Career extends Model
         'career_description',
         'career_uploaded',
         'career_requirements',
+        'status',
         'profile_id'
     ];
     public $timestamps = false;

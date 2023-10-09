@@ -20,6 +20,7 @@ class CreateCareersTable extends Migration
             $table->string('career_description');
             $table->date('career_uploaded')->default(DB::raw('CURRENT_DATE'));
             $table->string('career_requirements');
+            $table->string('status');
             $table->unsignedBigInteger('profile_id');
         });
     }
