@@ -1,3 +1,6 @@
+@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css");
+@import url('https://fonts.googleapis.com/css?family=Nunito&display=swap');
+
 .home-image {
     top: 0;
     left: 0;
@@ -122,45 +125,118 @@
     color: #555555;
     text-align: center;
 }
+.map_sec {
+    padding: 50px 0px;
+}
+.map_inner h4,
+.map_inner p {
+    color: #000;
+    text-align: center;
+}
+.map_inner p {
+    font-size: 13px;
+}
+.map_bind {
+    margin-top: 50px;
+    border-radius: 30px;
+    overflow: hidden;
+    margin-left: 8%;
+}
+
+
+.social-media{
+	align-items: center;
+	display: flex;
+	transition: transform 0.3s ease-in-out;
+}
+.social-media:hover{
+	transform: translateX(calc(-100% + 60px));
+}
+
+.social-media i{
+	color: #fff;
+	font-size: 20px;
+	padding: 15px;
+	text-align: center;
+	width: 60px;
+}
+.social-media-container a{
+	color: #fff;
+	padding: 0 10px;
+	text-align: center;
+	text-decoration: none;
+}
+.social-media-container{
+	top: 50%;
+	list-style-type: none;
+	padding: 0;
+	position: fixed;
+	left: calc(100% - 60px);
+	transform: translateY(-50%);
+	min-width: 250px;
+}
+
+.social-media.blog{
+	background-color: #014592;
+}
+
+.social-media.facebook{
+	background-color: #bd081c;
+}
+.social-media.linkedin{
+	background-color: #007;
+}
+.social-media.instagram{
+	background-color: #c13584;
+}
+.social-media.github{
+	background-color: #333;
+}
+#links-media{
+    text-decoration: none;
+    color: white;
+}
 @media screen and (max-width: 768px) {
-    #can-avidText{
+    #can-avidText {
         font-size: 12px;
     }
-    .dropdown-menu{
+    .dropdown-menu {
         font-size: 12px;
         margin-top: 10px;
     }
-    .dropdown-item{
+    .dropdown-item {
         font-size: 12px;
     }
-    #about{
+    #about {
         font-size: 12px;
     }
     .about-us p {
         text-align: justify;
         color: #004225;
     }
-    .headers_text_title{
-        font-size: 20px;
-        margin-top: 300px;
+    #pnButton {
     }
-    #pnButton{
-        margin-top: 500px;
-    }
-    .slider{
-        margin-top: calc(10% - 100px);
+    .slider {
+        margin-top: calc(27% - 100px);
     }
     .slide {
         width: 100%; /* Make slides take full width */
     }
-    .slider h3{
+    .slider h3 {
         font-size: 25px;
     }
-    .slider h6{
+    .slider h6 {
         font-size: 15px;
     }
-    .slider #event_description{
+    .slider #event_description {
         font-size: 12px;
         overflow-wrap: break-word;
+    }
+    #department-input{
+        font-size: 12px;
+        height: 30px;
+    }
+    #filter-department{
+        font-size: 12px;
     }
 }

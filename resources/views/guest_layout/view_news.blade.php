@@ -1,7 +1,7 @@
-@extends(auth()->check() ? 'dashboard.dashboard' : 'welcome')
+@extends('welcome')
 
 @section('content')
-    <div class="heading white-heading" id="headers_text">
+    <div class="headers_text_title">
         News
         <h3>{{ $news->news }}</h3>
     </div>

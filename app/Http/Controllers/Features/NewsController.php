@@ -24,8 +24,7 @@ class NewsController extends Controller
             } elseif (Auth::user()->role == "Registrar") {
                 $news = News::with('profile')
                     ->where(function ($query) {
-                        $query->where('status', 'Registrar Verified')
-                            ->orWhere('status', 'Pending');
+                        $query->where('status', 'Pending');
                     })
                     ->get();
             } else {
@@ -55,49 +54,53 @@ class NewsController extends Controller
      */
     public function store(Request $request)
     {
-        $validate = $request->validate([
-            'news' => 'required|string|max:12',
-            'news_description' => 'required|string|min:12',
-            'news_update' => 'required|date',
-            'media_files.*' => 'required|file|mimes:jpeg,png,jpg,gif,mp4,mov|max:2048',
-        ]);
-        if (!$validate) {
-            return redirect()->back()->with('fail', 'Failed to add News!');
-        }
-        $news = new News();
-        $news->news = $request->input('news');
-        $news->news_description = $request->input('news_description');
-        $news->news_updated = $request->input('news_update');
-        if (Auth::user()->role == "Faculty") {
-            $news->status = "Pending";
-        } elseif (Auth::user()->role == "Registrar") {
-            $news->status = "Registrar Verified";
-        } else {
-            $news->status = "Posted";
-        }
-        $mediaUrls = [];
-        if ($request->hasFile('media_files')) {
-            foreach ($request->file('media_files') as $file) {
-                $filename = time() . '_' . $file->getClientOriginalName();
-                $path = $file->storeAs('images/news/', $filename, 'public');
-                $mediaUrls[] = $path;
+        try {
+            $validate = $request->validate([
+                'news' => 'required|string|max:12',
+                'news_description' => 'required|string|min:12',
+                'news_update' => 'required|date',
+                'media_files.*' => 'required|file|mimes:jpeg,png,jpg,gif,mp4,mov|max:2048',
+            ]);
+            if (!$validate) {
+                return redirect()->route('news.create')->with('error', 'Failed to add News!');
             }
-        }
-        $news->news_images = json_encode($mediaUrls);
-        $news->profile_id = $request->input('personnel_added');
-        $historyRequest = new Request([
-            'action' => 'Store',
-            'type' => 'News',
-            'oldData' => null,
-            'newData' => $request->input('news'),
-            'date' => date('Y-m-d H:i:s')
-        ]);
-        $history = new LogsController();
-        $history->store($historyRequest);
-        if ($news->save()) {
-            return redirect()->route('news.index')->with('success', 'Added News!');
-        } else {
-            return redirect()->route('news.index')->with('error', 'Failed to add News!');
+            $news = new News();
+            $news->news = $request->input('news');
+            $news->news_description = $request->input('news_description');
+            $news->news_updated = $request->input('news_update');
+            if (Auth::user()->role == "Faculty") {
+                $news->status = "Pending";
+            } elseif (Auth::user()->role == "Registrar") {
+                $news->status = "Registrar Verified";
+            } else {
+                $news->status = "Posted";
+            }
+            $mediaUrls = [];
+            if ($request->hasFile('media_files')) {
+                foreach ($request->file('media_files') as $file) {
+                    $filename = time() . '_' . $file->getClientOriginalName();
+                    $path = $file->storeAs('images/news/', $filename, 'public');
+                    $mediaUrls[] = $path;
+                }
+            }
+            $news->news_images = json_encode($mediaUrls);
+            $news->profile_id = $request->input('personnel_added');
+            $historyRequest = new Request([
+                'action' => 'Store',
+                'type' => 'News',
+                'oldData' => null,
+                'newData' => $request->input('news'),
+                'date' => date('Y-m-d H:i:s')
+            ]);
+            $history = new LogsController();
+            $history->store($historyRequest);
+            if ($news->save()) {
+                return redirect()->route('news.index')->with('success', 'Added News!');
+            } else {
+                return redirect()->route('news.create')->with('error', 'Failed to add News!');
+            }
+        } catch (\Throwable $e) {
+            return redirect()->route('news.create')->with('error', 'Failed to add News: ' . $e->getMessage());
         }
     }
 
@@ -136,50 +139,52 @@ class NewsController extends Controller
      */
     public function update(Request $request, News $news)
     {
-        if (!$news) {
-            return redirect()->back()->with('fail', 'Event not found.');
-        }
+        try {
+            if (!$news) {
+                return redirect()->back()->with('fail', 'Event not found.');
+            }
 
-        $news->news = $request->input('news', $news->news);
-        $news->news_description = $request->input('news_description', $news->news_description);
-        $news->status = $request->input('status', $news->status);
-        $news->news_updated = $request->input('news_updated', $news->news_updated);
-        $mediaUrls = [];
-        if ($request->hasFile('media_files')) {
-            if ($this->deleteNewsMedia($news)) {
-                foreach ($request->file('media_files') as $file) {
-                    $filename = time() . '_' . $file->getClientOriginalName();
-                    $path = $file->storeAs('images/news/', $filename, 'public');
-                    $mediaUrls[] = $path;
+            $news->news = $request->input('news', $news->news);
+            $news->news_description = $request->input('news_description', $news->news_description);
+            $news->status = $request->input('status', $news->status);
+            $news->news_updated = $request->input('news_updated', $news->news_updated);
+            $mediaUrls = [];
+            if ($request->hasFile('media_files')) {
+                if ($this->deleteNewsMedia($news)) {
+                    foreach ($request->file('media_files') as $file) {
+                        $filename = time() . '_' . $file->getClientOriginalName();
+                        $path = $file->storeAs('images/news/', $filename, 'public');
+                        $mediaUrls[] = $path;
+                    }
+                    $news->news_images = json_encode($mediaUrls);
+                } else {
+                    return redirect()->route('news.edit')->with('error', 'Failed to update News!');
                 }
+            }
+            // If no new images uploaded, retain the existing images from the database
+            if (!$request->hasFile('media_files')) {
+                $mediaUrls = json_decode($news->news_images);
+
+                // You can also perform validation here to ensure URLs are valid before updating
                 $news->news_images = json_encode($mediaUrls);
             }
-            else {
-                return redirect()->route('news.index')->with('error', 'Failed to update News!');
+            $news->profile_id = $request->input('personnel_added', $news->profile_id);
+            $historyRequest = new Request([
+                'action' => 'Update',
+                'type' => 'News',
+                'oldData' => $news->news,
+                'newData' => $request->input('news'),
+                'date' => date('Y-m-d H:i:s')
+            ]);
+            $history = new LogsController();
+            $history->store($historyRequest);
+            if ($news->save()) {
+                return redirect()->route('news.index')->with('success', 'Update News Successful!');
+            } else {
+                return redirect()->route('news.edit')->with('error', 'Failed to update News!');
             }
-        }
-        // If no new images uploaded, retain the existing images from the database
-        if (!$request->hasFile('media_files')) {
-            $mediaUrls = json_decode($news->news_images);
-
-            // You can also perform validation here to ensure URLs are valid before updating
-            $news->news_images = json_encode($mediaUrls);
-        }
-        $news->profile_id = $request->input('personnel_added', $news->profile_id);
-        $historyRequest = new Request([
-            'action' => 'Update',
-            'type' => 'News',
-            'oldData' => $news->news,
-            'newData' => $request->input('news'),
-            'date' => date('Y-m-d H:i:s')
-        ]);
-        $history = new LogsController();
-        $history->store($historyRequest);
-        if ($news->save()) {
-            return redirect()->route('news.index')->with('success', 'Update News Successful!');
-        } else {
-            return redirect()->route('news.index')->with('error', 'Failed to update News!');
-
+        } catch (\Throwable $e) {
+            return redirect()->route('news.edit')->with('error', 'Failed to update News: ' . $e->getMessage());
         }
     }
 
@@ -191,23 +196,27 @@ class NewsController extends Controller
      */
     public function destroy(News $news)
     {
-        if ($news) {
-            if ($this->deleteNewsMedia($news)) {
-                $historyRequest = new Request([
-                    'action' => 'Delete',
-                    'type' => 'News',
-                    'oldData' => null,
-                    'newData' => $news->news,
-                    'date' => date('Y-m-d H:i:s')
-                ]);
-                $history = new LogsController();
-                $history->store($historyRequest);
-                $news->delete(); // Delete the event
-                return redirect()->back()->with('success', 'Event deleted successfully!');
+        try {
+            if ($news) {
+                if ($this->deleteNewsMedia($news)) {
+                    $historyRequest = new Request([
+                        'action' => 'Delete',
+                        'type' => 'News',
+                        'oldData' => null,
+                        'newData' => $news->news,
+                        'date' => date('Y-m-d H:i:s')
+                    ]);
+                    $history = new LogsController();
+                    $history->store($historyRequest);
+                    $news->delete(); // Delete the event
+                    return redirect()->back()->with('success', 'Event deleted successfully!');
+                }
+                return redirect()->back()->with('error', 'Failed to delete the News.');
             }
             return redirect()->back()->with('error', 'Failed to delete the News.');
+        } catch (\Throwable $e) {
+            return redirect()->back()->with('error', 'Failed to delete the News: ' . $e->getMessage());
         }
-        return redirect()->back()->with('error', 'Failed to delete the News.');
     }
     private function deleteNewsMedia(News $news)
     {

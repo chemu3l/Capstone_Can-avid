@@ -1,4 +1,4 @@
-@extends(auth()->check() ? 'dashboard.dashboard' : 'welcome')
+@extends('welcome')
 
 @section('content')
     <div class="headers_text_title">

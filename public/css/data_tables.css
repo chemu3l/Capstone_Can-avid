@@ -32,3 +32,25 @@
     object-fit: cover; /* Maintain aspect ratio and cover the container */
     border-radius: 50%; /* Ensure the video itself is also circular */
 }
+
+@media screen and (max-height: 450px) {
+    .sidenav {padding-top: 15px;}
+    .sidenav a {font-size: 18px;}
+  }
+  span{
+    font-size: 70%;
+  }
+  .sidenav .menu:hover{
+    background-color:  #a8df8e;
+    color: black;
+    box-shadow: 10px 5px 5px black;
+    text-decoration: none;
+  }
+  .sidenav #menu2:hover{
+    background-color:  #a8df8e;
+    color: black;
+    box-shadow: 10px 5px 5px black;
+  }
+  .sidenav #menu2 a:hover{
+    color: black;
+  }

@@ -18,9 +18,13 @@ class ProfileController extends Controller
     public function GetOwnData()
     {
         if (Auth::check()) {
-            $user = Auth::user();
-            $profiles = Profile::where('id', $user->profile->user_id)->get();
-            return view('settings', compact('profiles'));
+            try {
+                $user = Auth::user();
+                $profiles = Profile::where('id', $user->profile->user_id)->get();
+                return view('settings', compact('profiles'));
+            } catch (\Throwable $e) {
+                return redirect()->route('users.index')->with('error', 'Unable to view your information');
+            }
         } else {
             return redirect()->route('login');
         }
@@ -33,7 +37,7 @@ class ProfileController extends Controller
         ]);
         $credentials = $request->only('email', 'password');
         if (Auth::guard('web')->attempt($credentials)) {
-            return redirect()->route('HomePage');
+            return redirect()->route('sidenav');
         } else {
             return redirect()->route('login')->with('error', 'Incorrect Credentials');
         }
@@ -55,21 +59,27 @@ class ProfileController extends Controller
     // Handle the password change form submission
     public function changePassword(Request $request, Profile $profile)
     {
-        // Validate the form data
-        $request->validate([
-            'current_password' => 'required',
-            'new_password' => 'required|string|min:8|confirmed',
-        ]);
-        if (Hash::check($request->current_password, $profile->user->password)) {
-            // Update the user's password
-            $findUser = User::find($profile->user_id);
-            $findUser->update([
-                'password' => Hash::make($request->new_password)
+        try {
+
+            // Validate the form data
+            $request->validate([
+                'current_password' => 'required',
+                'new_password' => 'required|string|min:8|confirmed',
             ]);
-            // Redirect to a success page or home
-            return redirect()->route('home')->with('success', 'Password changed successfully.');
-        } else {
-            // If the current password doesn't match, return an error
+            if (Hash::check($request->current_password, $profile->user->password)) {
+                // Update the user's password
+                $findUser = User::find($profile->user_id);
+                $findUser->update([
+                    'password' => Hash::make($request->new_password)
+                ]);
+                // Redirect to a success page or home
+                return redirect()->route('home')->with('success', 'Password changed successfully.');
+            } else {
+                // If the current password doesn't match, return an error
+                return redirect()->back()->with(['error' => 'The current password is incorrect.']);
+            }
+            # code...
+        } catch (\Throwable $e) {
             return redirect()->back()->with(['error' => 'The current password is incorrect.']);
         }
     }
@@ -87,11 +97,11 @@ class ProfileController extends Controller
             'profile_picture' => 'required|image|mimes:jpeg,png,jpg,gif|max:4048',
         ]);
         if (!$validate) {
-            return redirect()->back()->with('fail', 'Unable to Update User!');
+            return redirect()->route('setting')->with('error', 'User not found!.');
         }
         $findUser = Profile::find(Auth::user()->id);
         if (!$findUser) {
-            return redirect()->back()->with('fail', 'User not found!');
+            return redirect()->route('setting')->with('error', 'User not found!.');
         }
         $newImages = null;
         if ($findUser->images) {
@@ -127,11 +137,12 @@ class ProfileController extends Controller
             'phone_number' => 'required|numeric',
         ]);
         if (!$validate) {
-            return redirect()->back()->with('error', 'Unable to Update User!');
+            return redirect()->route('setting')->with('error', 'User not found!.');
         }
         $findUser = Profile::find(Auth::user()->id);
         if (!$findUser) {
-            return redirect()->route('home')->with('error', 'User not found!');
+            return redirect()->route('setting')->with('error', 'User not found!.');
+
         }
         $findUser->user()->update([
             'email' => $findUser->user->email,
@@ -147,7 +158,8 @@ class ProfileController extends Controller
         return redirect()->back()->with('success', 'User updated successfully.');
     }
 
-    public function getEmail(){
+    public function getEmail()
+    {
         return view('User_Functional_Views.forgetPassword');
     }
     public function forgetPassword(Request $request)
@@ -165,7 +177,8 @@ class ProfileController extends Controller
     {
         return view('User_Functional_Views.view_forget_password')->with('email', $email);
     }
-    public function changeForgetPassword(Request $request, $email){
+    public function changeForgetPassword(Request $request, $email)
+    {
         $user = User::where('email', '=', $email)->first();
         if ($user) {
             $user->update([
@@ -173,6 +186,7 @@ class ProfileController extends Controller
             ]);
             return redirect()->route('login');
         }
-        return redirect()->back('error','Your password did not match');
+        return redirect()->back()->with('error', 'User not found!.');
+
     }
 }

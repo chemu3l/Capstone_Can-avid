@@ -2,7 +2,6 @@
     background-color: #a8df8e;
     border: 1px solid #ddd;
     border-radius: 10px;
-    margin-top: 50px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     padding: 20px;
     text-align: center;
@@ -16,6 +15,7 @@
 }
 #department-input{
     height: 50px;
+
 }
 .circle {
     text-align: center;

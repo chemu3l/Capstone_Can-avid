@@ -2,6 +2,16 @@
 
 @section('sub-content')
     <div class="tables-administer">
+        @if (session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
+        @if (session('error'))
+            <div class="alert alert-danger">
+                {{ session('error') }}
+            </div>
+        @endif
         <a href="{{ route('news.index') }}" class="btn btn-info btn-lg" style="background-color: green; margin-bottom:3%;">Go
             Back</a>
         <form action="{{ route('news.store') }}" method="post" enctype="multipart/form-data">

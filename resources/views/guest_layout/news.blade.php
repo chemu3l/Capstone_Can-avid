@@ -1,11 +1,11 @@
-@extends(auth()->check() ? 'dashboard.dashboard' : 'welcome')
+@extends('welcome')
 
 @section('content')
-    <div class="menu_class">
-        <div class="heading white-heading" id="headers_text">
+    <div class="news-content">
+        <div class="headers_text_title">
             News
         </div>
-        <section class="news-container">
+        <div class="news-container">
             <div id="news-carousel">
                 @if ($news)
                     @foreach ($news as $new)
@@ -31,7 +31,7 @@
                     @endforeach
                 @endif
             </div>
-        </section>
+        </div>
     </div>
     <script>
         /* 3d Carousel image slider */
@@ -226,10 +226,5 @@
             autoplay: true
         });
     </script>
-    <script>
-        lightbox.option({
-            'resizeDuration': 200,
-            'wrapAround': true
-        });
-    </script>
+
 @endsection

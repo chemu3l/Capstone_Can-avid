@@ -1,6 +1,19 @@
 .menu_class {
     height: 50%;
 }
+.headers_text_request {
+    background-color: #004225;
+    color: white;
+    text-align: center;
+    font-size: 15px;
+}
+.headers_textTitle{
+    background-color: #004225;
+    color: white;
+    text-align: center;
+    font-size: 15px;
+}
+
 
 .request_form {
     display: flex;

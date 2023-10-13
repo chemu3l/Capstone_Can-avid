@@ -1,5 +1,5 @@
-#announce{
-    background-color: #A8DF8E;
+#announce {
+    background-color: #a8df8e;
     padding: 0;
     text-align: center;
     color: #454343;
@@ -9,9 +9,8 @@
     margin-bottom: 70px;
     text-transform: uppercase;
     z-index: 999;
-
 }
-.headers_text_title{
+.headers_text_title {
     background-color: #004225;
     color: white;
     text-align: center;
@@ -19,73 +18,96 @@
 }
 
 .carousel {
-	display: inline-flex;
-	transition: 0.5s all;
+    display: inline-flex;
+    transition: 0.5s all;
+    height: 100%;
 }
 
 /* Visual Only Styles */
 
 .carousel-wrap {
-	text-align: center;
+    text-align: center;
     overflow: hidden;
-	max-width: 100%;
-	margin: 0 auto;
-	visibility: hidden;
+    max-width: 100%;
+    margin: 0 auto;
+    visibility: hidden;
 }
 
 .carousel div {
-	background-color: white;
-	color: white;
-	margin: 20px;
-	position: relative;
-	display: flex;
-	flex-direction: column;
-	border-radius: 4px;
-	overflow: hidden;
+    background-color: rgb(30, 126, 52);
+    color: white;
+    margin: 20px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    border-radius: 4px;
+    overflow: hidden;
     height: 120vh;
 }
 
 .carousel img {
-	width: 100%;
+    text-align: center;
+    margin-left: 25%;
+    width: 50%;
     height: 50%;
-	margin-top: auto;
+    margin-top: auto;
+}
+.video-container {
+    max-width: 100%;
+    margin: 0 auto;
+    background-color: #004225;
 }
 
+/* Style the video player */
+.video-container video {
+    background-color: #004225;
+    width: 50%;
+    max-height: 800px;
+    max-width: 800px; /* Adjust the maximum width as needed */
+    display: block;
+    margin: 0 auto;
+}
+
+/* Style the video controls */
+.video-container video::-webkit-media-controls {
+    background-color: rgba(0, 0, 0, 0.7); /* Background color for controls */
+    color: white; /* Control button color */
+}
 h1 {
-	font-family: Lato, Segoe UI, Roboto, Helvetica Neue, Arial, sans-serif;
-	font-size: 1em;
-	font-weight: 700;
-	letter-spacing: 2px;
-	line-height: 1.5em;
-	text-transform: uppercase;
-	padding: 1em 0 0 0;
+    font-family: Lato, Segoe UI, Roboto, Helvetica Neue, Arial, sans-serif;
+    font-size: 1em;
+    font-weight: 700;
+    letter-spacing: 2px;
+    line-height: 1.5em;
+    text-transform: uppercase;
+    padding: 1em 0 0 0;
 }
 
 p {
-	padding: 0 20px 1em 20px;
-	opacity: 0.7;
-	font-family: Georgia, Cambria, Times New Roman, Times, serif;
+    padding: 0 20px 1em 20px;
+    opacity: 0.7;
+    font-family: Georgia, Cambria, Times New Roman, Times, serif;
 }
 
 button {
-	display: inline-block;
-	font-family: "Lato", sans-serif;
-	font-size: 1rem;
-	font-weight: 700;
-	background-color: #d7d7d7;
-	text-align: center;
-	padding: 0.8em 0.5em;
-	min-width: 64px;
-	outline: none;
-	border: 0;
-	border-radius: 4px;
-	color: black;
-	text-transform: uppercase;
-	letter-spacing: 1.5px;
-	cursor: pointer;
-	transition: all 0.2s;
+    display: inline-block;
+    font-family: "Lato", sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    background-color: #d7d7d7;
+    text-align: center;
+    padding: 0.8em 0.5em;
+    min-width: 64px;
+    outline: none;
+    border: 0;
+    border-radius: 4px;
+    color: black;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    cursor: pointer;
+    transition: all 0.2s;
 }
 
 button:hover {
-	background-color: #999999;
+    background-color: #999999;
 }

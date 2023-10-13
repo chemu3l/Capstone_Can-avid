@@ -1,4 +1,4 @@
-@extends(auth()->check() ? 'dashboard.dashboard' : 'welcome')
+@extends('welcome')
 
 @section('content')
     <div class="home-image">
@@ -18,34 +18,48 @@
                 <h3>apart as the best?
                     <p>
                         <span>Can-avid National High School</span> has earned the distinction of being a top-performing
-                        school with a heart. Through relentless dedication&nbsp;and commitment to its mission, the school has achieved the
-                        remarkable status of being recognized as an Outstanding Senior High School Implementer and attaining SBM Level III accreditation.
+                        school with a heart. Through relentless dedication&nbsp;and commitment to its mission, the school
+                        has achieved the
+                        remarkable status of being recognized as an Outstanding Senior High School Implementer and attaining
+                        SBM Level III accreditation.
                         <br><br>
-                        Since its establishment in 2002, the school has encountered numerous challenges, including enrollment
+                        Since its establishment in 2002, the school has encountered numerous challenges, including
+                        enrollment
                         issues, low literacy and numeracy rates, and other academic concerns. However, under the exemplary
                         leadership of School Principal IV, <span>Ma’am Rosanna G. Catuday</span>, Can-avid National High
                         School has emerged as a shining example in the Division of Eastern Samar.
                         <br><br>
                         Central to <span>Ma’am Rosanna's</span> vision was the idea that CNHS should not just be a
-                        school but a home for its learners. This home was built on a foundation of love and tranquility, offering a secure and
+                        school but a home for its learners. This home was built on a foundation of love and tranquility,
+                        offering a secure and
                         nurturing environment for students to thrive. The dedicated teachers at CNHS acted as mentors and
                         caregivers, ensuring that every student felt valued and supported, even in times of difficulty.
                         <br><br>
-                        This vision resonated strongly with the Can-avid community, including parents and stakeholders, who placed
-                        their trust in the school. Trust, in this context, meant not only an increase in enrollment but also a
+                        This vision resonated strongly with the Can-avid community, including parents and stakeholders, who
+                        placed
+                        their trust in the school. Trust, in this context, meant not only an increase in enrollment but also
+                        a
                         comprehensive transformation of the institution.
                         <br><br>
-                        To achieve these remarkable milestones, CNHS undertook significant measures, such as revitalizing its instructional methods, implementing various sub-projects to address literacy and numeracy
-                        challenges, and establishing strong partnerships with the local community. The shared vision of Can-avidnons,
+                        To achieve these remarkable milestones, CNHS undertook significant measures, such as revitalizing
+                        its instructional methods, implementing various sub-projects to address literacy and numeracy
+                        challenges, and establishing strong partnerships with the local community. The shared vision of
+                        Can-avidnons,
                         based on mutual trust and respect, served as the driving force behind these endeavors.
                         <br><br>
-                        The key takeaway from this success story is the importance of performing with a heart. CNHS's educators
-                        understood that the legacy they left behind was not just tangible accomplishments but also the intangible
-                        impact they had on the lives of their students. The education provided at CNHS aimed to instill noble
+                        The key takeaway from this success story is the importance of performing with a heart. CNHS's
+                        educators
+                        understood that the legacy they left behind was not just tangible accomplishments but also the
+                        intangible
+                        impact they had on the lives of their students. The education provided at CNHS aimed to instill
+                        noble
                         aspirations and a deep sense of commitment in its learners.
                         <br><br>
-                        Can-avid National High School's journey to becoming an SBM Level III institution and the Most Outstanding Senior High School Implementer was a testament to their unwavering dedication and the values of
-                        <span>FAITH, LOVE, RESPECT, and TRUST</span>. Their achievements were dedicated not to personal glory but to the greater  good, as they continued to serve their community with a heart full of care.
+                        Can-avid National High School's journey to becoming an SBM Level III institution and the Most
+                        Outstanding Senior High School Implementer was a testament to their unwavering dedication and the
+                        values of
+                        <span>FAITH, LOVE, RESPECT, and TRUST</span>. Their achievements were dedicated not to personal
+                        glory but to the greater good, as they continued to serve their community with a heart full of care.
                     </p>
     </div>
     <div class="role-container">
@@ -77,6 +91,7 @@
             </p>
         </div>
     </div>
+
     <div class="feedback-class">
         <div class="feedback-card">
             <div class="feedback-body">
@@ -112,10 +127,40 @@
                             personnel.</p>
                     </div>
 
-                    <button type="submit" style="background-color: #004225;"  class="btn btn-primary">Send Message</button>
+                    <button type="submit" style="background-color: #004225;" class="btn btn-primary">Send Message</button>
                 </form>
 
             </div>
         </div>
     </div>
+    <section class="map_sec">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-10 offset-md-1">
+                    <div class="map_inner">
+                        <h4>Find Us on Google Map</h4>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempore quo beatae quasi assumenda,
+                            expedita aliquam minima tenetur maiores neque incidunt repellat aut voluptas hic dolorem sequi
+                            ab porro, quia error.</p>
+                        <div class="map_bind">
+                            <iframe
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1895.749478082288!2d125.45443051506449!3d12.002282535132899!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3309131373d04689%3A0x8c32f3f358ce2d2f!2sCan-avid%20National%20High%20School%2C%20Can-avid%2C%20Eastern%20Samar!5e0!3m2!1sen!2sph!4v1696915510516!5m2!1sen!2sph"
+                                width="800" height="600" style="border:0;" allowfullscreen="" loading="lazy"
+                                referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <ul class="social-media-container">
+            <li class="social-media facebook">
+                <i class="fab fa-facebook"></i>
+                <a id="links-media" href="https://www.facebook.com/ziggy.estanda" target="_blank">Visit us in Facebook</a>
+            </li>
+            <li class="social-media linkedin">
+                <i class="fas fa-envelope"></i>
+                <a id="links-media">Email us: 313501@deped.gov.ph</a>
+            </li>
+        </ul>
+    </section>
 @endsection

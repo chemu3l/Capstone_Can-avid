@@ -2,17 +2,6 @@
 
 @section('sub-content')
     <div class="tables-administer">
-        @if (session('success'))
-            <div class="alert alert-success">
-                {{ session('success') }}
-            </div>
-        @endif
-        @if (session('error'))
-            <div class="alert alert-danger">
-                {{ session('error') }}
-            </div>
-        @endif
-
         <div class="header-tables-page">
             <a href="{{ route('announcements.create') }}" class="btn btn-info btn-lg"
                 style="background-color: green; margin-bottom:3%">Add Announcement</a>

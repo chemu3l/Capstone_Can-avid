@@ -2,12 +2,6 @@
 
 @section('sub-content')
     <div class="tables-administer">
-
-
-
-
-
-
         <a href="{{ route('announcements.index') }}" class="btn btn-info btn-lg"
             style="background-color: green; margin-bottom:3%">Go Back</a><br>
         <div class="row">

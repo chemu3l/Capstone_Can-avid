@@ -24,6 +24,7 @@ Route::put('/ChangePassword/{profile}', [ProfileController::class, 'changePasswo
 Route::get('/guest_chart', [DisplayController::class, 'displayOrganizationalChart'])->name('guest_chart');
 Route::get('/guestannouncement', [DisplayController::class, 'guestannouncement'])->name('guestannouncement');
 Route::get('/guest_news', [DisplayController::class, 'guestNews'])->name('guest_news');
+Route::get('/admission', [DisplayController::class, 'displayAdmission'])->name('admission');
 
 Route::get('/forget-password/{email}', [ProfileController::class, 'showForgetPasswordForm'])->name('forget-password');
 Route::post('/ForgetPassword', [ProfileController::class, 'forgetPassword'])->name('ForgetPassword');
@@ -40,8 +41,6 @@ Route::post('/departments/filter', [DisplayController::class, 'filterByDepartmen
 Route::view('/login', 'login')->name('login');
 Route::view('/Landing_page', 'welcome')->name('Guest');
 Route::get('/guest_career', [DisplayController::class, 'displayCareers'])->name('guest_career');
-Route::get('/guest_alumni', [DisplayController::class, 'displayAlumni'])->name('guest_alumni');
-Route::get('/filtered_alumni', [DisplayController::class, 'displayFilteredAlumni'])->name('filtered_alumni');
 Route::get('/departments/filter', [DisplayController::class, 'displayDepartment'])->name('display_departments');
 Route::view('/reset_password', 'dashboard.reset_password')->name('reset_password');
 Route::post('/check_user', [ProfileController::class, 'Check_user'])->name('check_user');
@@ -58,7 +57,7 @@ Route::middleware(['auth:web', 'PreventBackHistory'])->group(function () {
     Route::get('/requested/search', [FilterTableController::class, 'searchDocument'])->name('requested_Filter');
     Route::get('/event/search', [FilterTableController::class, 'searchEvent'])->name('event_Filter');
     Route::get('/logs/search', [FilterTableController::class, 'searchLogs'])->name('logs_Filter');
-    Route::get('/news/search', [FilterTableController::class, 'searchLNews'])->name('news_Filter');
+    Route::get('/news/search', [FilterTableController::class, 'searchNews'])->name('news_Filter');
     Route::get('/history', [HistoryController::class, 'showHistory'])->name('history');
     Route::get('/sidenav', [ProfileController::class, 'SidenavShow'])->name('sidenav');
     Route::view('/calendar', 'School_Calendar.calendar')->name('calendar');

@@ -1,12 +1,22 @@
-@extends(auth()->check() ? 'dashboard.dashboard' : 'welcome')
+@extends('welcome')
 
 @section('content')
+
     <div class="headers_text_title">
         Department
     </div>
+    @if (session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
+    @if (session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+    @endif
     <div class="menu_class">
         <div class="menu-department">
-
             <div class="sub-menu-department">
                 <form method="POST" action="{{ route('departments.filter') }}">
                     @csrf
@@ -39,7 +49,7 @@
                             Non-Teaching
                             Department</option>
                     </select>
-                    <button type="submit">Filter</button>
+                    <button id="filter-department" type="submit">Filter</button>
                 </form>
             </div>
         </div>

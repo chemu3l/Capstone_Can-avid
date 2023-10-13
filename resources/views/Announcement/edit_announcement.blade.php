@@ -2,6 +2,16 @@
 
 @section('sub-content')
     <div class="tables-administer">
+        @if (session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
+        @if (session('error'))
+            <div class="alert alert-danger">
+                {{ session('error') }}
+            </div>
+        @endif
         <a href="{{ route('announcements.index') }}" class="btn btn-info btn-lg"
             style="background-color: green; margin-bottom:3%">Go Back</a>
         <form method="POST" enctype="multipart/form-data" action="{{ route('announcements.update', $announcement) }}">
@@ -50,18 +60,25 @@
             <div class="form-group ">
                 <label for="status">Status:</label>
                 <select class="form-control @error('status') is-invalid @enderror" name="status" id="status">
-                    <option value="Posted" {{ old('status', $announcement->status) === 'Posted' ? 'selected' : '' }}>
-                        Posted
-                    </option>
-                    <option value="Registrar Verified"
-                        {{ old('status', $announcement->status) === 'Registrar Verified' ? 'selected' : '' }}>
-                        Registrar Verified
-                    </option>
-                    <option value="Pending" {{ old('status', $announcement->status) === 'Pending' ? 'selected' : '' }}>
-                        Pending
-                    </option>
+                    @if (Auth::user()->role == 'Admin' || Auth::user()->role == 'Principal')
+                        <option value="Posted" {{ old('status', $announcement->status) === 'Posted' ? 'selected' : '' }}>
+                            Posted
+                        </option>
+                    @elseif (Auth::user()->role == 'Registrar')
+                        <option value="Registrar Verified"
+                            {{ old('status', $announcement->status) === 'Registrar Verified' ? 'selected' : '' }}>
+                            Registrar Verified
+                        </option>
+                    @endif
+                    @if (Auth::user()->role == 'Admin' ||
+                            Auth::user()->role == 'Principal' ||
+                            Auth::user()->role == 'Registrar' ||
+                            Auth::user()->role == 'Faculty')
+                        <option value="Pending" {{ old('status', $announcement->status) === 'Pending' ? 'selected' : '' }}>
+                            Pending
+                        </option>
+                    @endif
                 </select>
-
                 @error('status')
                     <div class="text-danger">{{ $message }}</div>
                 @enderror

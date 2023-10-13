@@ -12,8 +12,6 @@
                 {{ session('error') }}
             </div>
         @endif
-
-
         <div class="header-tables-page">
             <a href="{{ route('events.create') }}" class="btn btn-info btn-lg"
                 style="background-color: green; margin-bottom:3%">Add Events</a>

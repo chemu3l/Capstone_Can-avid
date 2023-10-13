@@ -46,23 +46,27 @@ class FeedbackController extends Controller
      */
     public function store(Request $request)
     {
-        $validate = $request->validate([
-            'name' => 'required',
-            'email' => 'required',
-            'message' => 'required'
-        ]);
-        if ($validate) {
-            $requests = new Feedback();
-            $requests->name = $request->input('name');
-            $requests->email = $request->input('email');
-            $requests->message = $request->input('message');
-            if ($requests->save()) {
-                return redirect()->route('HomePage')->with('success', 'Thank you for your message, Your message will be noticed!');
-            } else {
-                return redirect()->route('HomePage')->with('error', 'Please Comply the Data Needed!');
+        try {
+            $validate = $request->validate([
+                'name' => 'required',
+                'email' => 'required',
+                'message' => 'required'
+            ]);
+            if ($validate) {
+                $requests = new Feedback();
+                $requests->name = $request->input('name');
+                $requests->email = $request->input('email');
+                $requests->message = $request->input('message');
+                if ($requests->save()) {
+                    return redirect()->route('HomePage')->with('success', 'Thank you for your message, Your message will be noticed!');
+                } else {
+                    return redirect()->route('HomePage')->with('error', 'Please Comply the Data Needed!');
+                }
             }
+            return redirect()->route('HomePage')->with('error', 'Please Comply the Data Needed!');
+        } catch (\Throwable $e) {
+            return redirect()->route('HomePage')->with('error', 'Please Comply the Data Needed: ' . $e->getMessage());
         }
-        return redirect()->route('HomePage')->with('error', 'Please Comply the Data Needed!');
     }
 
     /**
@@ -106,24 +110,28 @@ class FeedbackController extends Controller
      */
     public function destroy(Feedback $feedback)
     {
-        if (Auth::check()) {
-            if ($feedback) {
-                $historyRequest = new Request([
-                    'action' => 'Delete',
-                    'type' => 'Feedback',
-                    'oldData' => null,
-                    'newData' => $feedback->name,
-                    'date' => date('Y-m-d H:i:s')
-                ]);
-                $history = new LogsController();
-                $history->store($historyRequest);
-                $feedback->delete(); // Delete the event
-                return redirect()->route('feedback.index')->with('success', 'Career deleted successfully!');
+        try {
+            if (Auth::check()) {
+                if ($feedback) {
+                    $historyRequest = new Request([
+                        'action' => 'Delete',
+                        'type' => 'Feedback',
+                        'oldData' => null,
+                        'newData' => $feedback->name,
+                        'date' => date('Y-m-d H:i:s')
+                    ]);
+                    $history = new LogsController();
+                    $history->store($historyRequest);
+                    $feedback->delete(); // Delete the event
+                    return redirect()->route('feedback.index')->with('success', 'Career deleted successfully!');
+                } else {
+                    return redirect()->route('feedback.index')->with('error', 'Failed to delete the Career.');
+                }
             } else {
                 return redirect()->route('feedback.index')->with('error', 'Failed to delete the Career.');
             }
-        } else {
-            return redirect()->route('feedback.index')->with('error', 'Failed to delete the Career.');
+        } catch (\Throwable $e) {
+            return redirect()->route('feedback.index')->with('error', 'Failed to delete the Career: ' . $e->getMessage());
         }
     }
 }

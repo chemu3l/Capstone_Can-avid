@@ -1,4 +1,4 @@
-@extends(auth()->check() ? 'dashboard.dashboard' : 'welcome')
+@extends('welcome')
 
 @section('content')
     <link rel="stylesheet" href="{{ asset('css/GuestCSS/organizational_chart.css') }}">

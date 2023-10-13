@@ -90,4 +90,7 @@ class DisplayController extends Controller
     public function pageNotFound(){
         return  view('page_not_found');
     }
+    public function displayAdmission(){
+        return view('guest_layout.admission');
+    }
 }

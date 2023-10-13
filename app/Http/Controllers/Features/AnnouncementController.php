@@ -24,12 +24,11 @@ class AnnouncementController extends Controller
     {
         if (Auth::check()) {
             if (Auth::user()->role == "Admin" || Auth::user()->role == "Principal") {
-                    $announcements = Announcement::with('profile')->get();
+                $announcements = Announcement::with('profile')->get();
             } elseif (Auth::user()->role == "Registrar") {
                 $announcements = Announcement::with('profile')
                     ->where(function ($query) {
-                        $query->where('status', 'Registrar Verified')
-                            ->orWhere('status', 'Pending');
+                        $query->where('status', 'Pending');
                     })
                     ->get();
             } else {
@@ -59,57 +58,61 @@ class AnnouncementController extends Controller
      */
     public function store(Request $request)
     {
-        $validate = $request->validate([
-            'announcements' => 'required|string',
-            'announcements_what' => 'required|string',
-            'announcements_who' => 'required|string',
-            'announcements_when' => 'required|date',
-            'announcements_where' => 'required|string',
-            'announcements_why' => 'required|string',
-            'announcements_how' => 'required|string',
-            'media_files.*' => 'required|file|mimes:jpeg,png,jpg,gif,mp4,mov|max:2048',
-        ]);
-        if (!$validate) {
-            return redirect()->back()->with('error', 'Failed to add Announcement!');
-        }
-        $announcements = new Announcement();
-        $announcements->announcements = $request->input('announcements');
-        $announcements->announcements_what = $request->input('announcements_what');
-        $announcements->announcements_who = $request->input('announcements_who');
-        $announcements->announcements_when = $request->input('announcements_when');
-        $announcements->announcements_where = $request->input('announcements_where');
-        $announcements->announcements_why = $request->input('announcements_why');
-        $announcements->announcements_how = $request->input('announcements_how');
-        if (Auth::user()->role == "Faculty") {
-            $announcements->status = "Pending";
-        } elseif (Auth::user()->role == "Registrar") {
-            $announcements->status = "Registrar Verified";
-        } else {
-            $announcements->status = "Posted";
-        }
-        $mediaUrls = [];
-        if ($request->hasFile('media_files')) {
-            foreach ($request->file('media_files') as $file) {
-                $filename = time() . '_' . $file->getClientOriginalName();
-                $path = $file->storeAs('images/announcement/', $filename, 'public');
-                $mediaUrls[] = $path;
+        try {
+            $validate = $request->validate([
+                'announcements' => 'required|string',
+                'announcements_what' => 'required|string',
+                'announcements_who' => 'required|string',
+                'announcements_when' => 'required|date',
+                'announcements_where' => 'required|string',
+                'announcements_why' => 'required|string',
+                'announcements_how' => 'required|string',
+                'media_files.*' => 'required|file|mimes:jpeg,png,jpg,gif,mp4,mov|max:2048',
+            ]);
+            if (!$validate) {
+                return redirect()->back()->with('error', 'Failed to add Announcement!');
             }
-        }
-        $announcements->announcements_images = json_encode($mediaUrls);
-        $announcements->profile_id = $request->input('profile_id');
-        $historyRequest = new Request([
-            'action' => 'Store',
-            'type' => 'Announcement',
-            'oldData' => $announcements->announcements,
-            'newData' => $request->input('announcements'),
-            'date' => date('Y-m-d H:i:s')
-        ]);
-        $history = new LogsController();
-        $history->store($historyRequest);
-        if ($announcements->save()) {
-            return redirect()->back()->with('success', 'Added Announcements!');
-        } else {
-            return redirect()->back()->with('error', 'Failed to add Announcements!');
+            $announcements = new Announcement();
+            $announcements->announcements = $request->input('announcements');
+            $announcements->announcements_what = $request->input('announcements_what');
+            $announcements->announcements_who = $request->input('announcements_who');
+            $announcements->announcements_when = $request->input('announcements_when');
+            $announcements->announcements_where = $request->input('announcements_where');
+            $announcements->announcements_why = $request->input('announcements_why');
+            $announcements->announcements_how = $request->input('announcements_how');
+            if (Auth::user()->role == "Faculty") {
+                $announcements->status = "Pending";
+            } elseif (Auth::user()->role == "Registrar") {
+                $announcements->status = "Registrar Verified";
+            } else {
+                $announcements->status = "Posted";
+            }
+            $mediaUrls = [];
+            if ($request->hasFile('media_files')) {
+                foreach ($request->file('media_files') as $file) {
+                    $filename = time() . '_' . $file->getClientOriginalName();
+                    $path = $file->storeAs('images/announcement/', $filename, 'public');
+                    $mediaUrls[] = $path;
+                }
+            }
+            $announcements->announcements_images = json_encode($mediaUrls);
+            $announcements->profile_id = $request->input('profile_id');
+            $historyRequest = new Request([
+                'action' => 'Store',
+                'type' => 'Announcement',
+                'oldData' => $announcements->announcements,
+                'newData' => $request->input('announcements'),
+                'date' => date('Y-m-d H:i:s')
+            ]);
+            $history = new LogsController();
+            $history->store($historyRequest);
+            if ($announcements->save()) {
+                return redirect()->back()->with('success', 'Added Announcements!');
+            } else {
+                return redirect()->route('announcements.create')->with('error', 'Failed to add Announcements!');
+            }
+        } catch (\Throwable $e) {
+            return redirect()->route('announcements.create')->with('error', 'Failed to add Announcements: ' . $e->getMessage());
         }
     }
 
@@ -148,51 +151,55 @@ class AnnouncementController extends Controller
      */
     public function update(Request $request, Announcement $announcement)
     {
-        if (!$announcement) {
-            return redirect()->route('announcements.index')->with('error', 'Announcement not found.');
-        }
-        $announcement->announcements = $request->input('announcements', $announcement->announcements);
-        $announcement->announcements_what = $request->input('announcements_what', $announcement->announcements_what);
-        $announcement->announcements_who = $request->input('announcement_who', $announcement->announcements_who);
-        $announcement->announcements_when = $request->input('announcements_when', $announcement->announcements_when);
-        $announcement->announcements_where = $request->input('announcements_where', $announcement->announcements_where);
-        $announcement->announcements_why = $request->input('announcements_why', $announcement->announcements_why);
-        $announcement->announcements_how = $request->input('announcements_how', $announcement->announcements_how);
-        $announcement->status = $request->input('status', $announcement->status);
-        $mediaUrls = [];
-        if ($request->hasFile('media_files')) {
-            if ($this->deleteAnnouncementMedia($announcement)) {
-                foreach ($request->file('media_files') as $file) {
-                    $filename = time() . '_' . $file->getClientOriginalName();
-                    $path = $file->storeAs('images/announcements/', $filename, 'public');
-                    $mediaUrls[] = $path;
-                }
-                $announcement->announcements_images = json_encode($mediaUrls);
-            } else {
-                return redirect()->route('announcements.index')->with('error', 'Failed to update Announcement!');
+        try {
+            if (!$announcement) {
+                return redirect()->route('announcements.edit')->with('error', 'Announcement not found.');
             }
-        }
-        // If no new images uploaded, retain the existing images from the database
-        if (!$request->hasFile('media_files')) {
-            $mediaUrls = json_decode($announcement->announcements_images);
+            $announcement->announcements = $request->input('announcements', $announcement->announcements);
+            $announcement->announcements_what = $request->input('announcements_what', $announcement->announcements_what);
+            $announcement->announcements_who = $request->input('announcement_who', $announcement->announcements_who);
+            $announcement->announcements_when = $request->input('announcements_when', $announcement->announcements_when);
+            $announcement->announcements_where = $request->input('announcements_where', $announcement->announcements_where);
+            $announcement->announcements_why = $request->input('announcements_why', $announcement->announcements_why);
+            $announcement->announcements_how = $request->input('announcements_how', $announcement->announcements_how);
+            $announcement->status = $request->input('status', $announcement->status);
+            $mediaUrls = [];
+            if ($request->hasFile('media_files')) {
+                if ($this->deleteAnnouncementMedia($announcement)) {
+                    foreach ($request->file('media_files') as $file) {
+                        $filename = time() . '_' . $file->getClientOriginalName();
+                        $path = $file->storeAs('images/announcements/', $filename, 'public');
+                        $mediaUrls[] = $path;
+                    }
+                    $announcement->announcements_images = json_encode($mediaUrls);
+                } else {
+                    return redirect()->route('announcements.edit')->with('error', 'Failed to update Announcement!');
+                }
+            }
+            // If no new images uploaded, retain the existing images from the database
+            if (!$request->hasFile('media_files')) {
+                $mediaUrls = json_decode($announcement->announcements_images);
 
-            // You can also perform validation here to ensure URLs are valid before updating
-            $announcement->announcements_images = json_encode($mediaUrls);
-        }
-        $announcement->profile_id = $request->input('profile_id', $announcement->profile_id);
-        $historyRequest = new Request([
-            'action' => 'Update',
-            'type' => 'Announcement',
-            'oldData' => $announcement->announcements,
-            'newData' => $request->input('announcements'),
-            'date' => date('Y-m-d H:i:s')
-        ]);
-        $history = new LogsController();
-        $history->store($historyRequest);
-        if ($announcement->save()) {
-            return redirect()->route('announcements.index')->with('success', 'Update Announcement Successful!');
-        } else {
-            return redirect()->route('announcements.index')->with('error', 'Failed to update Announcement!');
+                // You can also perform validation here to ensure URLs are valid before updating
+                $announcement->announcements_images = json_encode($mediaUrls);
+            }
+            $announcement->profile_id = $request->input('profile_id', $announcement->profile_id);
+            $historyRequest = new Request([
+                'action' => 'Update',
+                'type' => 'Announcement',
+                'oldData' => $announcement->announcements,
+                'newData' => $request->input('announcements'),
+                'date' => date('Y-m-d H:i:s')
+            ]);
+            $history = new LogsController();
+            $history->store($historyRequest);
+            if ($announcement->save()) {
+                return redirect()->route('announcements.index')->with('success', 'Update Announcement Successful!');
+            } else {
+                return redirect()->route('announcements.edit')->with('error', 'Failed to update Announcement!');
+            }
+        } catch (\Throwable $e) {
+            return redirect()->route('announcements.edit')->with('error', 'Failed to update Announcement: ' . $e->getMessage());
         }
     }
 
@@ -204,26 +211,30 @@ class AnnouncementController extends Controller
      */
     public function destroy(Announcement $announcement)
     {
-        if (!$announcement) {
-            return redirect()->route('announcements.index')->with('error', 'Failed to delete the Announcement.');
-        } else {
-            if ($this->deleteAnnouncementMedia($announcement)) {
-                $historyRequest = new Request([
-                    'action' => 'Delete',
-                    'type' => 'Announcement',
-                    'oldData' => null,
-                    'newData' => $announcement->announcements,
-                    'date' => date('Y-m-d H:i:s')
-                ]);
-                $history = new LogsController();
-                $history->store($historyRequest);
-                $announcement->delete();
-                return redirect()->route('announcements.index')->with('success', 'Announcement deleted successfully!');
-            } else {
+        try {
+            if (!$announcement) {
                 return redirect()->route('announcements.index')->with('error', 'Failed to delete the Announcement.');
+            } else {
+                if ($this->deleteAnnouncementMedia($announcement)) {
+                    $historyRequest = new Request([
+                        'action' => 'Delete',
+                        'type' => 'Announcement',
+                        'oldData' => null,
+                        'newData' => $announcement->announcements,
+                        'date' => date('Y-m-d H:i:s')
+                    ]);
+                    $history = new LogsController();
+                    $history->store($historyRequest);
+                    $announcement->delete();
+                    return redirect()->route('announcements.index')->with('success', 'Announcement deleted successfully!');
+                } else {
+                    return redirect()->route('announcements.index')->with('error', 'Failed to delete the Announcement.');
+                }
             }
+            return redirect()->route('announcements.index')->with('error', 'Failed to delete the Announcement.');
+        } catch (\Throwable $e) {
+            return redirect()->route('announcements.index')->with('error', 'Failed to delete the Announcement: ' . $e->getMessage());
         }
-        return redirect()->route('announcements.index')->with('error', 'Failed to delete the Announcement.');
     }
     private function deleteAnnouncementMedia($announcement)
     {

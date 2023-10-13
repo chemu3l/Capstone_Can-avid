@@ -46,29 +46,33 @@ class Organizational_ChartController extends Controller
      */
     public function store(Request $request)
     {
-        if (Auth::check()) {
-            $member = new OrganizationalChart();
-            if ($request->hasFile('picture')) {
-                $picturePath = $request->file('picture')->store('images/organizational_chart', 'public');
-                $member->organizational_image = json_encode($picturePath);
-            }
-            $member->profile_id = Auth::user()->profile->id;
-            $historyRequest = new Request([
-                'action' => 'Store',
-                'type' => 'Organizational Chart',
-                'oldData' => null,
-                'newData' => 'Added Organizational Picture',
-                'date' => date('Y-m-d H:i:s')
-            ]);
-            $history = new LogsController();
-            $history->store($historyRequest);
-            if ($member->save()) {
-                return redirect()->route('organizational_chart.index')->with('success', 'Succesfully Added a member!');
+        try {
+            if (Auth::check()) {
+                $member = new OrganizationalChart();
+                if ($request->hasFile('picture')) {
+                    $picturePath = $request->file('picture')->store('images/organizational_chart', 'public');
+                    $member->organizational_image = json_encode($picturePath);
+                }
+                $member->profile_id = Auth::user()->profile->id;
+                $historyRequest = new Request([
+                    'action' => 'Store',
+                    'type' => 'Organizational Chart',
+                    'oldData' => null,
+                    'newData' => 'Added Organizational Picture',
+                    'date' => date('Y-m-d H:i:s')
+                ]);
+                $history = new LogsController();
+                $history->store($historyRequest);
+                if ($member->save()) {
+                    return redirect()->route('organizational_chart.index')->with('success', 'Succesfully Added a chart!');
+                } else {
+                    return redirect()->route('organizational_chart.create')->with('error', 'Unable to add chart!');
+                }
             } else {
-                return redirect()->route('organizational_chart.index')->with('error', 'Unable to add member!');
+                return redirect()->route('login');
             }
-        } else {
-            return redirect()->route('login');
+        } catch (\Throwable $e) {
+            return redirect()->route('organizational_chart.create')->with('error', 'Unable to add chart: ' . $e->getMessage());
         }
     }
 
@@ -82,7 +86,7 @@ class Organizational_ChartController extends Controller
     {
         if (Auth::check()) {
             $path = json_decode($organizational_chart->organizational_image);
-            $data = compact('organizational_chart','path');
+            $data = compact('organizational_chart', 'path');
             return view('Organizational Chart.view_organization', $data);
         } else {
             return redirect()->route('login');
@@ -125,23 +129,28 @@ class Organizational_ChartController extends Controller
     public function destroy(OrganizationalChart $organizational_chart)
     {
         if (Auth::check()) {
-            if ($organizational_chart) {
-                $historyRequest = new Request([
-                    'action' => 'Delete',
-                    'type' => 'Organizational Chart',
-                    'oldData' => null,
-                    'newData' => 'Deleted organizational picture',
-                    'date' => date('Y-m-d H:i:s')
-                ]);
-                $history = new LogsController();
-                $history->store($historyRequest);
-                if ($organizational_chart->delete()) {
-                    return redirect()->route('organizational_chart.index')->with('success', 'Deleted Successfully!');
+            try {
+                if ($organizational_chart) {
+                    $historyRequest = new Request([
+                        'action' => 'Delete',
+                        'type' => 'Organizational Chart',
+                        'oldData' => null,
+                        'newData' => 'Deleted organizational picture',
+                        'date' => date('Y-m-d H:i:s')
+                    ]);
+                    $history = new LogsController();
+                    $history->store($historyRequest);
+                    if ($organizational_chart->delete()) {
+                        return redirect()->route('organizational_chart.index')->with('success', 'Deleted Successfully!');
+                    } else {
+                        return redirect()->route('organizational_chart.index')->with('error', 'Unable to Delete');
+                    }
                 } else {
                     return redirect()->route('organizational_chart.index')->with('error', 'Unable to Delete');
                 }
-            } else {
-                return redirect()->route('organizational_chart.index')->with('error', 'Unable to Delete');
+            } catch (\Throwable $e) {
+                return redirect()->route('organizational_chart.index')->with('error', 'Unable to Delete: ' . $e->getMessage());
+
             }
         }
     }

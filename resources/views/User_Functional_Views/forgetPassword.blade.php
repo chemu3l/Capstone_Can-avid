@@ -1,7 +1,7 @@
 @extends('welcome')
 
 @section('content')
-<div class="heading white-heading">
+<div class="headers_text_title">
     Send Email to Change Password
 </div>
     <center>

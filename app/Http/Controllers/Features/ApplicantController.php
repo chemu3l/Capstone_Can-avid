@@ -47,29 +47,35 @@ class ApplicantController extends Controller
      */
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'applicant_name' => 'required|string',
-            'applicant_email' => 'required|email',
-            'career_id' => 'required|exists:careers,id',
-            'applicant_resume' => 'required|file|mimes:pdf', // Adjust allowed file types
-        ]);
+        try {
+            # code...
 
-        $applicant = new Applicant();
-        $applicant->applicant_name = $validatedData['applicant_name'];
-        $applicant->applicant_email = $validatedData['applicant_email'];
-        $applicant->career_id = $validatedData['career_id'];
+            $validatedData = $request->validate([
+                'applicant_name' => 'required|string',
+                'applicant_email' => 'required|email',
+                'career_id' => 'required|exists:careers,id',
+                'applicant_resume' => 'required|file|mimes:pdf', // Adjust allowed file types
+            ]);
 
-        if ($request->hasFile('applicant_resume')) {
-            $file = $request->file('applicant_resume');
-            $filename = time() . '_' . $file->getClientOriginalName();
-            $path = $file->storeAs('resume', $filename, 'public');
-            $applicant->applicant_resume = json_encode($path);
-        }
+            $applicant = new Applicant();
+            $applicant->applicant_name = $validatedData['applicant_name'];
+            $applicant->applicant_email = $validatedData['applicant_email'];
+            $applicant->career_id = $validatedData['career_id'];
 
-        if ($applicant->save()) {
-            return redirect()->back()->with('success', 'Application Submitted');
-        } else {
-            return redirect()->back()->with('error', 'An error occurred. Please provide accurate data.');
+            if ($request->hasFile('applicant_resume')) {
+                $file = $request->file('applicant_resume');
+                $filename = time() . '_' . $file->getClientOriginalName();
+                $path = $file->storeAs('resume', $filename, 'public');
+                $applicant->applicant_resume = json_encode($path);
+            }
+
+            if ($applicant->save()) {
+                return redirect()->back()->with('success', 'Application Submitted');
+            } else {
+                return redirect()->route('applicants.create')->with('error', 'An error occurred. Please provide accurate data.');
+            }
+        } catch (\Throwable $e) {
+            return redirect()->route('applicants.create')->with('error', 'An error occurred. Please provide accurate data: ' . $e->getMessage());
         }
     }
 
@@ -84,7 +90,7 @@ class ApplicantController extends Controller
     {
         if (Auth::check()) {
             $path = json_decode($applicant->applicant_resume);
-            $data = compact('applicant','path');
+            $data = compact('applicant', 'path');
             return view('Application.view_application', $data);
         } else {
             return redirect()->route('Landing_page');
@@ -122,23 +128,27 @@ class ApplicantController extends Controller
      */
     public function destroy(Applicant $applicant)
     {
-        if (Auth::check()) {
-            $image = json_decode($applicant->applicant_resume);
-            $storagePath = str_replace('storage/', '', $image);
-            Storage::disk('public')->delete($storagePath);
-            $historyRequest = new Request([
-                'action' => 'Delete',
-                'type' => 'Applicant',
-                'oldData' => null,
-                'newData' => $applicant->applicant_name,
-                'date' => date('Y-m-d H:i:s')
-            ]);
-            $history = new LogsController();
-            $history->store($historyRequest);
-            $applicant->delete();
-            return redirect()->route('alumnis.index')->with('success', 'Deleted Successfully!');
-        } else {
-            return redirect()->route('Landing_page');
+        try {
+            if (Auth::check()) {
+                $image = json_decode($applicant->applicant_resume);
+                $storagePath = str_replace('storage/', '', $image);
+                Storage::disk('public')->delete($storagePath);
+                $historyRequest = new Request([
+                    'action' => 'Delete',
+                    'type' => 'Applicant',
+                    'oldData' => null,
+                    'newData' => $applicant->applicant_name,
+                    'date' => date('Y-m-d H:i:s')
+                ]);
+                $history = new LogsController();
+                $history->store($historyRequest);
+                $applicant->delete();
+                return redirect()->route('applicants.index')->with('success', 'Deleted Successfully!');
+            } else {
+                return redirect()->route('applicants.index')->with('success', 'Unable Deleted!');
+            }
+        } catch (\Throwable $e) {
+            return redirect()->route('applicants.index')->with('error', 'Unable Deleted: ' . $e->getMessage());
         }
     }
 }

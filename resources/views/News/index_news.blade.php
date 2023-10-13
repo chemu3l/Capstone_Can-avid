@@ -17,7 +17,7 @@
                 style="background-color: green; margin-bottom:3%">Add
                 News</a>
             <h1>News Table </h1>
-            <form action="{{ route('announcement_Filter') }}" method="GET" id="searchForm">
+            <form action="{{ route('news_Filter') }}" method="GET" id="searchForm">
                 <input type="text" name="search" placeholder="Search...">
                 <button type="submit">Search</button>
             </form>

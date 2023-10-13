@@ -1,4 +1,4 @@
-@extends(auth()->check() ? 'dashboard.dashboard' : 'welcome')
+@extends('welcome')
 
 @section('content')
     <div class="carousel-wrap">
@@ -23,12 +23,14 @@
                         @foreach (json_decode($announcement->announcements_images) as $mediaUrl)
                             @if (Str::contains($mediaUrl, ['.jpg', '.jpeg', '.png', '.gif']))
                                 <img src="{{ asset('storage/' . $mediaUrl) }}" alt="Image"
-                                    style="height:50%; margin-top:10px; width:100%;">
+                                    style="height:50%; margin-top:10px;">
                             @else
-                                <video controls>
-                                    <source src="{{ asset('storage/' . $mediaUrl) }}" type="video/mp4">
-                                    Your browser does not support the video tag.
-                                </video>
+                                <div class="video-container">
+                                    <video controls>
+                                        <source src="{{ asset('storage/' . $mediaUrl) }}" type="video/mp4">
+                                        Your browser does not support the video tag.
+                                    </video>
+                                </div>
                             @endif
                         @endforeach
                     @endif

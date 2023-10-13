@@ -46,29 +46,34 @@ class DocumentController extends Controller
      */
     public function store(Request $request)
     {
-        $validate = $request->validate([
-            'Document' => 'required|string',
-            'Student_Name' => 'required|string',
-            'Requester_Name' => 'required|string',
-            'Date_to_Get' => 'required|date',
-            'Requester_Email' => 'required|string'
-        ]);
-        if ($validate) {
-            $requests = new Document();
-            $requests->Document = $request->input('Document');
-            $requests->Student_Name = $request->input('Student_Name');
-            $requests->Requester_Name = $request->input('Requester_Name');
-            $requests->Date_to_Get = $request->input('Date_to_Get');
-            $requests->Requester_Email = $request->input('Requester_Email');
-            $requests->search_id = str_pad(mt_rand(0, 99999), 5, '0', STR_PAD_LEFT);
-            $sendEMAIL = $this->generatePdf($requests);
-            if ($requests->save() && $sendEMAIL) {
-                return redirect()->back()->with('success', 'Please Check your Email for more information!');
+        try {
+            $validate = $request->validate([
+                'Document' => 'required|string',
+                'Student_Name' => 'required|string',
+                'Requester_Name' => 'required|string',
+                'Date_to_Get' => 'required|date',
+                'Requester_Email' => 'required|string'
+            ]);
+            if ($validate) {
+                $requests = new Document();
+                $requests->Document = $request->input('Document');
+                $requests->Student_Name = $request->input('Student_Name');
+                $requests->Requester_Name = $request->input('Requester_Name');
+                $requests->Date_to_Get = $request->input('Date_to_Get');
+                $requests->Requester_Email = $request->input('Requester_Email');
+                $requests->search_id = str_pad(mt_rand(0, 99999), 5, '0', STR_PAD_LEFT);
+                $sendEMAIL = $this->generatePdf($requests);
+                if ($requests->save() && $sendEMAIL) {
+                    return redirect()->back()->with('success', 'Please Check your Email for more information!');
+                } else {
+                    return redirect()->back()->with('error', 'Please Comply the Data Needed!');
+                }
             } else {
                 return redirect()->back()->with('error', 'Please Comply the Data Needed!');
             }
+        } catch (\Throwable $e) {
+            return redirect()->back()->with('error', 'Please Comply the Data Needed: ' . $e->getMessage());
         }
-        return redirect()->back()->with('error', 'Please Comply the Data Needed!');
     }
 
     /**
@@ -113,24 +118,28 @@ class DocumentController extends Controller
      */
     public function destroy(Document $document)
     {
-        if (Auth::check()) {
-            if ($document) {
-                $historyRequest = new Request([
-                    'action' => 'Delete',
-                    'type' => 'Request',
-                    'oldData' => null,
-                    'newData' => $document->Requester_Name,
-                    'date' => date('Y-m-d H:i:s')
-                ]);
-                $history = new LogsController();
-                $history->store($historyRequest);
-                $document->delete(); // Delete the event
-                return redirect()->route('requests.index')->with('success', 'Career deleted successfully!');
+        try {
+            if (Auth::check()) {
+                if ($document) {
+                    $historyRequest = new Request([
+                        'action' => 'Delete',
+                        'type' => 'Request',
+                        'oldData' => null,
+                        'newData' => $document->Requester_Name,
+                        'date' => date('Y-m-d H:i:s')
+                    ]);
+                    $history = new LogsController();
+                    $history->store($historyRequest);
+                    $document->delete(); // Delete the event
+                    return redirect()->route('requests.index')->with('success', 'Request deleted successfully!');
+                } else {
+                    return redirect()->route('requests.index')->with('error', 'Request to delete the Career.');
+                }
             } else {
-                return redirect()->route('requests.index')->with('error', 'Failed to delete the Career.');
+                return redirect()->route('requests.index')->with('error', 'Request to delete the Career.');
             }
-        } else {
-            return redirect()->route('requests.index')->with('error', 'Failed to delete the Career.');
+        } catch (\Throwable $e) {
+            return redirect()->route('requests.index')->with('error', 'Request to delete the Career: ' . $e->getMessage());
         }
     }
 
@@ -156,6 +165,5 @@ class DocumentController extends Controller
             Log::error('Error in generatePdf: ' . $e->getMessage());
             return false;
         }
-
     }
 }

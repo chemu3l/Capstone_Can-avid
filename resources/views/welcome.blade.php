@@ -14,15 +14,19 @@
     <link rel="stylesheet" href="{{ asset('css/guest_welcome.css') }}">
     <link rel="stylesheet" href="{{ asset('css/GuestCSS/guestannouncement.css') }}">
     <link rel="stylesheet" href="{{ asset('css/footer.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/admission.css') }}">
     <link rel="stylesheet" href="{{ asset('css/pageNotFound.css') }}">
     <link rel="stylesheet" href="{{ asset('css/GuestCSS/events.css') }}">
     <link rel="stylesheet" href="{{ asset('css/GuestCSS/career.css') }}">
     <link rel="stylesheet" href="{{ asset('css/GuestCSS/view_event.css') }}">
     <link rel="stylesheet" href="{{ asset('css/GuestCSS/department.css') }}">
     <link rel="stylesheet" href="{{ asset('css/homepage.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/login.css') }}">
     <link rel="stylesheet" href="{{ asset('css/menu_class.css') }}">
     <link rel="stylesheet" href="{{ asset('css/GuestCSS/news_guest.css') }}">
     <link rel="stylesheet" href="{{ asset('css/GuestCSS/view_news.css') }}">
+    <link rel="stylesheet" href="{{ asset('node_modules/bootstrap/dist/css/bootstrap.min.css') }}">
+
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
         integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
@@ -463,9 +467,8 @@
                     <a class="dropdown-item" href="{{ route('requests.create') }}">Request Document</a>
                     <a class="dropdown-item" href="{{ route('school-calendar') }}">School Calendar</a>
                 </div>
-                <a class="navigation" href="#admission">ADMISSION</a>
+                <a class="navigation" href="{{ route('admission') }}">ADMISSION</a>
                 <a class="navigation" href="{{ route('login') }}">LOGIN</a>
-                <a class="navigation" href="#contact_us">CONTACT US</a>
             </div>
         </div>
     </nav>

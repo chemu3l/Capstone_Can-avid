@@ -1,7 +1,7 @@
-@extends(auth()->check() ? 'dashboard.dashboard' : 'welcome')
+@extends('welcome')
 
 @section('content')
-    <div class="heading white-heading" id="headers_text">
+    <div class="headers_text_title">
         Event
         <h1>{{ $event->events }}</h1>
     </div>
@@ -32,58 +32,5 @@
                 @endif
             </div>
         </div>
-
-        <!-- Modals -->
-        <div class="modal">
-            <span class="close">×</span>
-            <img class="modal-content" id="img0">
-            <div class="caption"></div>
-        </div>
-
-        <div class="modal">
-            <span class="close">×</span>
-            <img class="modal-content" id="img1">
-            <div class="caption"></div>
-        </div>
-
-        <div class="modal">
-            <span class="close">×</span>
-            <img class="modal-content" id="img2">
-            <div class="caption"></div>
-        </div>
-
-        <div class="modal">
-            <span class="close">×</span>
-            <img class="modal-content" id="img3">
-            <div class="caption"></div>
-        </div>
-        <!-- Just keep duplicating modal div and change the image id you can have more images in your carousel -->
     </div>
-
-
-
-    <script>
-        var modals = document.getElementsByClassName("modal");
-
-        for (let i = 0; i < modals.length; i++) {
-            let modal = modals[i];
-
-            let img = document.getElementsByClassName("content-carousel")[0].getElementsByTagName("img")[i];
-            let modalImg = document.getElementById("img" + i);
-            let captionText = document.getElementsByClassName("caption")[i];
-
-            img.onclick = function() {
-                modal.style.display = "block";
-                modalImg.src = this.src;
-                modalImg.alt = this.alt;
-                captionText.innerHTML = this.alt;
-            }
-
-            let span = document.getElementsByClassName("close")[i];
-
-            span.onclick = function() {
-                modal.style.display = "none";
-            }
-        }
-    </script>
 @endsection

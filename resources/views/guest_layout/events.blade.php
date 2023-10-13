@@ -1,26 +1,25 @@
-@extends(auth()->check() ? 'dashboard.dashboard' : 'welcome')
+@extends('welcome')
 
 @section('content')
-    <div class="event_content_container" style="margin-top: 20px;">
-        <div class="header_event">
-            Events
+    <div class="headers_text_title">
+        Events
+    </div>
+    <div class="event-container">
+        <button class="left-button" id="pnButton">&#129144;</button>
+        <div class="slider">
+            @foreach ($eventItems as $event)
+                <div class="slide active">
+                    <h3>{{ $event->events }}</h3>
+                    <h6>Started at: {{ $event->events_started }}</h6>
+                    <h6>Ended at: {{ $event->events_uploaded }}</h6>
+                    <p id="event_description">{{ $event->events_description }}</p>
+                    <a href="{{ route('show_event', $event) }}" class="btn btn-primary"
+                        style="background-color: green; width: 50%; margin-left: 25%;">Show More</a>
+                </div>
+            @endforeach
         </div>
-        <div class="event-container">
-            <button class="left-button" id="pnButton">&#129144;</button>
-            <div class="slider">
-                @foreach ($eventItems as $event)
-                    <div class="slide active">
-                        <h3>{{ $event->events }}</h3>
-                        <h6>Started at: {{ $event->events_started }}</h6>
-                        <h6>Ended at: {{ $event->events_uploaded }}</h6>
-                        <p id="event_description">{{ $event->events_description }}</p>
-                        <a href="{{ route('show_event', $event) }}" class="btn btn-primary"
-                            style="background-color: green; width: 50%; margin-left: 25%;">Show More</a>
-                    </div>
-                @endforeach
-            </div>
-            <button class="right-button" id="pnButton">&#129146;</button>
-        </div>
+        <button class="right-button" id="pnButton">&#129146;</button>
+    </div>
     </div>
     <script>
         'use strict';

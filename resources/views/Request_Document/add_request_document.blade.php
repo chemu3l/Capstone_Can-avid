@@ -1,7 +1,7 @@
 @extends('welcome')
 
 @section('content')
-    <div class="heading white-heading">
+    <div class="headers_text_request">
         Request Document
     </div>
     <div class="menu_class">
@@ -31,7 +31,7 @@
                     required>
                 <br>
                 <input type="submit" value="Send Request"
-                    style="width: 30%; height: 40px; background-color: #004225; color: white;" />
+                    style="width: 40%; height: 40px; background-color: #004225; color: white;" />
             </form>
         </div>
     </div>

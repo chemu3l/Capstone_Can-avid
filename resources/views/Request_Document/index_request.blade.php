@@ -4,7 +4,7 @@
     <div class="tables-administer">
         <div class="header-tables-page">
             <h1>Requests Table </h1>
-            <form action="{{ route('announcement_Filter') }}" method="GET" id="searchForm">
+            <form action="{{ route('requested_Filter') }}" method="GET" id="searchForm">
                 <input type="text" name="search" placeholder="Search...">
                 <button type="submit">Search</button>
             </form>
