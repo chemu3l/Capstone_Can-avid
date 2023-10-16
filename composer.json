@@ -15,8 +15,7 @@
         "laravel/framework": "^8.0",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^3.4",
-        "psr/simple-cache": "1.0",
-        "sendgrid/sendgrid": "~7"
+        "psr/simple-cache": "1.0"
     },
     "require-dev": {
         "facade/ignition": "^2.3.6",
