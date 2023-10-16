@@ -21,7 +21,7 @@ class DatabaseSeeder extends Seeder
         DB::table('users')->insert([
             'email' => 'chemuelgodes@gmail.com',
             'role' => 'Admin',
-            'password' => Hash::make('chemuelgodes13'),
+            'password' => '$2y$10$Ljo7MDbSro.TjEMzbzw5SezZ0DuvqQyNON8WPLVdI5i0qC5VasNqy',
             'created_at' => $currentDate,
         ]);
         DB::table('profiles')->insert([
