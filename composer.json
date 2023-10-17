@@ -30,7 +30,7 @@
         "preferred-install": "dist",
         "sort-packages": true,
         "allow-plugins": {
-            "hirak/prestissimo": false
+            "hirak/prestissimo": true
         }
     },
     "extra": {
