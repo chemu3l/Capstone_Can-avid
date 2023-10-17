@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 echo "Running composer"
-composer global require allow-plugins.hirak/prestissimo --ignore-platform-reqs --no-plugins
+composer global require hirak/prestissimo --ignore-platform-reqs
 composer install --no-dev --working-dir=/var/www/html
 
 echo "generating application key..."
