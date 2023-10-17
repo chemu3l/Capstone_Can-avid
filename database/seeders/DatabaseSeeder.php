@@ -31,8 +31,7 @@ class DatabaseSeeder extends Seeder
             'position' => 'Website Consultant',
             'department' => 'Non-teaching',
             'phone_number' => '9631198435',
-            'images' => 'images/profile_pictures/sby1FH3uhgpJkQ3yDtDiEQlB59hy3SaiHGkzOd8b.jpg',
-            'user_id' => 1
+            'images' => 'images/profile_pictures/sby1FH3uhgpJkQ3yDtDiEQlB59hy3SaiHGkzOd8b.jpg'
         ]);
     }
 }
