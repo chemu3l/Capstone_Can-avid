@@ -29,7 +29,9 @@
         "optimize-autoloader": true,
         "preferred-install": "dist",
         "sort-packages": true,
-        "allow-plugins": true
+        "allow-plugins": {
+            "hirak/prestissimo": false
+        }
     },
     "extra": {
         "laravel": {
