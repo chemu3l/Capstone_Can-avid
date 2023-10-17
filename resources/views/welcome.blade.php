@@ -17,7 +17,6 @@
     <link rel="stylesheet" href="{{ asset('css/admission.css') }}">
     <link rel="stylesheet" href="{{ asset('css/pageNotFound.css') }}">
     <link rel="stylesheet" href="{{ asset('css/GuestCSS/events.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/GuestCSS/career.css') }}">
     <link rel="stylesheet" href="{{ asset('css/GuestCSS/view_event.css') }}">
     <link rel="stylesheet" href="{{ asset('css/GuestCSS/department.css') }}">
     <link rel="stylesheet" href="{{ asset('css/homepage.css') }}">

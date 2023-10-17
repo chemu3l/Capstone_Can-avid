@@ -54,7 +54,6 @@
                 </div>
             </div>
         </div>
-        <script src="{{ asset('node_modules/bootstrap/dist/js/bootstrap.min.js') }}"></script>
         {{-- <script>
             document.addEventListener('DOMContentLoaded', function() {
                 const screenWidth = window.innerWidth;
