@@ -47,7 +47,7 @@ Route::post('/check_user', [ProfileController::class, 'Check_user'])->name('chec
 Route::view('/request_form', 'guest_layout.request_document')->name('request_form');
 Route::view('/', 'layouts.homePage')->name('HomePage');
 
-Route::middleware(['auth:web', 'PreventBackHistory'])->group(function () {
+Route::middleware(['auth:web'])->group(function () {
     Route::view('/home', 'layouts.app')->name('home');
     Route::get('/announcements/search', [FilterTableController::class, 'searchAnnouncement'])->name('announcement_Filter');
     Route::get('/applicants/search', [FilterTableController::class, 'searchApplicant'])->name('applicant_Filter');
