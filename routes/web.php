@@ -52,7 +52,6 @@ Route::middleware(['auth:web', 'PreventBackHistory'])->group(function () {
     Route::get('/announcements/search', [FilterTableController::class, 'searchAnnouncement'])->name('announcement_Filter');
     Route::get('/applicants/search', [FilterTableController::class, 'searchApplicant'])->name('applicant_Filter');
     Route::get('/careers/search', [FilterTableController::class, 'searchCareer'])->name('career_Filter');
-    Route::get('/users/search', [FilterTableController::class, 'searchUser'])->name('user_Filter');
 
     Route::get('/requested/search', [FilterTableController::class, 'searchDocument'])->name('requested_Filter');
     Route::get('/event/search', [FilterTableController::class, 'searchEvent'])->name('event_Filter');
@@ -68,11 +67,11 @@ Route::middleware(['auth:web', 'PreventBackHistory'])->group(function () {
     Route::put('/update_user_images', [ProfileController::class, 'updateProfilePicture'])->name('update_profile_picture');
 
     Route::middleware(['redirect_role:Admin'])->group(function () {
-        // View Admin Dashboard with Menu
-        Route::view('/admin_dashboard', 'dashboard.dashboard')->name('admin_dashboard');
+        // ========== Start of Request Document routes ============================================================================================
+        Route::resource('users', UserController::class);
+        // ========== End of Request routes ============================================================================================
+        Route::get('/users/search', [FilterTableController::class, 'searchUser'])->name('user_Filter');
     });
-
-
 
     Route::get('/logout', [ProfileController::class, 'logout'])->name('logout');
     // ========== Start of News routes ============================================================================================
@@ -103,9 +102,7 @@ Route::middleware(['auth:web', 'PreventBackHistory'])->group(function () {
     //Route::post('/update_password', [UserController::class, 'Update_Password'])->name('update_password');
     // Route::resource('logs', LogsController::class);
 });
-// ========== Start of Request Document routes ============================================================================================
-Route::resource('users', UserController::class);
-// ========== End of Request routes ============================================================================================
+
 // ========== Start of Applicants routes ============================================================================================
 Route::resource('applicants', ApplicantController::class);
 // ========== End of Applicants routes ============================================================================================
