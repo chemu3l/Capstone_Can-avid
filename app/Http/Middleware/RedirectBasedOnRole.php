@@ -21,7 +21,7 @@ class RedirectBasedOnRole
             if(auth()->user()->role == $userRole){
                 return $next($request);
             }else{
-                return redirect()->route('home');
+                return redirect()->route('HomePage');
             }
         } else {
             // Redirect unauthenticated users to login dashboard

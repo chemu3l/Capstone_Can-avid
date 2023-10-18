@@ -37,7 +37,13 @@ class ProfileController extends Controller
         ]);
         $credentials = $request->only('email', 'password');
         if (Auth::guard('web')->attempt($credentials)) {
-            return redirect()->route('sidenav');
+            if (Auth::user()->role === "Admin") {
+                return redirect()->route('users.index');
+            }elseif (Auth::user()->role === "Principal") {
+                return redirect()->route('careers.index');
+            }else{
+                return redirect()->route('news.index');
+            }
         } else {
             return redirect()->route('login')->with('error', 'Incorrect Credentials');
         }
@@ -60,7 +66,7 @@ class ProfileController extends Controller
     public function changePassword(Request $request, Profile $profile)
     {
         try {
-
+            if (Auth::check()) {
             // Validate the form data
             $request->validate([
                 'current_password' => 'required',
@@ -73,11 +79,14 @@ class ProfileController extends Controller
                     'password' => Hash::make($request->new_password)
                 ]);
                 // Redirect to a success page or home
-                return redirect()->route('home')->with('success', 'Password changed successfully.');
+                return redirect()->back()->with('success', 'Password changed successfully.');
             } else {
                 // If the current password doesn't match, return an error
                 return redirect()->back()->with(['error' => 'The current password is incorrect.']);
             }
+        }else{
+            return redirect()->route('login')->with(['error' => 'Please login!.']);
+        }
             # code...
         } catch (\Throwable $e) {
             return redirect()->back()->with(['error' => 'The current password is incorrect.']);
@@ -142,7 +151,6 @@ class ProfileController extends Controller
         $findUser = Profile::find(Auth::user()->id);
         if (!$findUser) {
             return redirect()->route('setting')->with('error', 'User not found!.');
-
         }
         $findUser->user()->update([
             'email' => $findUser->user->email,
@@ -187,6 +195,5 @@ class ProfileController extends Controller
             return redirect()->route('login');
         }
         return redirect()->back()->with('error', 'User not found!.');
-
     }
 }

@@ -17,7 +17,6 @@ class DatabaseSeeder extends Seeder
     {
         $currentDate = now();
 
-        // Insert a user record into the 'users' table
         $userId = DB::table('users')->insertGetId([
             'email' => 'chemuelgodes@gmail.com',
             'role' => 'Admin',
@@ -25,7 +24,6 @@ class DatabaseSeeder extends Seeder
             'created_at' => $currentDate,
         ]);
 
-        // Insert a profile record into the 'profiles' table and associate it with the user
         DB::table('profiles')->insert([
             'name' => 'Chemuel Castillo',
             'age' => 23,
