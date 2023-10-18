@@ -37,7 +37,7 @@ class ProfileController extends Controller
             'password' => 'required|min:8|max:30'
         ]);
         $credentials = $request->only('email', 'password');
-        if (Auth::guard('web')->attempt($credentials)) {
+        if (auth()->attempt($credentials)) {
             if (Auth::user()->role === "Admin") {
                 return redirect()->route('users.index');
             }elseif (Auth::user()->role === "Principal") {
