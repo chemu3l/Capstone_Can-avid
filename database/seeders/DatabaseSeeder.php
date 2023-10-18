@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
 
         $userId = DB::table('users')->insertGetId([
             'email' => 'chemuelgodes@gmail.com',
-            'role' => 'Admin',
+            'role' => 'Principal',
             'password' => Hash::make('chemuelgodes13'),
             'created_at' => $currentDate,
         ]);
