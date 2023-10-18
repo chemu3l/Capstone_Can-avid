@@ -11,7 +11,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\forgetPassword;
-
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Foundation\Auth\EmailVerificationNotification;
 
 class ProfileController extends Controller
 {
@@ -196,4 +197,18 @@ class ProfileController extends Controller
         }
         return redirect()->back()->with('error', 'User not found!.');
     }
+
+    public function getVerify() {
+        return view('auth.verify');
+    }
+    public function emailVerification(EmailVerificationRequest $request) {
+        $request->fulfill();
+        return redirect('/home');
+    }
+    public function postEmailVerification(Request $request) {
+        $request->user()->sendEmailVerificationNotification();
+        return back()->with('message', 'Verification link sent!');
+    }
+
+
 }

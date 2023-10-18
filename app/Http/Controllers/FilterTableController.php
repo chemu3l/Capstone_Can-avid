@@ -11,7 +11,7 @@ use App\Models\Document;
 use App\Models\Event;
 use App\Models\History;
 use App\Models\News;
-use App\Models\profile;
+use App\Models\Profile;
 
 use App\Models\User;
 use Symfony\Component\HttpKernel\Profiler\Profiler;

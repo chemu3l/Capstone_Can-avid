@@ -8,15 +8,14 @@ use App\Http\Controllers\Features\CareerController;
 use App\Http\Controllers\Guest\DisplayController;
 use App\Http\Controllers\Features\EventController;
 use App\Http\Controllers\Features\NewsController;
-use App\Http\Controllers\Features\AlumniController;
 use App\Http\Controllers\Features\DocumentController;
 use App\Http\Controllers\Features\FeedbackController;
 use App\Http\Controllers\Features\LogsController;
 use App\Http\Controllers\FilterTableController;
-// use App\Http\Controllers\LogsController;
 use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\User\ProfileController;
 use Illuminate\Support\Facades\Route;
+
 
 Route::get('/school-calendar',  [DisplayController::class, 'displayEventsInCalendar'])->name('school-calendar');
 Route::get('/change-password/{profile}', [ProfileController::class, 'showChangePasswordForm'])->name('change-password');
@@ -47,7 +46,14 @@ Route::post('/check_user', [ProfileController::class, 'Check_user'])->name('chec
 Route::view('/request_form', 'guest_layout.request_document')->name('request_form');
 Route::view('/', 'layouts.homePage')->name('HomePage');
 
-Route::middleware(['auth:web'])->group(function () {
+
+Route::get('/email/verify', [ProfileController::class, 'getVerify'])->middleware(['auth'])->name('verification.notice');
+
+Route::get('/email/verify/{id}/{hash}', [ProfileController::class, 'emailVerification'])->middleware(['auth', 'signed'])->name('verification.verify');
+
+Route::post('/email/verification-notification', [ProfileController::class, 'postEmailVerification'])->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+
+Route::middleware(['auth:web', 'PreventBackHistory'])->group(function () {
     Route::view('/home', 'layouts.app')->name('home');
     Route::get('/announcements/search', [FilterTableController::class, 'searchAnnouncement'])->name('announcement_Filter');
     Route::get('/applicants/search', [FilterTableController::class, 'searchApplicant'])->name('applicant_Filter');
