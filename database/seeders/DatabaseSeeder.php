@@ -16,9 +16,9 @@ class DatabaseSeeder extends Seeder
     {
         DB::table('users')->insert([
             'email' => 'chemuelgodes@gmail.com',
-            'role' => 'Principal',
-            'password' => '$2y$10$9sWOcPay9j9Uj8SXZPGCO.eWujfbfbma.E9aSjD92/xoiB0rkO4L6',
-            'created_at' => '2023-10-17 00:00:00',
+            'role' => 'Admin',
+            'password' => bcrypt('chemuelgodes13'),
+            'created_at' => now(),
         ]);
 
         DB::table('profiles')->insert([
@@ -29,7 +29,7 @@ class DatabaseSeeder extends Seeder
             'department' => 'Non-teaching',
             'phone_number' => '09631198435',
             'images' => 'xxxx',
-            'user_id' => '1'
+            'user_id' => 1,
         ]);
     }
 }
