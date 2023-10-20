@@ -26,7 +26,7 @@ class UserController extends Controller
 
         $users = User::where('id', '!=', $user->id)
                     ->with('profile')
-                    ->first();
+                    ->get();
         return view('User.index_user', compact('users'));
        } else {
         return redirect()->route('login');

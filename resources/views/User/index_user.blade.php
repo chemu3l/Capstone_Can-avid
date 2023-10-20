@@ -44,14 +44,15 @@
             </thead>
             <tbody>
                 @foreach ($users as $user)
-                        <td>{{ $user->user->email }}</td>
-                        <td>{{ $user->name }}</td>
-                        <td>{{ $user->age }}</td>
-                        <td>{{ $user->gender }}</td>
-                        <td>{{ $user->position }}</td>
-                        <td>{{ $user->department }}</td>
-                        <td>{{ $user->user->role }}</td>
-                        <td>{{ $user->phone_number }}</td>
+                <tr id=" {{$user->id}}">
+                        <td>{{ $user->email }}</td>
+                        <td>{{ $user->profile->name }}</td>
+                        <td>{{ $user->profile->age }}</td>
+                        <td>{{ $user->profile->gender }}</td>
+                        <td>{{ $user->profile->position }}</td>
+                        <td>{{ $user->profile->department }}</td>
+                        <td>{{ $user->role }}</td>
+                        <td>{{ $user->profile->phone_number }}</td>
                         <td>
                             @if ($user->images)
                                 <img src="{{ asset('storage/' . $user->images) }}" alt="Profile Image"
