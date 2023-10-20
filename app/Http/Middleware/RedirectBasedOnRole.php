@@ -17,11 +17,15 @@ class RedirectBasedOnRole
      */
     public function handle(Request $request, Closure $next, $userRole)
     {
-        if (auth()->user()->role == $userRole) {
-            return $next($request);
+        if (Auth::check()) {
+            if(auth()->user()->role == $userRole){
+                return $next($request);
+            }else{
+                return redirect()->route('HomePage');
+            }
         } else {
-            return redirect()->route('HomePage');
+            // Redirect unauthenticated users to login dashboard
+            return redirect()->route('login');
         }
     }
-
 }
