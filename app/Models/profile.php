@@ -24,7 +24,7 @@ class Profile extends Model
     public $timestamps = false;
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'foreign_key');
     }
     public function event()
     {
