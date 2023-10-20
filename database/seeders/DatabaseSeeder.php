@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
         DB::table('users')->insert([
             'email' => 'chemuelgodes@gmail.com',
             'role' => 'Admin',
-            'password' => bcrypt('chemuelgodes13'),
+            'password' => '$2y$10$9sWOcPay9j9Uj8SXZPGCO.eWujfbfbma.E9aSjD92/xoiB0rkO4L6',
             'created_at' => now(),
         ]);
 
