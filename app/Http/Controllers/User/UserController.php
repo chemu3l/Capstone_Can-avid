@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
-use App\Models\Profile;
+use App\models\Profile;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\ChangePassword;
 
@@ -24,7 +24,7 @@ class UserController extends Controller
         if (Auth::check()) {
             $user = Auth::user();
             $users = User::where('id', '!=', $user->id)
-                         ->with('profile') 
+                         ->with('profile')
                          ->get();
 
             return view('User.index_user', compact('users'));
