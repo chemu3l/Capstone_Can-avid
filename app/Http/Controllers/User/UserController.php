@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
-use App\models\Profile;
+use App\Models\Profile;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\ChangePassword;
 

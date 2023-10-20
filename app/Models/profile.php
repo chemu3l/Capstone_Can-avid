@@ -11,6 +11,9 @@ class Profile extends Model
 
     use HasFactory;
     protected $table = 'profiles';
+    protected $primaryKey = 'id';
+    public $timestamps = false;
+
     protected $fillable = [
         'name',
         'age',
@@ -21,7 +24,6 @@ class Profile extends Model
         'images',
         'user_id',
     ];
-    public $timestamps = false;
     public function user()
     {
         return $this->belongsTo(User::class);
