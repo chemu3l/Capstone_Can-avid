@@ -17,7 +17,4 @@ php artisan migrate:fresh --seed --force
 
 php artisan storage:link --force
 
-composer dump-autoload
-
-php artisan view:clear
 
