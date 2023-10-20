@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Profile extends Model
 {
+    protected $table = 'profiles';
+    
     use HasFactory;
     protected $fillable = [
         'name',
