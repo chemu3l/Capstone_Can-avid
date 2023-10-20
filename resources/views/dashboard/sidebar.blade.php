@@ -3,11 +3,11 @@
 @section('menu')
     <div class="menu_class">
         <div class="headers_textTitle">
-            @if (Auth::user()->role == 'Admin')
+            @if (Auth::user()->role === 'Admin')
                 Admin Dashboard
-            @elseif (Auth::user()->role == 'Principal')
+            @elseif (Auth::user()->role === 'Principal')
                 Principal Dashboard
-            @elseif (Auth::user()->role == 'Registrar')
+            @elseif (Auth::user()->role === 'Registrar')
                 Registrar Dashboard
             @else
                 Faculty/Staff Dashboard
