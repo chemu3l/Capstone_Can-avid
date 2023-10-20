@@ -21,13 +21,16 @@ class UserController extends Controller
      */
     public function index()
     {
-        if (Auth::check()) {
-            $user = Auth::user();
-            $users = Profile::where('user_id', '<>', $user->profile->id)->get();
-            return view('User.index_user', compact('users'));
-        } else {
-            return redirect()->route('login');
-        }
+       if (Auth::check()) {
+        $user = Auth::user();
+
+        $users = User::where('id', '!=', $user->id)
+                    ->with('profile')
+                    ->get();
+        return view('User.index_user', compact('users'));
+       } else {
+        return redirect()->route('login');
+       }
     }
 
     /**
