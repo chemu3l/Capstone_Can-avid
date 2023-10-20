@@ -15,10 +15,10 @@ class RedirectBasedOnRole
      * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
-    public function handle(Request $request, Closure $next, $userRole)
+    public function handle(Request $request, Closure $next)
     {
         if (Auth::check()) {
-            if(auth()->user()->role === $userRole){
+            if(auth()){
                 return $next($request);
             }else{
                 return redirect()->route('HomePage');
