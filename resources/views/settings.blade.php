@@ -97,7 +97,7 @@
                                         <div class="form-group">
                                             <label for="complete-name">Complete Name</label>
                                             <input type="text" class="form-control" id="complete-name"
-                                                value="{{ $profile->name }}" name="name">
+                                                value="{{ $profile->profile->name }}" name="name">
                                             @error('name')
                                                 <div class="text-danger">{{ $message }}</div>
                                             @enderror
@@ -106,7 +106,7 @@
                                         <div class="form-group">
                                             <label for="age">Age</label>
                                             <input type="number" class="form-control" id="age"
-                                                value="{{ $profile->age }}" name="age">
+                                                value="{{ $profile->profile->age }}" name="age">
                                             @error('age')
                                                 <div class="text-danger">{{ $message }}</div>
                                             @enderror
@@ -115,7 +115,7 @@
                                         <div class="form-group">
                                             <label for="gender">Gender</label>
                                             <input type="text" class="form-control" id="gender"
-                                                value="{{ $profile->gender }}" name="gender" readonly>
+                                                value="{{ $profile->profile->gender }}" name="gender" readonly>
                                             @error('gender')
                                                 <div class="text-danger">{{ $message }}</div>
                                             @enderror
@@ -124,7 +124,7 @@
                                         <div class="form-group">
                                             <label for="position">Position</label>
                                             <input type="text" class="form-control" id="position"
-                                                value="{{ $profile->position }}" name="position">
+                                                value="{{ $profile->profile->position }}" name="position">
                                             @error('position')
                                                 <div class="text-danger">{{ $message }}</div>
                                             @enderror
@@ -136,34 +136,34 @@
                                                 <select class="form-control @error('department') is-invalid @enderror"
                                                     name="department" id="department">
                                                     <option value="Mathematics"
-                                                        {{ old('department', $profile->department) === 'Mathematics' ? 'selected' : '' }}>
+                                                        {{ old('department', $profile->profile->department) === 'Mathematics' ? 'selected' : '' }}>
                                                         Mathematics Department</option>
                                                     <option value="Science"
-                                                        {{ old('department', $profile->department) === 'Science' ? 'selected' : '' }}>
+                                                        {{ old('department', $profile->profile->department) === 'Science' ? 'selected' : '' }}>
                                                         Science Department</option>
                                                     <option value="English"
-                                                        {{ old('department', $profile->department) === 'English' ? 'selected' : '' }}>
+                                                        {{ old('department', $profile->profile->department) === 'English' ? 'selected' : '' }}>
                                                         English Department</option>
                                                     <option value="Filipino"
-                                                        {{ old('department', $profile->department) === 'Filipino' ? 'selected' : '' }}>
+                                                        {{ old('department', $profile->profile->department) === 'Filipino' ? 'selected' : '' }}>
                                                         Filipino Department</option>
                                                     <option value="EdukPanlipunan"
-                                                        {{ old('department', $profile->department) === 'EdukPanlipunan' ? 'selected' : '' }}>
+                                                        {{ old('department', $profile->profile->department) === 'EdukPanlipunan' ? 'selected' : '' }}>
                                                         E.S.P & Araling Panlipunan Department</option>
                                                     <option value="TLE"
-                                                        {{ old('department', $profile->department) === 'TLE' ? 'selected' : '' }}>
+                                                        {{ old('department', $profile->profile->department) === 'TLE' ? 'selected' : '' }}>
                                                         TLE Department</option>
                                                     <option value="Mapeh"
-                                                        {{ old('department', $profile->department) === 'Mapeh' ? 'selected' : '' }}>
+                                                        {{ old('department', $profile->profile->department) === 'Mapeh' ? 'selected' : '' }}>
                                                         Mapeh Department</option>
                                                     <option value="SHS"
-                                                        {{ old('department', $profile->department) === 'SHS' ? 'selected' : '' }}>
+                                                        {{ old('department', $profile->profile->department) === 'SHS' ? 'selected' : '' }}>
                                                         Senior High School Department</option>
                                                     <option value="ALS"
-                                                        {{ old('department', $profile->department) === 'ALS' ? 'selected' : '' }}>
+                                                        {{ old('department', $profile->profile->department) === 'ALS' ? 'selected' : '' }}>
                                                         Alternative Learning System Department</option>
                                                     <option value="Non-teaching"
-                                                        {{ old('department', $profile->department) === 'Non-teaching' ? 'selected' : '' }}>
+                                                        {{ old('department', $profile->profile->department) === 'Non-teaching' ? 'selected' : '' }}>
                                                         Non-Teaching Department</option>
                                                 </select>
                                                 @error('department')
@@ -174,7 +174,7 @@
                                             <div class="form-group col-md-4">
                                                 <label for="phone_number">Phone number</label>
                                                 <input type="tel" class="form-control" id="phone_number"
-                                                    value="{{ $profile->phone_number }}" name="phone_number">
+                                                    value="{{ $profile->profile->phone_number }}" name="phone_number">
                                                 @error('phone_number')
                                                     <div class="text-danger">{{ $message }}</div>
                                                 @enderror
