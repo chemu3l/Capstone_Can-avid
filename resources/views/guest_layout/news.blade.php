@@ -7,6 +7,7 @@
         </div>
         <div class="news-container">
             <div id="news-carousel">
+                fsssddscs
                 @if ($news)
                     @foreach ($news as $new)
                         @if ($new->news_images)
