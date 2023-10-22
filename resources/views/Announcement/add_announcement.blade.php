@@ -7,9 +7,13 @@
                 {{ session('success') }}
             </div>
         @endif
-        @if (session('error'))
+        @if ($errors->any())
             <div class="alert alert-danger">
-                {{ session('error') }}
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
             </div>
         @endif
         <a href="{{ route('announcements.index') }}" class="btn btn-info btn-lg"
