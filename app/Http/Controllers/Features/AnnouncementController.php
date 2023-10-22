@@ -58,65 +58,65 @@ class AnnouncementController extends Controller
      */
     public function store(Request $request)
     {
-        try {
-            $validate = $request->validate([
-                'announcements' => 'required|string',
-                'announcements_what' => 'required|string',
-                'announcements_who' => 'required|string',
-                'announcements_when' => 'required|date',
-                'announcements_where' => 'required|string',
-                'announcements_why' => 'required|string',
-                'announcements_how' => 'required|string',
-                'media_files.*' => 'required|file|mimes:jpeg,png,jpg,gif,mp4,mov|max:2048',
-            ]);
-            $errors = [];
+        $validate = $request->validate([
+            'announcements' => 'required|string',
+            'announcements_what' => 'required|string',
+            'announcements_who' => 'required|string',
+            'announcements_when' => 'required|date',
+            'announcements_where' => 'required|string',
+            'announcements_why' => 'required|string',
+            'announcements_how' => 'required|string',
+            'media_files.*' => 'required|file|mimes:jpeg,png,jpg,gif,mp4,mov|max:2048',
+        ]);
+        $errors = [];
 
-            if (empty($request->input('announcements'))) {
-                $errors['announcements'] = 'The Announcements field is required.';
-            }
+        if (empty($request->input('announcements'))) {
+            $errors['announcements'] = 'The Announcements field is required.';
+        }
 
-            if (empty($request->input('announcements_what'))) {
-                $errors['announcements_what'] = 'The What field is required.';
-            }
+        if (empty($request->input('announcements_what'))) {
+            $errors['announcements_what'] = 'The What field is required.';
+        }
 
-            if (empty($request->input('announcements_who'))) {
-                $errors['announcements_who'] = 'The Who field is required.';
-            }
+        if (empty($request->input('announcements_who'))) {
+            $errors['announcements_who'] = 'The Who field is required.';
+        }
 
-            if (empty($request->input('announcements_when')) || !strtotime($request->input('announcements_when'))) {
-                $errors['announcements_when'] = 'The When field must be a valid date.';
-            }
+        if (empty($request->input('announcements_when')) || !strtotime($request->input('announcements_when'))) {
+            $errors['announcements_when'] = 'The When field must be a valid date.';
+        }
 
-            if (empty($request->input('announcements_where'))) {
-                $errors['announcements_where'] = 'The Where field is required.';
-            }
+        if (empty($request->input('announcements_where'))) {
+            $errors['announcements_where'] = 'The Where field is required.';
+        }
 
-            if (empty($request->input('announcements_why'))) {
-                $errors['announcements_why'] = 'The Why field is required.';
-            }
+        if (empty($request->input('announcements_why'))) {
+            $errors['announcements_why'] = 'The Why field is required.';
+        }
 
-            if (empty($request->input('announcements_how'))) {
-                $errors['announcements_how'] = 'The How field is required.';
-            }
+        if (empty($request->input('announcements_how'))) {
+            $errors['announcements_how'] = 'The How field is required.';
+        }
 
-            if (!$request->hasFile('media_files') || count($request->file('media_files')) < 1) {
-                $errors['media_files'] = 'Please upload at least one media file.';
-            } else {
-                foreach ($request->file('media_files') as $file) {
-                    if (!$file->isValid()) {
-                        $errors['media_files'] = 'Each media file must be a valid file.';
-                        break;
-                    }
-                    if ($file->getSize() > 2048000) {
-                        $errors['media_files'] = 'Each media file should not exceed 2MB in size.';
-                        break;
-                    }
+        if (!$request->hasFile('media_files') || count($request->file('media_files')) < 1) {
+            $errors['media_files'] = 'Please upload at least one media file.';
+        } else {
+            foreach ($request->file('media_files') as $file) {
+                if (!$file->isValid()) {
+                    $errors['media_files'] = 'Each media file must be a valid file.';
+                    break;
+                }
+                if ($file->getSize() > 2048000) {
+                    $errors['media_files'] = 'Each media file should not exceed 2MB in size.';
+                    break;
                 }
             }
+        }
 
-            if (!empty($errors)) {
-                return redirect()->route('announcements.create')->withErrors($errors)->with('error', 'Validation error: Please check the form for errors.');
-            }
+        if (!empty($errors)) {
+            return redirect()->route('announcements.create')->withErrors($errors)->with('error', 'Validation error: Please check the form for errors.');
+        }
+        try {
             $announcements = new Announcement();
             $announcements->announcements = $request->input('announcements');
             $announcements->announcements_what = $request->input('announcements_what');
