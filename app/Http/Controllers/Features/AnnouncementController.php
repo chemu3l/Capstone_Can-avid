@@ -159,7 +159,7 @@ class AnnouncementController extends Controller
                 return redirect()->route('announcements.create')->with('error', 'Failed to add Announcements!');
             }
         } catch (\Throwable $e) {
-            return redirect()->route('announcements.create')->withErrors($validate)->with('error', $e->getMessage());
+            return redirect()->route('announcements.create')->with('error', $e->getMessage());
         }
     }
 
