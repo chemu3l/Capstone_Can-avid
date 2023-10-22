@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\User;
 
-use app\Models\profile;
+use app\Models\Profile;
 use app\Models\User;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\Controller;
@@ -21,7 +21,7 @@ class ProfileController extends Controller
         if (Auth::check()) {
             try {
                 $user = Auth::user();
-                $profiles = profile::where('id', $user->profile->user_id)->get();
+                $profiles = Profile::where('id', $user->profile->user_id)->get();
                 return view('settings', compact('profiles'));
             } catch (\Throwable $e) {
                 return redirect()->route('users.index')->with('error', 'Unable to view your information');
