@@ -7,13 +7,9 @@
                 {{ session('success') }}
             </div>
         @endif
-        @if ($errors->any())
+        @if (session('error'))
             <div class="alert alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
+                {{ session('error') }}
             </div>
         @endif
         <a href="{{ route('announcements.index') }}" class="btn btn-info btn-lg"
@@ -25,9 +21,11 @@
                 <input type="text" class="form-control @error('announcements') is-invalid @enderror" name="announcements"
                     id="announcements" required>
                 <span class="text-danger">
-                    @error('announcements')
-                        {{ $message }}
-                    @enderror
+                    @if ($errors->has('announcements'))
+                        <div class="alert alert-danger">
+                            {{ $errors->first('announcements') }}
+                        </div>
+                    @endif
                 </span>
             </div>
             <center>
@@ -38,9 +36,11 @@
                 <input type="text" class="form-control @error('announcements_what') is-invalid @enderror"
                     name="announcements_what" id="announcements_what"required>
                 <span class="text-danger">
-                    @error('announcements_what')
-                        {{ $message }}
-                    @enderror
+                    @if ($errors->has('announcements_what'))
+                        <div class="alert alert-danger">
+                            {{ $errors->first('announcements_what') }}
+                        </div>
+                    @endif
                 </span>
             </div>
             <div class="form-group">
@@ -48,9 +48,11 @@
                 <input type="text" class="form-control @error('announcements_who') is-invalid @enderror"
                     name="announcements_who" id="announcements_who"required>
                 <span class="text-danger">
-                    @error('announcements_who')
-                        {{ $message }}
-                    @enderror
+                    @if ($errors->has('announcements_who'))
+                        <div class="alert alert-danger">
+                            {{ $errors->first('announcements_who') }}
+                        </div>
+                    @endif
                 </span>
             </div>
 
@@ -59,9 +61,11 @@
                 <input type="date" class="form-control @error('announcements_when') is-invalid @enderror"
                     name="announcements_when" id="announcements_when"required>
                 <span class="text-danger">
-                    @error('announcements_when')
-                        {{ $message }}
-                    @enderror
+                    @if ($errors->has('announcements_when'))
+                        <div class="alert alert-danger">
+                            {{ $errors->first('announcements_when') }}
+                        </div>
+                    @endif
                 </span>
             </div>
 
@@ -70,9 +74,11 @@
                 <input type="text" class="form-control @error('announcements_where') is-invalid @enderror"
                     name="announcements_where" id="announcements_where"required>
                 <span class="text-danger">
-                    @error('announcements_where')
-                        {{ $message }}
-                    @enderror
+                    @if ($errors->has('announcements_where'))
+                        <div class="alert alert-danger">
+                            {{ $errors->first('announcements_where') }}
+                        </div>
+                    @endif
                 </span>
             </div>
             <div class="form-group">
@@ -80,9 +86,11 @@
                 <input type="text" class="form-control @error('announcements_why') is-invalid @enderror"
                     name="announcements_why" id="announcements_why"required>
                 <span class="text-danger">
-                    @error('announcements_why')
-                        {{ $message }}
-                    @enderror
+                    @if ($errors->has('announcements_why'))
+                        <div class="alert alert-danger">
+                            {{ $errors->first('announcements_why') }}
+                        </div>
+                    @endif
                 </span>
             </div>
             <div class="form-group">
@@ -90,9 +98,11 @@
                 <input type="text" class="form-control @error('announcements_how') is-invalid @enderror"
                     name="announcements_how" id="announcements_how"required>
                 <span class="text-danger">
-                    @error('announcements_how')
-                        {{ $message }}
-                    @enderror
+                    @if ($errors->has('announcements_how'))
+                        <div class="alert alert-danger">
+                            {{ $errors->first('announcements_how') }}
+                        </div>
+                    @endif
                 </span>
             </div>
 
@@ -107,9 +117,16 @@
             </div>
             <input type="file" name="media_files[]" accept="image/*, video/*" required>
             <span class="text-danger">
-                @error('media_files')
-                    {{ $message }}
-                @enderror
+                @if ($errors->has('media_files'))
+                    <div class="alert alert-danger">
+                        {{ $errors->first('media_files') }}
+                    </div>
+                @endif
+                @if ($errors->has('media_files.*.max'))
+                    <div class="alert alert-danger">
+                        {{ $errors->first('media_files.*.max') }}
+                    </div>
+                @endif
             </span>
             <br>
             <div class="form-group text-center">
