@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use app\Models\profile;
-use app\Models\User;
+use App\Models\User;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -60,27 +60,26 @@ class ProfileController extends Controller
     }
 
     // Handle the password change form submission
-    public function changePassword(Request $request, User $user)
+    public function changePassword(Request $request)
     {
         try {
             if (Auth::check()) {
-                // Validate the form data
+                $user = Auth::user();
+                $findUser = User::where('email', '=', $user->email)->first();
                 $request->validate([
                     'current_password' => 'required',
                     'new_password' => 'required|string|min:8|confirmed',
                 ]);
-                if (Hash::check($request->current_password, $user->password)) {
-                    // Update the user's password
-                    $findUser = User::find($user->id);
-                    $findUser->update([
-                        'password' => Hash::make($request->new_password)
-                    ]);
-                    // Redirect to a success page or home
-                    return redirect()->back()->with('success', 'Password changed successfully.');
-                } else {
-                    // If the current password doesn't match, return an error
-                    return redirect()->back()->with(['error' => 'The current password is incorrect.']);
+
+                // Check if the current password is correct
+                if (!Hash::check($request->current_password, $user->password)) {
+                    return redirect()->back()->with('error', 'The current password is incorrect.');
                 }
+
+                // Update the user's password
+                $findUser->update([
+                    'password' => Hash::make($request->new_password)
+                ]);
             } else {
                 return redirect()->route('login')->with(['error' => 'Please login!.']);
             }
@@ -100,34 +99,25 @@ class ProfileController extends Controller
     public function updateProfilePicture(Request $request)
     {
         $validate = $request->validate([
-            'profile_picture' => 'required|image|mimes:jpeg,png,jpg,gif|max:4048',
+            'profile_picture' => 'required|image|mimes:jpeg,png,jpg',
         ]);
         if (!$validate) {
             return redirect()->route('setting')->with('error', 'User not found!.');
         }
-        $findUser = profile::find(Auth::user()->id);
+        $userID = Auth::id();
+        $findUser = User::find($userID);
         if (!$findUser) {
             return redirect()->route('setting')->with('error', 'User not found!.');
         }
         $newImages = null;
-        if ($findUser->images) {
-            Storage::delete('public/' . $findUser->images);
+        if ($findUser->profile->images) {
+            Storage::delete('public/' . $findUser->profile->images);
         }
         if ($request->hasFile('profile_picture')) {
             $picturePath = $request->file('profile_picture')->store('images/profile_pictures', 'public');
             $newImages = $picturePath;
         }
-
-        $findUser->user()->update([
-            'email' => $findUser->user->email,
-            'role' => $findUser->user->role
-        ]);
         $findUser->update([
-            'age' => $findUser->age,
-            'gender' => $findUser->gender,
-            'position' => $findUser->position,
-            'department' => $findUser->department,
-            'phone_number' => $findUser->phone_number,
             'images' => $newImages
         ]);
         return redirect()->back()->with('success', 'Profile Picture Updated');

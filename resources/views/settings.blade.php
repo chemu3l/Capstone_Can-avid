@@ -55,7 +55,7 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="text-center">
-                                            <img alt="Andrew Jones"
+                                            <img alt="No images"
                                                 src="{{ asset('storage/' . Auth::guard('web')->user()->profile->images) }}"
                                                 class="rounded-circle img-responsive mt-2" width="128" height="128">
                                             <div class="mt-2" class="profile-picture">
