@@ -19,7 +19,6 @@ class RedirectBasedOnRole
     {
         if (Auth::check()) {
             if(auth()->user()->role == $userRole){
-                dd($request);
                 dd($next($request));
                 return $next($request);
             }else{
