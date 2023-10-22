@@ -22,6 +22,7 @@ class ProfileController extends Controller
             try {
                 $user = Auth::user();
                 $profiles = Profile::where('id', $user->profile->user_id)->get();
+                dd($profiles);
                 return view('settings', compact('profiles'));
             } catch (\Throwable $e) {
                 return redirect()->route('users.index')->with('error', 'Unable to view your information');
