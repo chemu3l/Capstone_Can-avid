@@ -68,6 +68,19 @@ class AnnouncementController extends Controller
                 'announcements_why' => 'required|string',
                 'announcements_how' => 'required|string',
                 'media_files.*' => 'required|file|mimes:jpeg,png,jpg,gif,mp4,mov|max:2048',
+            ], [
+                'announcements.required' => 'The Announcements field is required.',
+                'announcements_what.required' => 'The What field is required.',
+                'announcements_who.required' => 'The Who field is required.',
+                'announcements_when.required' => 'The When field is required.',
+                'announcements_when.date' => 'The When field must be a valid date.',
+                'announcements_where.required' => 'The Where field is required.',
+                'announcements_why.required' => 'The Why field is required.',
+                'announcements_how.required' => 'The How field is required.',
+                'media_files.*.required' => 'Please upload at least one media file.',
+                'media_files.*.file' => 'Each media file must be a valid file.',
+                'media_files.*.mimes' => 'The supported media file types are: jpeg, png, jpg, gif, mp4, mov.',
+                'media_files.*.max' => 'Each media file should not exceed 2MB in size.',
             ]);
             if (!$validate) {
                 return redirect()->back()->with('error', 'Failed to add Announcement!');
