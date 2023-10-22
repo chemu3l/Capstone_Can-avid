@@ -9,7 +9,7 @@ use App\Models\Event;
 use App\Models\Career;
 use App\Models\News;
 use App\Models\OrganizationalChart;
-use App\Models\Profile;
+use App\Models\profile;
 use Illuminate\Http\Request;
 
 class DisplayController extends Controller
@@ -66,7 +66,7 @@ class DisplayController extends Controller
     public function filterByDepartment(Request $request)
     {
         $selectedDepartment = $request->input('department');
-        $filteredData = Profile::where('department', $selectedDepartment)->get();
+        $filteredData = profile::where('department', $selectedDepartment)->get();
         return view('guest_layout.departments', ['filteredData' => $filteredData, 'department' => $selectedDepartment]);
     }
     public function guestNews(){

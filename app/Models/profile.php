@@ -5,10 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Profile extends Model
+class profile extends Model
 {
-
-
     use HasFactory;
     protected $table = 'profiles';
     protected $primaryKey = 'id';
@@ -53,4 +51,5 @@ class Profile extends Model
     {
         return $this->hasMany(History::class);
     }
+
 }

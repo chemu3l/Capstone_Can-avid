@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\User;
 
-use app\Models\Profile;
+use app\Models\profile;
 use app\Models\User;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\Controller;
@@ -21,7 +21,7 @@ class ProfileController extends Controller
         if (Auth::check()) {
             try {
                 $user = Auth::user();
-                $profiles = Profile::where('id', $user->profile->user_id)->get();
+                $profiles = profile::where('id', $user->profile->user_id)->get();
                 return view('settings', compact('profiles'));
             } catch (\Throwable $e) {
                 return redirect()->route('users.index')->with('error', 'Unable to view your information');
@@ -58,13 +58,13 @@ class ProfileController extends Controller
         return redirect()->route('HomePage'); // Redirect to the login page after logout
     }
     // Show the password change form
-    public function showChangePasswordForm(Profile $profile)
+    public function showChangePasswordForm(profile $profile)
     {
         return view('User_Functional_Views.view_ChangePassword')->with('profile', $profile);
     }
 
     // Handle the password change form submission
-    public function changePassword(Request $request, Profile $profile)
+    public function changePassword(Request $request, profile $profile)
     {
         try {
             if (Auth::check()) {
@@ -109,7 +109,7 @@ class ProfileController extends Controller
         if (!$validate) {
             return redirect()->route('setting')->with('error', 'User not found!.');
         }
-        $findUser = Profile::find(Auth::user()->id);
+        $findUser = profile::find(Auth::user()->id);
         if (!$findUser) {
             return redirect()->route('setting')->with('error', 'User not found!.');
         }
@@ -149,7 +149,7 @@ class ProfileController extends Controller
         if (!$validate) {
             return redirect()->route('setting')->with('error', 'User not found!.');
         }
-        $findUser = Profile::find(Auth::user()->id);
+        $findUser = profile::find(Auth::user()->id);
         if (!$findUser) {
             return redirect()->route('setting')->with('error', 'User not found!.');
         }

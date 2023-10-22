@@ -22,7 +22,7 @@ class Event extends Model
     public $timestamps = false;
     public function profile()
     {
-        return $this->belongsTo(Profile::class);
+        return $this->belongsTo(profile::class);
     }
 }
 

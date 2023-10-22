@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
-use App\Models\Profile;
+use App\Models\profile;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\ChangePassword;
 
@@ -71,7 +71,7 @@ class UserController extends Controller
         $user->role = $request->input('role');
         $user->save(); // Save the user before sending the email
         $user->load('profile'); // Assuming you have a profile relationship
-        $profile = new Profile();
+        $profile = new profile();
         $profile->name = $request->input('name');
         $profile->age = $request->input('age');
         $profile->gender = $request->input('gender');

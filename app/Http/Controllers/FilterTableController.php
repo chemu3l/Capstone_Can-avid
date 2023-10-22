@@ -11,7 +11,7 @@ use App\Models\Document;
 use App\Models\Event;
 use App\Models\History;
 use App\Models\News;
-use App\Models\Profile;
+use App\Models\profile;
 
 use App\Models\User;
 use Symfony\Component\HttpKernel\Profiler\Profiler;
@@ -165,7 +165,7 @@ class FilterTableController extends Controller
             try {
                 $searchTerm = $request->input('search');
                 $columns = ['name', 'age', 'gender', 'position', 'department', 'phone_number'];
-                $query = Profile::where(function ($query) use ($columns, $searchTerm) {
+                $query = profile::where(function ($query) use ($columns, $searchTerm) {
                     foreach ($columns as $column) {
                         $query->orWhere($column, 'LIKE', '%' . $searchTerm . '%');
                     }
