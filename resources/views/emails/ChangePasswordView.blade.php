@@ -13,7 +13,7 @@
     <table style="width: 100%; max-width: 600px; margin: 0 auto; padding: 20px; border-collapse: collapse; ">
         <tr>
             <td style="text-align: center; background-color: green; padding: 20px;">
-                @if ($profile->gender == 'Male')
+                @if ($profile->gender === 'Male')
                     <h1>Welcome!, Mr: {{ $profile->name }}!</h1>
                 @else
                     <h1>Welcome!, Mrs: {{ $profile->name }}!</h1>

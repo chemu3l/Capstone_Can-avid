@@ -1,6 +1,6 @@
 @extends('home')
 
-@section('content')
+@section('sub-content')
     <div class="container p-0">
         <h1 class="h3 mb-3">Settings</h1>
         @if (Session::has('success'))
