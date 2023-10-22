@@ -59,7 +59,7 @@ class NewsController extends Controller
                 'news' => 'required|string|max:12',
                 'news_description' => 'required|string|min:12',
                 'news_update' => 'required|date',
-                'media_files.*' => 'required|file|mimes:jpeg,png,jpg,gif,mp4,mov|max:2048',
+                'media_files.*' => 'required|file|mimes:jpeg,png,jpg,gif,mp4',
             ]);
             if (!$validate) {
                 return redirect()->route('news.create')->with('error', 'Failed to add News!');
