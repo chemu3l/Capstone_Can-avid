@@ -19,14 +19,10 @@ class ProfileController extends Controller
     public function GetOwnData()
     {
         if (Auth::check()) {
-            try {
-                $user = Auth::user();
-                $profiles = profile::where('id', $user->profile->user_id)->get();
-                dd($profiles);
-                return view('settings', compact('profiles'));
-            } catch (\Throwable $e) {
-                return redirect()->route('users.index')->with('error', 'Unable to view your information'. $e->getMessage() );
-            }
+            $user = Auth::user();
+            $profiles = profile::where('id', $user->profile->user_id)->get();
+            dd($profiles);
+            return view('settings', compact('profiles'));
         } else {
             return redirect()->route('login');
         }
@@ -40,10 +36,10 @@ class ProfileController extends Controller
         $credentials = $request->only('email', 'password');
         if (auth()->attempt($credentials)) {
             if (Auth::user()->role === "Admin") {
-                return redirect()->route('home')->with(['Dashboard'=>'Admin Dashboard', 'status' => 'Admin Dashboard']);
-            }elseif (Auth::user()->role === "Principal") {
+                return redirect()->route('home')->with(['Dashboard' => 'Admin Dashboard', 'status' => 'Admin Dashboard']);
+            } elseif (Auth::user()->role === "Principal") {
                 return redirect()->route('careers.index');
-            }else{
+            } else {
                 return redirect()->route('news.index');
             }
         } else {
@@ -69,26 +65,26 @@ class ProfileController extends Controller
     {
         try {
             if (Auth::check()) {
-            // Validate the form data
-            $request->validate([
-                'current_password' => 'required',
-                'new_password' => 'required|string|min:8|confirmed',
-            ]);
-            if (Hash::check($request->current_password, $profile->user->password)) {
-                // Update the user's password
-                $findUser = User::find($profile->user_id);
-                $findUser->update([
-                    'password' => Hash::make($request->new_password)
+                // Validate the form data
+                $request->validate([
+                    'current_password' => 'required',
+                    'new_password' => 'required|string|min:8|confirmed',
                 ]);
-                // Redirect to a success page or home
-                return redirect()->back()->with('success', 'Password changed successfully.');
+                if (Hash::check($request->current_password, $profile->user->password)) {
+                    // Update the user's password
+                    $findUser = User::find($profile->user_id);
+                    $findUser->update([
+                        'password' => Hash::make($request->new_password)
+                    ]);
+                    // Redirect to a success page or home
+                    return redirect()->back()->with('success', 'Password changed successfully.');
+                } else {
+                    // If the current password doesn't match, return an error
+                    return redirect()->back()->with(['error' => 'The current password is incorrect.']);
+                }
             } else {
-                // If the current password doesn't match, return an error
-                return redirect()->back()->with(['error' => 'The current password is incorrect.']);
+                return redirect()->route('login')->with(['error' => 'Please login!.']);
             }
-        }else{
-            return redirect()->route('login')->with(['error' => 'Please login!.']);
-        }
             # code...
         } catch (\Throwable $e) {
             return redirect()->back()->with(['error' => 'The current password is incorrect.']);
@@ -199,17 +195,18 @@ class ProfileController extends Controller
         return redirect()->back()->with('error', 'User not found!.');
     }
 
-    public function getVerify() {
+    public function getVerify()
+    {
         return view('auth.verify');
     }
-    public function emailVerification(EmailVerificationRequest $request) {
+    public function emailVerification(EmailVerificationRequest $request)
+    {
         $request->fulfill();
         return redirect('/home');
     }
-    public function postEmailVerification(Request $request) {
+    public function postEmailVerification(Request $request)
+    {
         $request->user()->sendEmailVerificationNotification();
         return back()->with('message', 'Verification link sent!');
     }
-
-
 }
