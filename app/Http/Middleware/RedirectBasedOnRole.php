@@ -18,8 +18,8 @@ class RedirectBasedOnRole
     public function handle(Request $request, Closure $next, $userRole)
     {
         if (Auth::check()) {
-            if(auth()->user()->role == $userRole){
-                dd($next($request));
+            $userRole = Auth::user();
+            if($userRole->role === $userRole){
                 return $next($request);
             }else{
                 return redirect()->route('HomePage');
