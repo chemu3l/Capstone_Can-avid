@@ -23,7 +23,7 @@ class UserController extends Controller
     {
         if (Auth::check()) {
             $user = Auth::user();
-            $users = Profile::where('id', '!=', $user->profile->id)->get();
+            $users = Profile::where('id', '<>', $user->profile->id)->get();
             return view('User.index_user', compact('users'));
         } else {
             return redirect()->route('login');
@@ -57,7 +57,7 @@ class UserController extends Controller
             'department' => 'required|string|max:255',
             'role' => 'required|string|max:255',
             'phone_number' => 'required|numeric',
-            'picture' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'picture' => 'required|image|mimes:jpeg,png,jpg',
         ]);
         if (!$validate) {
             return redirect()->back()->with('fail', 'Unable to Create User!');
