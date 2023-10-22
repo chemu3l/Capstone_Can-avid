@@ -107,6 +107,8 @@ class AnnouncementController extends Controller
                     $path = $file->storeAs('images/announcement/', $filename, 'public');
                     $mediaUrls[] = $path;
                 }
+            }else{
+                return redirect()->route('announcements.create')->with('error', 'Please Add some image or a video');
             }
             $announcements->announcements_images = json_encode($mediaUrls);
             $announcements->profile_id = $request->input('profile_id');
