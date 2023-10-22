@@ -150,8 +150,8 @@ class ProfileController extends Controller
             return redirect()->route('setting')->with('error', 'User not found!.');
         }
         $findUser->update([
-            'email' => $findUser->user->email,
-            'role' => $findUser->user->role
+            'email' => $findUser->email,
+            'role' => $findUser->role
         ]);
         $findUser->profile()->update([
             'age' => $validate['age'],
