@@ -101,9 +101,9 @@
                     @enderror
                 </span>
             </div>
-            <input type="file" name="media_files" accept="image/*, video/*" required>
+            <input type="file" name="media_files[]" accept="image/*, video/*" required>
             <span class="text-danger">
-                @error('media_files')
+                @error('media_files[]')
                     {{ $message }}
                 @enderror
             </span>
