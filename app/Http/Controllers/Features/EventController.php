@@ -60,7 +60,7 @@ class EventController extends Controller
                 'events_description' => 'required|string|min:12',
                 'events_started' => 'required|date',
                 'events_end' => 'required|date',
-                'media_files.*' => 'required|file|mimes:jpeg,png,jpg,gif,mp4,mov|max:2048',
+                'media_files.*' => 'required|file|mimes:jpeg,png,jpg,gif,mp4',
             ]);
 
             if (!$validate) {

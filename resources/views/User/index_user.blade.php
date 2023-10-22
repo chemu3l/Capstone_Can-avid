@@ -45,13 +45,13 @@
             <tbody>
                 @foreach ($users as $user)
                     <tr>
-                        <td>{{ $user->user->email }}</td>
+                        <td>{{ $user->profile->email }}</td>
                         <td>{{ $user->name }}</td>
                         <td>{{ $user->age }}</td>
                         <td>{{ $user->gender }}</td>
                         <td>{{ $user->position }}</td>
                         <td>{{ $user->department }}</td>
-                        <td>{{ $user->user->role }}</td>
+                        <td>{{ $user->profile->role }}</td>
                         <td>{{ $user->phone_number }}</td>
                         <td>
                             @if ($user->images)
