@@ -20,7 +20,7 @@ class ProfileController extends Controller
     {
         if (Auth::check()) {
             $user = Auth::user();
-            $profiles = profile::where('id', $user->profile->user_id)->get();
+            $profiles = User::where('id', $user->profile->user_id)->get();
             dd($profiles);
             return view('settings', compact('profiles'));
         } else {
