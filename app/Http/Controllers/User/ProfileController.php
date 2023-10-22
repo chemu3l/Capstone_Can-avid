@@ -21,7 +21,6 @@ class ProfileController extends Controller
         if (Auth::check()) {
             $user = Auth::user();
             $profiles = User::where('id', $user->profile->user_id)->get();
-            dd($profiles);
             return view('settings', compact('profiles'));
         } else {
             return redirect()->route('login');
