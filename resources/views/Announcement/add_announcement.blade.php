@@ -21,7 +21,7 @@
                 <input type="text" class="form-control @error('announcements') is-invalid @enderror" name="announcements"
                     id="announcements" required>
                 <span class="text-danger">
-                    @error('profile_id')
+                    @error('announcements')
                         {{ $message }}
                     @enderror
                 </span>
@@ -34,7 +34,7 @@
                 <input type="text" class="form-control @error('announcements_what') is-invalid @enderror"
                     name="announcements_what" id="announcements_what"required>
                 <span class="text-danger">
-                    @error('profile_id')
+                    @error('announcements_what')
                         {{ $message }}
                     @enderror
                 </span>
@@ -44,7 +44,7 @@
                 <input type="text" class="form-control @error('announcements_who') is-invalid @enderror"
                     name="announcements_who" id="announcements_who"required>
                 <span class="text-danger">
-                    @error('profile_id')
+                    @error('announcements_who')
                         {{ $message }}
                     @enderror
                 </span>
@@ -55,7 +55,7 @@
                 <input type="date" class="form-control @error('announcements_when') is-invalid @enderror"
                     name="announcements_when" id="announcements_when"required>
                 <span class="text-danger">
-                    @error('profile_id')
+                    @error('announcements_when')
                         {{ $message }}
                     @enderror
                 </span>
@@ -66,7 +66,7 @@
                 <input type="text" class="form-control @error('announcements_where') is-invalid @enderror"
                     name="announcements_where" id="announcements_where"required>
                 <span class="text-danger">
-                    @error('profile_id')
+                    @error('announcements_where')
                         {{ $message }}
                     @enderror
                 </span>
@@ -76,7 +76,7 @@
                 <input type="text" class="form-control @error('announcements_why') is-invalid @enderror"
                     name="announcements_why" id="announcements_why"required>
                 <span class="text-danger">
-                    @error('profile_id')
+                    @error('announcements_why')
                         {{ $message }}
                     @enderror
                 </span>
@@ -86,7 +86,7 @@
                 <input type="text" class="form-control @error('announcements_how') is-invalid @enderror"
                     name="announcements_how" id="announcements_how"required>
                 <span class="text-danger">
-                    @error('profile_id')
+                    @error('announcements_how')
                         {{ $message }}
                     @enderror
                 </span>
@@ -101,7 +101,7 @@
                     @enderror
                 </span>
             </div>
-            <input type="file" name="media_files[]" accept="image/*, video/*" required>
+            <input type="file" name="media_files" accept="image/*, video/*" required>
             <span class="text-danger">
                 @error('media_files')
                     {{ $message }}
