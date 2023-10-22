@@ -60,7 +60,7 @@ class ProfileController extends Controller
     }
 
     // Handle the password change form submission
-    public function changePassword(Request $request, profile $profile)
+    public function changePassword(Request $request, User $user)
     {
         try {
             if (Auth::check()) {
@@ -69,9 +69,9 @@ class ProfileController extends Controller
                     'current_password' => 'required',
                     'new_password' => 'required|string|min:8|confirmed',
                 ]);
-                if (Hash::check($request->current_password, $profile->user->password)) {
+                if (Hash::check($request->current_password, $user->password)) {
                     // Update the user's password
-                    $findUser = User::find($profile->user_id);
+                    $findUser = User::find($user->id);
                     $findUser->update([
                         'password' => Hash::make($request->new_password)
                     ]);
