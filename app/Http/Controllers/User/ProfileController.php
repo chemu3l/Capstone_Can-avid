@@ -145,15 +145,15 @@ class ProfileController extends Controller
         if (!$validate) {
             return redirect()->route('setting')->with('error', 'User not found!.');
         }
-        $findUser = profile::find(Auth::user()->id);
+        $findUser = User::find(Auth::user()->id);
         if (!$findUser) {
             return redirect()->route('setting')->with('error', 'User not found!.');
         }
-        $findUser->user()->update([
+        $findUser->update([
             'email' => $findUser->user->email,
             'role' => $findUser->user->role
         ]);
-        $findUser->update([
+        $findUser->profile()->update([
             'age' => $validate['age'],
             'gender' => $validate['gender'],
             'position' => $validate['position'],
