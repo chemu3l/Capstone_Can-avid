@@ -67,7 +67,6 @@ Route::middleware(['auth:web', 'PreventBackHistory'])->group(function () {
     Route::get('/sidenav', [ProfileController::class, 'SidenavShow'])->name('sidenav');
     Route::view('/calendar', 'School_Calendar.calendar')->name('calendar');
     Route::view('/setting', 'dashboard.user.settings')->name('setting');
-    Route::view('/admin_dashboard', 'dashboard.dashboard')->name('admin_dashboard');
     Route::get('/setting', [ProfileController::class, 'GetOwnData'])->name('setting');
     Route::put('/update_user', [ProfileController::class, 'UpdateUser'])->name('update_user');
     Route::put('/update_user_images', [ProfileController::class, 'updateProfilePicture'])->name('update_profile_picture');
