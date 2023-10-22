@@ -46,7 +46,6 @@ Route::post('/check_user', [ProfileController::class, 'Check_user'])->name('chec
 Route::view('/request_form', 'guest_layout.request_document')->name('request_form');
 Route::view('/', 'layouts.homePage')->name('HomePage');
 
-
 Route::get('/email/verify', [ProfileController::class, 'getVerify'])->middleware(['auth'])->name('verification.notice');
 
 Route::get('/email/verify/{id}/{hash}', [ProfileController::class, 'emailVerification'])->middleware(['auth', 'signed'])->name('verification.verify');
@@ -54,7 +53,7 @@ Route::get('/email/verify/{id}/{hash}', [ProfileController::class, 'emailVerific
 Route::post('/email/verification-notification', [ProfileController::class, 'postEmailVerification'])->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 
 Route::middleware(['auth:web', 'PreventBackHistory'])->group(function () {
-    Route::view('/home', 'layouts.app')->name('home');
+    Route::view('/home', 'home')->name('home');
     Route::get('/announcements/search', [FilterTableController::class, 'searchAnnouncement'])->name('announcement_Filter');
     Route::get('/applicants/search', [FilterTableController::class, 'searchApplicant'])->name('applicant_Filter');
     Route::get('/careers/search', [FilterTableController::class, 'searchCareer'])->name('career_Filter');

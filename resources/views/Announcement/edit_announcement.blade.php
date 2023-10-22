@@ -1,4 +1,4 @@
-@extends('dashboard.sidebar')
+@extends('home')
 
 @section('sub-content')
     <div class="tables-administer">

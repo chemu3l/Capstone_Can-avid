@@ -39,7 +39,7 @@ class ProfileController extends Controller
         $credentials = $request->only('email', 'password');
         if (auth()->attempt($credentials)) {
             if (Auth::user()->role === "Admin") {
-                return redirect()->route('users.index');
+                return redirect()->route('home')->with(['Dashboard'=>'Admin Dashboard', 'status' => 'Admin Dashboard']);
             }elseif (Auth::user()->role === "Principal") {
                 return redirect()->route('careers.index');
             }else{

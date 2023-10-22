@@ -1,6 +1,6 @@
-@extends('dashboard.dashboard')
+@extends('home')
 
-@section('settings')
+@section('content')
     <div class="container p-0">
         <h1 class="h3 mb-3">Settings</h1>
         @if (Session::has('success'))

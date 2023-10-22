@@ -1,25 +1,60 @@
 @extends('layouts.app')
 
 @section('content')
-
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Dashboard') }}</div>
-                <div class="card-body">
-                    @if (session('status'))
-                    <div class="alert alert-success" role="alert">
-                        {{ session('status') }}
-                        sdsdvdssd
+<div class="menu_class">
+    <div class="headers_textTitle">
+        @if (Auth::user()->role == 'Admin')
+            Admin Dashboard
+        @elseif (Auth::user()->role == 'Principal')
+            Principal Dashboard
+        @elseif (Auth::user()->role == 'Registrar')
+            Registrar Dashboard
+        @else
+            Faculty/Staff Dashboard
+        @endif
+    </div>
+    <div class="sidenav" style="margin-top: 50px;">
+        <a class="menu" href="{{ route('news.index') }}">News</a>
+        <a class="menu" href="{{ route('announcements.index') }}">Announcements</a>
+        <a class="menu" href="{{ route('events.index') }}">Events</a>
+        @if (Auth::user()->role === 'Admin')
+            <a class="menu" id="menu1" href="{{ route('users.index') }}">Users</a>
+            <a class="menu" href="{{ route('careers.index') }}">Careers</a>
+            <a class="menu" href="{{ route('applicants.index') }}">Applicant</a>
+            <a class="menu" href="{{ route('organizational_chart.index') }}">Organizational Chart</a>
+            <a class="menu" href="{{ route('logs.index') }}">Logs</a>
+        @endif
+        @if (Auth::user()->role === 'Principal')
+            <a class="menu" href="{{ route('careers.index') }}">Careers</a>
+            <a class="menu" href="{{ route('applicants.index') }}">Applicant</a>
+            <a class="menu" href="{{ route('organizational_chart.index') }}">Organizational Chart</a>
+            <a class="menu" href="#feedback">Feedback</a>
+        @endif
+        @if (Auth::user()->role === 'Registrar')
+            <a class="menu" href="{{ route('requests.index') }}">Requested School Form</a>
+            <a class="menu" href="{{ route('careers.index') }}">Careers</a>
+            <a class="menu" href="{{ route('applicants.index') }}">Applicant</a>
+            <a class="menu" href="{{ route('organizational_chart.index') }}">Organizational Chart</a>
+        @endif
+        <a class="menu" href="{{ route('history') }}">History</a>
+        <div class="navigation">
+            <center>
+                <div class="user-profile">
+                    <img src="{{ asset('storage/' . Auth::guard('web')->user()->profile->images) }}"
+                        alt="User Profile Image" style="max-width: 50px; max-height: 50px; border-radius: 50%;">
+                    <a id="name" href="#name">{{ Auth::guard('web')->user()->profile->name }}</a>
+                    <div class="hover-menu">
+                        <ul>
+                            <li><a href="{{ route('setting') }}">Options</a></li>
+                            <li><a href="{{ route('logout') }}">Log Out</a></li>
+                        </ul>
                     </div>
-                    @endif
-                    {{ __('You are logged in!') }}
-
                 </div>
-            </div>
+            </center>
         </div>
     </div>
+    <div class="p-3 md-10 bg-white rounded">
+        @yield('sub-content')
+    </div>
 </div>
-
 @endsection

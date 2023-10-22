@@ -1,4 +1,4 @@
-@extends(auth()->check() ? 'dashboard.dashboard' : 'welcome')
+@extends(auth()->check() ? 'home' : 'welcome')
 
 @section('content')
     <section class="page_404">
