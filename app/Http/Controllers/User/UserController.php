@@ -23,8 +23,8 @@ class UserController extends Controller
     {
         if (Auth::check()) {
             $user = Auth::user();
-            $users = Profile::where('id', '<>', $user->profile->user_id)->get();
-            return view('User.index_user', compact('users'));
+            $profiles = Profile::where('id', '<>', $user->profile->user_id)->get();
+            return view('User.index_user', compact('profiles'));
         } else {
             return redirect()->route('login');
         }

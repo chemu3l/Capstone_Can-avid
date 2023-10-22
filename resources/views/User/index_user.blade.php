@@ -43,34 +43,34 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($users as $user)
+                @foreach ($profiles as $profile)
                     <tr>
-                        <td>{{ $user->profile->email }}</td>
-                        <td>{{ $user->name }}</td>
-                        <td>{{ $user->age }}</td>
-                        <td>{{ $user->gender }}</td>
-                        <td>{{ $user->position }}</td>
-                        <td>{{ $user->department }}</td>
-                        <td>{{ $user->profile->role }}</td>
-                        <td>{{ $user->phone_number }}</td>
+                        <td>{{ $profile->user->email }}</td>
+                        <td>{{ $profile->name }}</td>
+                        <td>{{ $profile->age }}</td>
+                        <td>{{ $profile->gender }}</td>
+                        <td>{{ $profile->position }}</td>
+                        <td>{{ $profile->department }}</td>
+                        <td>{{ $profile->user->role }}</td>
+                        <td>{{ $profile->phone_number }}</td>
                         <td>
-                            @if ($user->images)
-                                <img src="{{ asset('storage/' . $user->images) }}" alt="Profile Image"
+                            @if ($profile->images)
+                                <img src="{{ asset('storage/' . $profile->images) }}" alt="Profile Image"
                                     style="max-width: 50px; border-radius: 50%;">
                             @else
                                 No Image
                             @endif
                         </td>
                         <td>
-                            <a href="{{ route('users.edit', $user) }}" class="btn btn-primary"
+                            <a href="{{ route('users.edit', $profile) }}" class="btn btn-primary"
                                 style="background-color: green; color:white;">EDIT</a>
                         </td>
                         <td>
-                            <a href="{{ route('users.show', $user) }}" class="btn btn-primary"
+                            <a href="{{ route('users.show', $profile) }}" class="btn btn-primary"
                                 style="background-color: green">VIEW</a>
                         </td>
                         <td>
-                            <form action="{{ route('users.destroy', $user) }}" method="POST">
+                            <form action="{{ route('users.destroy', $profile) }}" method="POST">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger"
