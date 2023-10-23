@@ -102,22 +102,22 @@ class ProfileController extends Controller
             'profile_picture' => 'required|image|mimes:jpeg,png,jpg',
         ]);
         if (!$validate) {
-            return redirect()->route('setting')->with('error', 'User not found!.');
+            return redirect()->route('setting')->with('error', 'Unable to Update your Profile Picture.');
         }
         $userID = Auth::id();
         $findUser = User::find($userID);
         if (!$findUser) {
-            return redirect()->route('setting')->with('error', 'User not found!.');
+            return redirect()->route('setting')->with('error', 'Unable to Update your Profile Picture.');
         }
         $newImages = null;
-        if ($findUser->profile->images) {
-            Storage::delete('public/' . $findUser->profile->images);
-        }
         if ($request->hasFile('profile_picture')) {
+            Storage::delete('public/' . $findUser->profile->images);
             $picturePath = $request->file('profile_picture')->store('images/profile_pictures', 'public');
             $newImages = $picturePath;
+        } else {
+            return redirect()->back()->with('error', 'Unable to Update your Profile Picture');
         }
-        $findUser->update([
+        $findUser->profile->update([
             'images' => $newImages
         ]);
         return redirect()->back()->with('success', 'Profile Picture Updated');
