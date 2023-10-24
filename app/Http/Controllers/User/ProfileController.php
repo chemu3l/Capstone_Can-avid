@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\User;
 
-use app\Models\profile;
+use App\Models\profile;
 use App\Models\User;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\Controller;
