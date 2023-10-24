@@ -60,34 +60,31 @@ class ProfileController extends Controller
     }
 
     // Handle the password change form submission
-    public function changePassword(Request $request)
+    public function changePassword(Request $request, profile $profile)
     {
         try {
-            if (Auth::check()) {
-                $user = Auth::user();
-                $updateUser = new User();
-                // Check if the current password is correct
-                if (!Hash::check($request->current_password, $user->password)) {
-                    return redirect()->back()->with('error', 'The current password is incorrect.');
-                }
+            dd($profile);
+            $updateUser = new User();
 
-                // Ensure the new password meets your requirements
-                if (strlen($request->new_password) < 8) {
-                    return redirect()->back()->with('error', 'The new password must be at least 8 characters long.');
-                }
-
-                if ($request->new_password !== $request->new_password_confirmation) {
-                    return redirect()->back()->with('error', 'The new password confirmation does not match.');
-                }
-                $NewPassword = Hash::make($request->new_password);
-                $updateUser->password = $NewPassword;
-                $updateUser->save();
-                return redirect()->route('login')->with('success', 'Password changed successfully.');
-            } else {
-                return redirect()->route('login')->with('error', 'Please login.');
+            // Check if the current password is correct
+            if (!Hash::check($request->current_password, $user->password)) {
+                return redirect()->back()->with('error', 'The current password is incorrect.');
             }
+
+            // Ensure the new password meets your requirements
+            if (strlen($request->new_password) < 8) {
+                return redirect()->back()->with('error', 'The new password must be at least 8 characters long.');
+            }
+
+            if ($request->new_password !== $request->new_password_confirmation) {
+                return redirect()->back()->with('error', 'The new password confirmation does not match.');
+            }
+            $NewPassword = Hash::make($request->new_password);
+            $updateUser->password = $NewPassword;
+            $updateUser->save();
+            return redirect()->route('login');
         } catch (\Throwable $e) {
-            return redirect()->back()->with('error', 'There was an error in changing your password.');
+            return redirect()->route('/')->with('error', 'There was an error in changing your password.');
         }
     }
     public function SidenavShow()
