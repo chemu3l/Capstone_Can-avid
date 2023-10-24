@@ -76,9 +76,9 @@ class ProfileController extends Controller
                 }
                 $NewPassword = Hash::make($request->new_password);
                 // Update the user's password
-                dd($findUser->update([
+                $findUser->update([
                     'password' => $NewPassword
-                ]));
+                ]);
                 return redirect()->route('login');
             } else {
                 return redirect()->route('login')->with(['error' => 'Please login!.']);
