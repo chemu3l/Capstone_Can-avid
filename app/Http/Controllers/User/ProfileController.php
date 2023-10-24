@@ -84,7 +84,7 @@ class ProfileController extends Controller
 
             return redirect()->route('login');
         } catch (\Throwable $e) {
-            return redirect()->route('/')->with('error', 'There was an error in changing your password.');
+            return redirect()->back()->with('error', 'There was an error in changing your password.');
         }
     }
     public function SidenavShow()

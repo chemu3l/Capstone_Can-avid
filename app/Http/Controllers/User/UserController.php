@@ -160,8 +160,8 @@ class UserController extends Controller
                     return redirect()->back()->with('success', 'User deleted successfully!');
                 }
             }
-            return redirect()->back()->with('error', 'Failed to delete the user.');
+            return redirect()->route('users.index')->with('error', 'Failed to delete the user.');
         }
-        return redirect()->back()->with('errror', 'Failed to delete the user.');
+        return redirect()->route('users.index')->with('errror', 'Failed to delete the user.');
     }
 }

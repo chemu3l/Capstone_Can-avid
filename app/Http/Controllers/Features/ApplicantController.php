@@ -72,10 +72,10 @@ class ApplicantController extends Controller
             if ($applicant->save()) {
                 return redirect()->back()->with('success', 'Application Submitted');
             } else {
-                return redirect()->route('applicants.create')->with('error', 'An error occurred. Please provide accurate data.');
+                return redirect()->back()->with('error', 'An error occurred. Please provide accurate data.');
             }
         } catch (\Throwable $e) {
-            return redirect()->route('applicants.create')->with('error', 'An error occurred. Please provide accurate data: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'An error occurred. Please provide accurate data: ' . $e->getMessage());
         }
     }
 
