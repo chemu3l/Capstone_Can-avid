@@ -65,28 +65,32 @@ class ProfileController extends Controller
         try {
             if (Auth::check()) {
                 $user = Auth::user();
-                $findUser = User::where('email', '=', $user->email)->first();
-                $request->validate([
-                    'current_password' => 'required',
-                    'new_password' => 'required|string|min:8|confirmed',
-                ]);
+                dd($user);
                 // Check if the current password is correct
-                if (Hash::check($request->current_password, $user->password)) {
+                if (!Hash::check($request->current_password, $user->password)) {
                     return redirect()->back()->with('error', 'The current password is incorrect.');
                 }
-                $NewPassword = Hash::make($request->new_password);
-                dd($NewPassword);
+
+                // Ensure the new password meets your requirements
+                if (strlen($request->new_password) < 8) {
+                    return redirect()->back()->with('error', 'The new password must be at least 8 characters long.');
+                }
+
+                if ($request->new_password !== $request->new_password_confirmation) {
+                    return redirect()->back()->with('error', 'The new password confirmation does not match.');
+                }
+
                 // Update the user's password
-                $findUser->update([
-                    'password' => $NewPassword
-                ]);
-                return redirect()->route('login');
+                // $user->update([
+                //     'password' => Hash::make($request->new_password),
+                // ]);
+
+                return redirect()->route('login')->with('success', 'Password changed successfully.');
             } else {
-                return redirect()->route('login')->with(['error' => 'Please login!.']);
+                return redirect()->route('login')->with('error', 'Please login.');
             }
-            # code...
         } catch (\Throwable $e) {
-            return redirect()->back()->with(['error' => 'There is something wrong in changing your password!.']);
+            return redirect()->back()->with('error', 'There was an error in changing your password.');
         }
     }
     public function SidenavShow()
