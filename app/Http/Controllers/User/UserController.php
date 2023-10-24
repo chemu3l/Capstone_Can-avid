@@ -65,7 +65,7 @@ class UserController extends Controller
         }
         $user = new User();
         $user->email = $request->input('email');
-        $user->password = Hash::make('12345678');
+        $user->password = Hash::make('cnhs12345678');
         $user->role = $request->input('role');
         $user->save(); // Save the user before sending the email
         $user->load('profile'); // Assuming you have a profile relationship
