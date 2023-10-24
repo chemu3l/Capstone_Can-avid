@@ -74,11 +74,11 @@ class ProfileController extends Controller
                 if (Hash::check($request->current_password, $user->password)) {
                     return redirect()->back()->with('error', 'The current password is incorrect.');
                 }
-
+                $NewPassword = Hash::make($request->new_password);
                 // Update the user's password
-                $findUser->update([
-                    'password' => Hash::make($request->new_password)
-                ]);
+                dd($findUser->update([
+                    'password' => $NewPassword
+                ]));
                 return redirect()->route('login');
             } else {
                 return redirect()->route('login')->with(['error' => 'Please login!.']);
