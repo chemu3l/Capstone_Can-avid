@@ -64,11 +64,8 @@ class ProfileController extends Controller
     {
         try {
             $fetchUser = User::where('id', $profile->user_id)->get();
-            dd($fetchUser);
-            $updateUser = new User();
-
             // Check if the current password is correct
-            if (!Hash::check($request->current_password, $user->password)) {
+            if (!Hash::check($request->current_password, $fetchUser->password)) {
                 return redirect()->back()->with('error', 'The current password is incorrect.');
             }
 
@@ -81,8 +78,8 @@ class ProfileController extends Controller
                 return redirect()->back()->with('error', 'The new password confirmation does not match.');
             }
             $NewPassword = Hash::make($request->new_password);
-            $updateUser->password = $NewPassword;
-            $updateUser->save();
+            $fetchUser->password = $NewPassword;
+            $fetchUser->save();
             return redirect()->route('login');
         } catch (\Throwable $e) {
             return redirect()->route('/')->with('error', 'There was an error in changing your password.');
