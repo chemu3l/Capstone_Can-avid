@@ -2,11 +2,7 @@
 <html>
 
 <head>
-    @if ($profile->gender = 'Male')
-        <title>Welcome!, Mr: {{ $email }}</title>
-    @else
-        <title>Welcome!, Mrs: {{ $email }}</title>
-    @endif
+    <title>Welcome!, Mr/Mrs: {{ $email }}</title>
 </head>
 
 <body>
@@ -22,7 +18,7 @@
         </tr>
         <tr>
             <td style="padding: 20px;">
-                <p>Hello {{ $profile->user->email}},</p>
+                <p>Hello {{ $profile->user->email }},</p>
                 <p>Welcome to Can-avid National High School, We're excited to have you on board.</p>
                 <p>We highly recommend you to change your password!, <br>Throught out the button below:</p>
                 <p style="text-align: center;">
