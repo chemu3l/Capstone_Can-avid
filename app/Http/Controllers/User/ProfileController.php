@@ -62,9 +62,9 @@ class ProfileController extends Controller
     // Handle the password change form submission
     public function changePassword(Request $request, profile $profile)
     {
-        dd($profile);
         try {
-            $fetchUser = User::where('id', $profile->user->user_id)->get();
+            $fetchUser = User::where('id', $profile->user_id)->first();
+            dd($fetchUser);
             // Check if the current password is correct
             if (!Hash::check($request->current_password, $fetchUser->password)) {
                 return redirect()->back()->with('error', 'The current password is incorrect.');
@@ -78,9 +78,13 @@ class ProfileController extends Controller
             if ($request->new_password !== $request->new_password_confirmation) {
                 return redirect()->back()->with('error', 'The new password confirmation does not match.');
             }
-            $NewPassword = Hash::make($request->new_password);
-            $fetchUser->password = $NewPassword;
+
+            $newPassword = Hash::make($request->new_password);
+
+            // Update the user's password using the save method
+            $fetchUser->password = $newPassword;
             $fetchUser->save();
+
             return redirect()->route('login');
         } catch (\Throwable $e) {
             return redirect()->route('/')->with('error', 'There was an error in changing your password.');
