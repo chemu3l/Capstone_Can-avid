@@ -63,7 +63,8 @@ class ProfileController extends Controller
     public function changePassword(Request $request, profile $profile)
     {
         try {
-            dd($profile);
+            $fetchUser = User::where('id', $profile->user_id)->get();
+            dd($fetchUser);
             $updateUser = new User();
 
             // Check if the current password is correct
