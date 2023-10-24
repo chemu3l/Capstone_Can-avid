@@ -29,8 +29,8 @@ class ProfileController extends Controller
     public function Check_user(Request $request)
     {
         $request->validate([
-            'email' => 'required|email|exists:users,email',
-            'password' => 'required|min:8|max:30'
+            'email' => 'required|email',
+            'password' => 'required'
         ]);
         $credentials = $request->only('email', 'password');
         if (auth()->attempt($credentials)) {
@@ -63,7 +63,7 @@ class ProfileController extends Controller
     public function changePassword(Request $request, profile $profile)
     {
         try {
-            $fetchUser = User::where('id', $profile->user_id)->get();
+            $fetchUser = User::where('id', $profile->user->user_id)->get();
             // Check if the current password is correct
             if (!Hash::check($request->current_password, $fetchUser->password)) {
                 return redirect()->back()->with('error', 'The current password is incorrect.');
