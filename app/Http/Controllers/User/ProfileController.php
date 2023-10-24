@@ -84,7 +84,7 @@ class ProfileController extends Controller
             }
             # code...
         } catch (\Throwable $e) {
-            return redirect()->back()->with(['error' => 'The current password is incorrect.']);
+            return redirect()->back()->with(['error' => 'There is something wrong in changing your password!.']);
         }
     }
     public function SidenavShow()
