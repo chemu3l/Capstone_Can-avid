@@ -62,6 +62,7 @@ class ProfileController extends Controller
     // Handle the password change form submission
     public function changePassword(Request $request, profile $profile)
     {
+        dd($profile);
         try {
             $fetchUser = User::where('id', $profile->user->user_id)->get();
             // Check if the current password is correct
