@@ -46,33 +46,29 @@ class DocumentController extends Controller
      */
     public function store(Request $request)
     {
-        try {
-            $validate = $request->validate([
-                'Document' => 'required|string',
-                'Student_Name' => 'required|string',
-                'Requester_Name' => 'required|string',
-                'Date_to_Get' => 'required|date',
-                'Requester_Email' => 'required|string'
-            ]);
-            if ($validate) {
-                $requests = new Document();
-                $requests->Document = $request->input('Document');
-                $requests->Student_Name = $request->input('Student_Name');
-                $requests->Requester_Name = $request->input('Requester_Name');
-                $requests->Date_to_Get = $request->input('Date_to_Get');
-                $requests->Requester_Email = $request->input('Requester_Email');
-                $requests->search_id = str_pad(mt_rand(0, 99999), 5, '0', STR_PAD_LEFT);
-                $sendEMAIL = $this->generatePdf($requests);
-                if ($requests->save() && $sendEMAIL) {
-                    return redirect()->back()->with('success', 'Please Check your Email for more information!');
-                } else {
-                    return redirect()->back()->with('error', 'Please Comply the Data Needed!');
-                }
+        $validate = $request->validate([
+            'Document' => 'required|string',
+            'Student_Name' => 'required|string',
+            'Requester_Name' => 'required|string',
+            'Date_to_Get' => 'required|date',
+            'Requester_Email' => 'required|string'
+        ]);
+        if ($validate) {
+            $requests = new Document();
+            $requests->Document = $request->input('Document');
+            $requests->Student_Name = $request->input('Student_Name');
+            $requests->Requester_Name = $request->input('Requester_Name');
+            $requests->Date_to_Get = $request->input('Date_to_Get');
+            $requests->Requester_Email = $request->input('Requester_Email');
+            $requests->search_id = str_pad(mt_rand(0, 99999), 5, '0', STR_PAD_LEFT);
+            $sendEMAIL = $this->generatePdf($requests);
+            if ($requests->save() && $sendEMAIL) {
+                return redirect()->back()->with('success', 'Please Check your Email for more information!');
             } else {
                 return redirect()->back()->with('error', 'Please Comply the Data Needed!');
             }
-        } catch (\Throwable $e) {
-            return redirect()->back()->with('error', 'Please Comply the Data Needed: ' . $e->getMessage());
+        } else {
+            return redirect()->back()->with('error', 'Please Comply the Data Needed!');
         }
     }
 
