@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Features;
 
 use App\Http\Controllers\Controller;
-use Barryvdh\DomPDF\Facade\PDF;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use App\Models\Document;
 use Illuminate\Support\Facades\Auth;
@@ -147,7 +147,7 @@ class DocumentController extends Controller
         $data['date'] = $request->Date_to_Get;
         $data['email'] = $request->Requester_Email;
         $data['random_string'] = $request->search_id;
-        $pdf = PDF::loadView('emails.user_data', $data);
+        $pdf = Pdf::loadView('emails.user_data', $data);
         Mail::send('emails.RequestingDocument', $data, function ($message) use ($data, $pdf) {
             $message->to($data["email"], $data['email'])
                 ->subject($data["document"])
