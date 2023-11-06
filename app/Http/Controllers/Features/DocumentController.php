@@ -151,19 +151,12 @@ class DocumentController extends Controller
         $data['date'] = $request->Date_to_Get;
         $data['email'] = $request->Requester_Email;
         $data['random_string'] = $request->search_id;
-
-        try {
-            $pdf = PDF::loadView('emails.user_data', $data);
-            Mail::send('emails.RequestingDocument', $data, function ($message) use ($data, $pdf) {
-                $message->to($data["email"], $data['email'])
-                    ->subject($data["document"])
-                    ->attachData($pdf->output(), "receipt.pdf");
-            });
-            return true;
-        } catch (\Exception $e) {
-            // Log the exception for debugging purposes
-            Log::error('Error in generatePdf: ' . $e->getMessage());
-            return false;
-        }
+        $pdf = PDF::loadView('emails.user_data', $data);
+        Mail::send('emails.RequestingDocument', $data, function ($message) use ($data, $pdf) {
+            $message->to($data["email"], $data['email'])
+                ->subject($data["document"])
+                ->attachData($pdf->output(), "receipt.pdf");
+        });
+        return true;
     }
 }

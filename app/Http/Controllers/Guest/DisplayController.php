@@ -28,16 +28,16 @@ class DisplayController extends Controller
 
     public function displayOrganizationalChart()
     {
-        $chart = OrganizationalChart::first();
-        if ($chart) {
-            $path = json_decode($chart->organizational_image);
-        } else {
-            // If there's no chart data, set a default image path
-            $path = asset('images\CNHS_IMAGE\images\329820707_229994286356212_5600802534606273014_n.jpg'); // Adjust the path accordingly
+        $charts = OrganizationalChart::first();
+        $path = "";
+        if($charts)
+            $path = json_decode($charts->organizational_image);
+        else{
+            $path = "images/CNHS_IMAGE/chart_org.jpg";
         }
         return view('guest_layout.organizational_chart', compact('path'));
     }
-    public function displayEventsInCalendar()
+    public function displayEventsInCalendar(Request $request)
     {
         if (Request::capture()->expectsJson()) {
             $start = (!empty($_GET["start"])) ? ($_GET["start"]) : ('');
@@ -73,8 +73,7 @@ class DisplayController extends Controller
         $filteredData = profile::where('department', $selectedDepartment)->get();
         return view('guest_layout.departments', ['filteredData' => $filteredData, 'department' => $selectedDepartment]);
     }
-    public function guestNews()
-    {
+    public function guestNews(){
         $news = News::where('status', 'Posted')->get(['news', 'news_description', 'news_images']);
 
         // Extract the first media URL from each news item and add it as a property
@@ -92,12 +91,10 @@ class DisplayController extends Controller
         return view('guest_layout.view_news')->with('news', $news);
     }
 
-    public function pageNotFound()
-    {
+    public function pageNotFound(){
         return  view('page_not_found');
     }
-    public function displayAdmission()
-    {
+    public function displayAdmission(){
         return view('guest_layout.admission');
     }
 }
