@@ -12,6 +12,7 @@
         <table style="background-color: #A8DF8E; font-size: 12px; width: 100%; border-collapse: collapse; ">
             <thead>
                 <tr>
+                    <th scope="col">Searchable ID</th>
                     <th scope="col">Document</th>
                     <th scope="col">Student Name</th>
                     <th scope="col">Requester Name</th>
