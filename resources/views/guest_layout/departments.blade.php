@@ -54,7 +54,11 @@
             </div>
         </div>
         @if (isset($filteredData))
-            <h3 id="h3SelectedDepartment">{{ $department }} Department</h3>
+            @if ($department === 'EdukPanlipunan')
+                <p class="name">E.S.P & Araling Panlipunan Department</p>
+            @else
+                <h3 id="h3SelectedDepartment">{{ $department }} Department</h3>
+            @endif
             <div class="row">
                 @foreach ($filteredData as $data)
                     <div class="col-md-2">
