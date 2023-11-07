@@ -55,7 +55,7 @@
         </div>
         @if (isset($filteredData))
             @if ($department === 'EdukPanlipunan')
-                <p class="name">E.S.P & Araling Panlipunan Department</p>
+                <h3 id="h3SelectedDepartment">E.S.P & Araling Panlipunan Department</h3>
             @else
                 <h3 id="h3SelectedDepartment">{{ $department }} Department</h3>
             @endif
