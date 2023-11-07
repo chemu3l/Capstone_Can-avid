@@ -59,7 +59,7 @@ class NewsController extends Controller
                 'news' => 'required|string|max:12',
                 'news_description' => 'required|string|min:12',
                 'news_update' => 'required|date',
-                'media_files.*' => 'required|file|mimes:jpeg,png,jpg,gif,mp4',
+                'media_files.*' => 'required|file|mimes:jpeg,png,jpg,gif,mp4|max:2048',
             ]);
             if (!$validate) {
                 return redirect()->route('news.create')->with('error', 'Failed to add News!');
@@ -100,7 +100,7 @@ class NewsController extends Controller
                 return redirect()->route('news.create')->with('error', 'Failed to add News!');
             }
         } catch (\Throwable $e) {
-            return redirect()->route('news.create')->with('error', 'Failed to add News: ' . $e->getMessage());
+            return redirect()->route('news.create')->with('error', 'Supported media file types are JPEG, PNG, JPG, GIF, and MP4, and the maximum file size is 2MB.');
         }
     }
 
@@ -141,7 +141,7 @@ class NewsController extends Controller
     {
         try {
             if (!$news) {
-                return redirect()->back()->with('fail', 'Event not found.');
+                return redirect()->back()->with('fail', 'News not found.');
             }
 
             $news->news = $request->input('news', $news->news);
@@ -184,7 +184,7 @@ class NewsController extends Controller
                 return redirect()->route('news.edit')->with('error', 'Failed to update News!');
             }
         } catch (\Throwable $e) {
-            return redirect()->route('news.edit')->with('error', 'Failed to update News: ' . $e->getMessage());
+            return redirect()->route('news.edit')->with('error', 'Supported media file types are JPEG, PNG, JPG, GIF, and MP4, and the maximum file size is 2MB.');
         }
     }
 
@@ -209,7 +209,7 @@ class NewsController extends Controller
                     $history = new LogsController();
                     $history->store($historyRequest);
                     $news->delete(); // Delete the event
-                    return redirect()->back()->with('success', 'Event deleted successfully!');
+                    return redirect()->back()->with('success', 'News deleted successfully!');
                 }
                 return redirect()->back()->with('error', 'Failed to delete the News.');
             }

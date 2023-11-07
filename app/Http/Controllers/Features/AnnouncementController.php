@@ -67,7 +67,7 @@ class AnnouncementController extends Controller
                 'announcements_where' => 'required|string',
                 'announcements_why' => 'required|string',
                 'announcements_how' => 'required|string',
-                'media_files.*' => 'required|file|mimes:jpeg,png,jpg,gif,mp4',
+                'media_files.*' => 'required|file|mimes:jpeg,png,jpg,gif,mp4|max:2048',
             ]);
             if (!$validate) {
                 return redirect()->route('announcements.create')->with('error','Please input the required fields!');
@@ -114,7 +114,7 @@ class AnnouncementController extends Controller
                 return redirect()->route('announcements.create')->with('error', 'Failed to add Announcements!');
             }
         } catch (\Throwable $e) {
-            return redirect()->route('announcements.create')->with('error', 'The supported media file types are: jpeg, png, jpg, gif, mp4,');
+            return redirect()->route('announcements.create')->with('error', 'Supported media file types are JPEG, PNG, JPG, GIF, and MP4, and the maximum file size is 2MB.');
         }
     }
 
@@ -201,7 +201,7 @@ class AnnouncementController extends Controller
                 return redirect()->route('announcements.edit')->with('error', 'Failed to update Announcement!');
             }
         } catch (\Throwable $e) {
-            return redirect()->route('announcements.edit')->with('error', 'Failed to update Announcement: ' . $e->getMessage());
+            return redirect()->route('announcements.edit')->with('error', 'Supported media file types are JPEG, PNG, JPG, GIF, and MP4, and the maximum file size is 2MB.');
         }
     }
 

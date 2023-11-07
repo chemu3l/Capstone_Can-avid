@@ -60,7 +60,7 @@ class EventController extends Controller
                 'events_description' => 'required|string|min:12',
                 'events_started' => 'required|date',
                 'events_end' => 'required|date',
-                'media_files.*' => 'required|file|mimes:jpeg,png,jpg,gif,mp4',
+                'media_files.*' => 'required|file|mimes:jpeg,png,jpg,gif,mp4|max:2048',
             ]);
 
             if (!$validate) {
@@ -104,7 +104,7 @@ class EventController extends Controller
                 return redirect()->route('events.create')->with('error', 'Failed to add Event!');
             }
         } catch (\Throwable $e) {
-            return redirect()->route('events.create')->with('error', 'Failed to add Event: ' . $e->getMessage());
+            return redirect()->route('events.create')->with('error', 'Supported media file types are JPEG, PNG, JPG, GIF, and MP4, and the maximum file size is 2MB.');
         }
     }
 
@@ -182,7 +182,7 @@ class EventController extends Controller
             }
             # code...
         } catch (\Throwable $e) {
-            return redirect()->route('events.edit')->with('error', 'Failed to update Event!: ' . $e->getMessage());
+            return redirect()->route('events.edit')->with('error', 'Supported media file types are JPEG, PNG, JPG, GIF, and MP4, and the maximum file size is 2MB.');
         }
     }
 
