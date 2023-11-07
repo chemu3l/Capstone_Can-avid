@@ -91,9 +91,9 @@ class FilterTableController extends Controller
                     }
                 });
                 $requested = $query->get();
-                return view('Request_Document_.index_request', compact('requested'));
+                return view('Request_Document.index_request', compact('requested'));
             } catch (\Throwable $e) {
-                return redirect()->route('Request_Document_.index_request')->with('error', 'Request not found!');
+                return redirect()->route('Request_Document.index_request')->with('error', 'Request not found!');
             }
         } else {
             return redirect()->route('login');

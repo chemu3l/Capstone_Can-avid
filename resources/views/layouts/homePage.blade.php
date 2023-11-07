@@ -139,9 +139,9 @@
                 <div class="col-md-10 offset-md-1">
                     <div class="map_inner">
                         <h4>Find Us on Google Map</h4>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Tempore quo beatae quasi assumenda,
-                            expedita aliquam minima tenetur maiores neque incidunt repellat aut voluptas hic dolorem sequi
-                            ab porro, quia error.</p>
+                        <p>Explore the vibrant world of our school, where students thrive in a nurturing and dynamic environment.
+                            Our campus is a hub of learning, innovation, and community.
+                            Come and visit us to see where the future of education is shaping up.</p>
                         <div class="map_bind">
                             <iframe
                                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1895.749478082288!2d125.45443051506449!3d12.002282535132899!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3309131373d04689%3A0x8c32f3f358ce2d2f!2sCan-avid%20National%20High%20School%2C%20Can-avid%2C%20Eastern%20Samar!5e0!3m2!1sen!2sph!4v1696915510516!5m2!1sen!2sph"

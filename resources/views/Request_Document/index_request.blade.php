@@ -24,6 +24,7 @@
             <tbody>
                 @foreach ($requested as $request)
                     <tr>
+                        <td>{{ $request->search_id }}</td>
                         <td>{{ $request->Document }}</td>
                         <td>{{ $request->Student_Name }}</td>
                         <td>{{ $request->Requester_Name }}</td>

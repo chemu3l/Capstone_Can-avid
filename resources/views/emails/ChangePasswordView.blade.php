@@ -28,12 +28,12 @@
                     </a>
                 </p>
                 <p>Best regards,</p>
-                <p>The {{ config('app.name') }} Team</p>
+                <p>CNHS Department</p>
             </td>
         </tr>
         <tr>
             <td style="text-align: center; background-color: #f0f0f0; padding: 20px;">
-                <p>&copy; {{ date('Y') }} {{ config('app.name') }}. All rights reserved.</p>
+                <p>&copy; {{ date('Y') }} CNHS. All rights reserved.</p>
             </td>
         </tr>
     </table>

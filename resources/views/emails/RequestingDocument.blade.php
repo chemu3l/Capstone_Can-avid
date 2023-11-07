@@ -29,12 +29,12 @@
                 <p>If you have any questions or need further assistance during this process, please do not hesitate to reach out to our office. You can contact us at [School's Contact Information], and our dedicated staff will be happy to assist you.</p>
                 <p>We look forward to seeing you on {{ $date }} at the Registrar's Office. Your documents will be ready for your collection, and we hope this will be a convenient experience for you.</p>
                 <p>Best regards,</p>
-                <p>The {{ config('app.name') }} Team</p>
+                <p>CNHS Department</p>
             </td>
         </tr>
         <tr>
             <td style="text-align: center; background-color: #f0f0f0; padding: 20px;">
-                <p>&copy; {{ date('Y') }} {{ config('app.name') }}. All rights reserved.</p>
+                <p>&copy; {{ date('Y') }} CNHS. All rights reserved.</p>
             </td>
         </tr>
     </table>
