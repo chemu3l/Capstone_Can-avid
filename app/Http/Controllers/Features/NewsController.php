@@ -147,7 +147,7 @@ class NewsController extends Controller
             $news->news = $request->input('news', $news->news);
             $news->news_description = $request->input('news_description', $news->news_description);
             $news->status = $request->input('status', $news->status);
-            $news->news_updated = $request->input('news_updated', $news->news_updated);
+            $news->news_updated = $request->input('news_scheduled', $news->news_updated);
             $mediaUrls = [];
             if ($request->hasFile('media_files')) {
                 if ($this->deleteNewsMedia($news)) {
