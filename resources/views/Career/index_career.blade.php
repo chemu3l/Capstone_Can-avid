@@ -21,7 +21,7 @@
                 <button type="submit">Search</button>
             </form>
         </div>
-        <table class="carrer_tables table-responsive" style="background-color: #A8DF8E; font-size: 12px">
+        <table style="background-color: #A8DF8E; font-size: 12px; width: 100%; border-collapse: collapse; padding-right:40%;">
             <thead>
                 <tr>
                     <th scope="col">Career Position</th>
