@@ -83,7 +83,7 @@ class UserController extends Controller
         $profile->user_id = $user->id;
         $user->profile()->save($profile);
         Mail::to($user->email)->send(new ChangePassword($profile, $user->email));
-        return redirect()->back()->with('success', 'Form submitted successfully.');
+        return redirect()->route('users.index')->with('success', 'Form submitted successfully.');
     }
 
     /**
