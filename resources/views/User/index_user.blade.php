@@ -23,6 +23,69 @@
             </form>
         </div>
 
+        <div class="sub2">
+            <div class="item1">
+                <p class="heading2">Total Users</p>
+                @if (count($profiles) > 0)
+                    <p class="value_management" id="profileCountByDepartment">{{ count($profiles) }}</p>
+                @else
+                    <p>No users found.</p>
+                @endif
+                <select id="departmentSelect"
+                    style="width: 90%; background-color:#285430; color: black; border-color: #285430; font-size: 12px;">
+                    <option value="Mathematics">By Mathematics Department</option>
+                    <option value="Science">By Science Department</option>
+                    <option value="English">By English Department</option>
+                    <option value="Filipino">By Filipino Department</option>
+                    <option value="EdukPanlipunan">By E.S.P & Araling Panlipunan Department</option>
+                    <option value="Tle">By TLE Department</option>
+                    <option value="Mapeh">By Mapeh Department</option>
+                    <option value="SHS">By Senior High School Department</option>
+                    <option value="ALS">By Alternative Learning System Department</option>
+                    <option value="Non-teaching">By Non-Teaching Department</option>
+                </select>
+            </div>
+
+            <div class="item2">
+                <p class="heading2">Total Users by Gender</p>
+                @if (count($profiles) > 0)
+                    <p class="value_management" id="profileCountByGender">{{ count($profiles) }}</p>
+                @else
+                    <p>No users found.</p>
+                @endif
+                <select id="genderSelect"
+                    style="width: 90%; background-color:rgb(8, 88, 12); color: white; border-color:rgb(8, 88, 12); font-size: 12px;">
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                </select>
+            </div>
+
+
+            <div class="item3">
+                <p class="heading2">Total Users by Role</p>
+                @if (count($profiles) > 0)
+                    <p class="value_management" id="profileCountByRole">{{ count($profiles) }}</p>
+                @else
+                    <p>No users found.</p>
+                @endif
+                <select id="roleSelect"
+                    style="width: 90%; background-color:#379237; color: black; border-color:#379237; font-size: 12px;">
+                    <option value="Admin">Admin</option>
+                    <option value="Principal">Principal</option>
+                    <option value="Registrar">Registrar</option>
+                    <option value="Faculty">Faculty & Staff</option>
+                </select>
+            </div>
+            <div class="item4">
+                <p class="heading2">Total Users</p>
+                @if (count($profiles) > 0)
+                    <p class="value_management">{{ count($profiles) }}</p>
+                @else
+                    <p>No users found.</p>
+                @endif
+            </div>
+
+        </div>
         <table style="background-color: #A8DF8E; font-size: 12px; width: 100%; border-collapse: collapse; ">
             <thead>
                 <tr>
@@ -82,4 +145,63 @@
             </tbody>
         </table>
     </div>
+    <script>
+        function updateProfileCountByDepartment(selectedDepartment) {
+            const filteredProfiles = profilesByDepartment.filter(profile => profile.department === selectedDepartment);
+            profileCountDepartmentElement.textContent = filteredProfiles.length;
+        }
+
+        const departmentSelect = document.getElementById('departmentSelect');
+        const profileCountDepartmentElement = document.getElementById('profileCountByDepartment');
+        const profilesByDepartment = @json($profiles);
+
+        // Function to update the profile count based on the selected department
+        departmentSelect.addEventListener('change', function() {
+            const selectedDepartment = departmentSelect.value;
+            updateProfileCountByDepartment(selectedDepartment);
+        });
+
+        // Initial page load, use 'Mathematics' as the default department
+        const initialDepartment = 'Mathematics';
+        updateProfileCountByDepartment(initialDepartment);
+    </script>
+
+    <script>
+        function updateProfileCountByGender(selectedGender) {
+            const filteredProfiles = profilesByGender.filter(profile => profile.gender === selectedGender);
+            profileCountGenderElement.textContent = filteredProfiles.length;
+        }
+
+        const genderSelect = document.getElementById('genderSelect');
+        const profileCountGenderElement = document.getElementById('profileCountByGender');
+        const profilesByGender = @json($profiles);
+
+        genderSelect.addEventListener('change', function() {
+            const selectedGender = genderSelect.value;
+            updateProfileCountByGender(selectedGender);
+        });
+
+        const initialGender = 'Male';
+        updateProfileCountByGender(initialGender);
+    </script>
+
+    <script>
+        function updateProfileCountByRole(selectedRole) {
+            const filteredProfiles = profilesByRole.filter(profile => profile.user.role === selectedRole);
+            profileCountRoleElement.textContent = filteredProfiles.length;
+        }
+        const roleSelect = document.getElementById('roleSelect');
+        const profileCountRoleElement = document.getElementById('profileCountByRole');
+        const profilesByRole = @json($profiles);
+
+        // Function to update the profile count based on the selected department
+        roleSelect.addEventListener('change', function() {
+            const selectedRole = roleSelect.value;
+            updateProfileCountByRole(selectedRole);
+        });
+
+        // Initial page load, use 'Mathematics' as the default department
+        const initialRole = 'Admin';
+        updateProfileCountByRole(initialRole);
+    </script>
 @endsection

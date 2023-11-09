@@ -3,7 +3,7 @@
 @section('sub-content')
     <div class="tables-administer">
         <h1>Your History</h1>
-        <table class="history_table">
+        <table style="background-color: #A8DF8E; font-size: 12px; width: 100%; border-collapse: collapse; ">
             <thead>
                 <tr>
                     <th scope="col">Actions</th>

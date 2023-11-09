@@ -43,15 +43,6 @@
 <body>
     <div id="app">
         @yield('content')
-        {{-- @if (View::hasSection('menu'))
-            @yield('menu')
-        @endif
-        @if (View::hasSection('content'))
-            @yield('content')
-        @endif
-        @if (View::hasSection('settings'))
-            @yield('settings')
-        @endif --}}
         <script>
             /* Loop through all dropdown buttons to toggle between hiding and showing its dropdown content - This allows the user to have multiple dropdowns without any conflict */
             var dropdown = document.getElementsByClassName("dropdown-btn");
@@ -76,13 +67,6 @@
             integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous">
         </script>
         <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        {{-- <script>
-            $(document).ready(function() {
-                $(".burger-menu-button").click(function() {
-                    $(".burger-menu").slideToggle(); // Toggle the display of the burger menu
-                });
-            });
-        </script> --}}
     </div>
 </body>
 
