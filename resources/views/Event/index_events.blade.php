@@ -12,7 +12,7 @@
                 {{ session('error') }}
             </div>
         @endif
-        <div class="header-tables-page">
+        <div class="header-tables-page"  style="display: flex; justify-content: space-between; align-items: center;">
             <a href="{{ route('events.create') }}" class="btn btn-info btn-lg"
                 style="background-color: green; margin-bottom:3%">Add Events</a>
             <h1>Events Table </h1>

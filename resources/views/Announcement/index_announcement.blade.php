@@ -2,15 +2,15 @@
 
 @section('sub-content')
     <div class="tables-administer">
-        <div class="header-tables-page">
-            <a href="{{ route('announcements.create') }}" class="btn btn-info btn-lg"
-                style="background-color: green; margin-bottom:3%">Add Announcement</a>
+        <div class="header-tables-page" style="display: flex; justify-content: space-between; align-items: center;">
+            <a href="{{ route('announcements.create') }}" class="btn btn-info btn-lg" style="background-color: green;">Add Announcement</a>
             <h1>Announcement Table </h1>
-            <form action="{{ route('announcement_Filter') }}" method="GET" id="searchForm">
-                <input type="text" name="search" placeholder="Search...">
+            <form action="{{ route('announcement_Filter') }}" method="GET" id="searchForm" style="display: flex; align-items: center;">
+                <input type="text" name="search" placeholder="Search..." style="margin-right: 10px;">
                 <button type="submit">Search</button>
             </form>
         </div>
+
         <table style="background-color: #A8DF8E; font-size: 12px; width: 100%; border-collapse: collapse; padding-right:40%; ">
             <thead>
                 <tr>

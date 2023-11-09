@@ -2,7 +2,7 @@
 
 @section('sub-content')
     <div class="tables-administer">
-        <div class="header-tables-page">
+        <div class="header-tables-page" style="display: flex; justify-content: space-between; align-items: center;">
             <h1>Activity Logs</h1>
             <form action="{{ route('logs_Filter') }}" method="GET" id="searchForm">
                 <input type="text" name="search" placeholder="Search...">

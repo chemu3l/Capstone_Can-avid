@@ -19,6 +19,7 @@
                 <button type="submit">Search</button>
             </form>
         </div>
+        
         <table style="background-color: #A8DF8E; font-size: 12px; width: 100%; border-collapse: collapse;">
             <thead>
                 <tr>
