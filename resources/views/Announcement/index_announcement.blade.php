@@ -11,7 +11,7 @@
             </form>
         </div>
 
-        <table style="background-color: #A8DF8E; font-size: 12px; width: 100%; border-collapse: collapse; padding-right:40%;  ">
+        <table style="background-color: #A8DF8E; font-size: 12px; width: 100%; border-collapse: collapse; padding-right:40%; max-height: 300px; overflow-y:scroll; -ms-overflow-style:none;">
             <thead>
                 <tr>
                     <th colspan="7"

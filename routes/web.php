@@ -37,6 +37,16 @@ Route::get('/show_event/{event}', [DisplayController::class, 'showEvent'])->name
 Route::get('/show_news/{news_id}', [DisplayController::class, 'showNews'])->name('show_news');
 
 Route::post('/departments/filter', [DisplayController::class, 'filterByDepartment'])->name('departments.filter');
+
+
+
+
+
+
+
+
+
+
 Route::view('/login', 'login')->name('login');
 Route::view('/Landing_page', 'welcome')->name('Guest');
 Route::get('/guest_career', [DisplayController::class, 'displayCareers'])->name('guest_career');

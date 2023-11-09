@@ -2,13 +2,22 @@
 
 @section('content')
     <section class="vh-100 gradient-custom" id="loginDIV">
+        @if (session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
+        @if (session('error'))
+            <div class="alert alert-danger">
+                {{ session('error') }}
+            </div>
+        @endif
         <div class="container py-2 h-100">
             <div class="row d-flex justify-content-center align-items-center h-10">
                 <div class="col-12 col-md-8 col-lg-6 col-xl-5">
                     <div class="card bg-transparent text-white" style="border-radius: .5rem;">
                         <div class="card-body p-5 text-center">
                             <div class="mb-md-5 mt-md-4 pb-5">
-
                                 <h2 class="fw-bold mb-2 text-uppercase" style="color: green">Login</h2>
                                 <p class="text-black-5 mb-10" id="required_user">Please enter your login and password!</p>
                                 <form action="{{ route('check_user') }}" method="post" id="form-login">
