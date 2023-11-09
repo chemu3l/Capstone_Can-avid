@@ -27,8 +27,8 @@
 }
 
 .video-styles-in-administer video {
-    width: 100%;
-    height: 100%;
+    width: 10%;
+    height: 10%;
     object-fit: cover; /* Maintain aspect ratio and cover the container */
     border-radius: 50%; /* Ensure the video itself is also circular */
 }

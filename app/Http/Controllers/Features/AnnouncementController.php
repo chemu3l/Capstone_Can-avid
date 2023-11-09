@@ -23,22 +23,19 @@ class AnnouncementController extends Controller
     public function index()
     {
         if (Auth::check()) {
-            if (Auth::user()->role == "Admin" || Auth::user()->role == "Principal") {
-                $announcements = Announcement::with('profile')->get();
-            } elseif (Auth::user()->role == "Registrar") {
-                $announcements = Announcement::with('profile')
-                    ->where(function ($query) {
-                        $query->where('status', 'Pending');
-                    })
-                    ->get();
-            } else {
-                $announcements = Announcement::with('profile')->where('status', 'Pending')->get();
-            }
+            $announcements = Announcement::with('profile')
+                ->when(Auth::user()->role == 'Registrar', function ($query) {
+                    return $query->where('status', 'Pending');
+                })
+                ->orderBy('announcements_uploaded', 'desc') // Order by date in descending order
+                ->get();
+
             return view('Announcement.index_announcement', compact('announcements'));
         } else {
             return redirect()->route('login');
         }
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -70,7 +67,7 @@ class AnnouncementController extends Controller
                 'media_files.*' => 'required|file|mimes:jpeg,png,jpg,gif,mp4|max:2048',
             ]);
             if (!$validate) {
-                return redirect()->route('announcements.create')->with('error','Please input the required fields!');
+                return redirect()->route('announcements.create')->with('error', 'Please input the required fields!');
             }
             $announcements = new Announcement();
             $announcements->announcements = $request->input('announcements');
