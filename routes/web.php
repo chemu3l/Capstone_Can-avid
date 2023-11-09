@@ -48,7 +48,6 @@ Route::post('/departments/filter', [DisplayController::class, 'filterByDepartmen
 
 
 Route::view('/login', 'login')->name('login');
-Route::view('/Landing_page', 'welcome')->name('Guest');
 Route::get('/guest_career', [DisplayController::class, 'displayCareers'])->name('guest_career');
 Route::get('/departments/filter', [DisplayController::class, 'displayDepartment'])->name('display_departments');
 Route::view('/reset_password', 'dashboard.reset_password')->name('reset_password');

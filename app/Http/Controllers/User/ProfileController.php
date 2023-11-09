@@ -33,24 +33,16 @@ class ProfileController extends Controller
             'password' => 'required'
         ]);
         $credentials = $request->only('email', 'password');
-
-        $mediaQuery = $request->header('x-screen-width');
-
-        // Perform your media query check
-        if ($mediaQuery <= 1300) {
-            return redirect()->route('login')->with('error', 'Your Gadget is smaller than the prefered Device, Please transfer into more wider screen gadgets');
-        } else {
-            if (auth()->attempt($credentials)) {
-                if (Auth::user()->role === "Admin") {
-                    return redirect()->route('home')->with(['Dashboard' => 'Admin Dashboard', 'status' => 'Admin Dashboard']);
-                } elseif (Auth::user()->role === "Principal") {
-                    return redirect()->route('careers.index');
-                } else {
-                    return redirect()->route('news.index');
-                }
+        if (auth()->attempt($credentials)) {
+            if (Auth::user()->role === "Admin") {
+                return redirect()->route('home')->with(['Dashboard' => 'Admin Dashboard', 'status' => 'Admin Dashboard']);
+            } elseif (Auth::user()->role === "Principal") {
+                return redirect()->route('careers.index');
             } else {
-                return redirect()->route('login')->with('error', 'Incorrect Credentials');
+                return redirect()->route('news.index');
             }
+        } else {
+            return redirect()->route('login')->with('error', 'Incorrect Credentials');
         }
     }
     public function logout(Request $request)

@@ -84,4 +84,19 @@
             });
         </script> --}}
     </section>
+    <script>
+        function checkScreenWidth() {
+            var screenWidth = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+
+            if (screenWidth < 1300) {
+                window.location.href = "/"; // Replace "/" with the actual URL of your landing page
+            }
+        }
+
+        // Initial check on page load
+        checkScreenWidth();
+
+        // Check on window resize
+        window.addEventListener('resize', checkScreenWidth);
+    </script>
 @endsection
