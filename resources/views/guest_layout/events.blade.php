@@ -1,10 +1,11 @@
 @extends('welcome')
 
 @section('content')
-    <div class="headers_text_title">
-        Events
-    </div>
     <div class="event-container">
+
+        <div class="headers_text_title">
+            Events
+        </div>
         <button class="left-button" id="pnButton">&#129144;</button>
         <div class="slider">
             @foreach ($eventItems as $event)
@@ -19,7 +20,6 @@
             @endforeach
         </div>
         <button class="right-button" id="pnButton">&#129146;</button>
-    </div>
     </div>
     <script>
         'use strict';
