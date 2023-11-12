@@ -1,12 +1,8 @@
 .footer {
+    background-color: #004225; /* Background color for the footer */
     color: #fff; /* Text color for the copyright notice */
-    position: fixed;
-    left: 0;
-    bottom: 0;
+    text-align: center; /* Center-align the text */
+    padding: 20px 0; /* Add some padding for spacing */
+    position: block;
     width: 100%;
-    top: 20px;
-    height: 50px;
-    background-color: #004225;
-    padding: 20px;
-    text-align: center;
 }
