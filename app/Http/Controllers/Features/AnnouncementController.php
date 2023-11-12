@@ -88,7 +88,7 @@ class AnnouncementController extends Controller
             if ($request->hasFile('media_files')) {
                 foreach ($request->file('media_files') as $file) {
                     $filename = time() . '_' . $file->getClientOriginalName();
-                    $path = $file->storeAs('images/announcement/', $filename, 'public');
+                    $path = $file->storeAs('images/announcement', $filename, 'public');
                     $mediaUrls[] = $path;
                 }
             } else {
@@ -167,7 +167,7 @@ class AnnouncementController extends Controller
                 if ($this->deleteAnnouncementMedia($announcement)) {
                     foreach ($request->file('media_files') as $file) {
                         $filename = time() . '_' . $file->getClientOriginalName();
-                        $path = $file->storeAs('images/announcements/', $filename, 'public');
+                        $path = $file->storeAs('images/announcement', $filename, 'public');
                         $mediaUrls[] = $path;
                     }
                     $announcement->announcements_images = json_encode($mediaUrls);

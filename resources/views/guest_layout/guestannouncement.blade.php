@@ -1,6 +1,7 @@
 @extends('welcome')
 
 @section('content')
+
     <div class="carousel-wrap">
         <div class="headers_text_title">
             Announcements
@@ -21,6 +22,9 @@
                     <p>Why: {{ $announcement->announcements_where }}</p>
                     @if ($announcement->announcements_images)
                         @foreach (json_decode($announcement->announcements_images) as $mediaUrl)
+                        {{-- @php
+                            dd($mediaUrl)
+                        @endphp --}}
                             @if (Str::contains($mediaUrl, ['.jpg', '.jpeg', '.png', '.gif']))
                                 <img src="{{ asset('storage/' . $mediaUrl) }}" alt="Image"
                                     style="height:50%; margin-top:10px;">
