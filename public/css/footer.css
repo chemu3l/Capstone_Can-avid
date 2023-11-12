@@ -3,7 +3,7 @@
     color: #fff; /* Text color for the copyright notice */
     text-align: center; /* Center-align the text */
     padding: 20px 0; /* Add some padding for spacing */
-    position: block;
+    position: fixed;
     width: 100%;
-    margin-top: 20px;
+    margin-top: 3%;
 }
