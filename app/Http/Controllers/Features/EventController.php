@@ -82,7 +82,7 @@ class EventController extends Controller
             if ($request->hasFile('media_files')) {
                 foreach ($request->file('media_files') as $file) {
                     $filename = time() . '_' . $file->getClientOriginalName();
-                    $path = $file->storeAs('images/events/', $filename, 'public');
+                    $path = $file->storeAs('images/events', $filename, 'public');
                     $mediaUrls[] = $path;
                 }
             }
@@ -157,7 +157,7 @@ class EventController extends Controller
                 if ($this->deleteEventMedia($event)) {
                     foreach ($request->file('media_files') as $file) {
                         $filename = time() . '_' . $file->getClientOriginalName();
-                        $path = $file->storeAs('images/events/', $filename, 'public');
+                        $path = $file->storeAs('images/events', $filename, 'public');
                         $mediaUrls[] = $path;
                     }
                     $event->events_images = json_encode($mediaUrls);

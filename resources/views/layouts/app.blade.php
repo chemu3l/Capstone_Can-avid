@@ -201,6 +201,40 @@
             left: 22%;
 
         }
+
+        .user-icon {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+            margin-right: 20px;
+        }
+
+        .user-icon-svg {
+            width: 16px;
+            height: 16px;
+            fill: currentColor;
+            vertical-align: middle;
+        }
+
+        .user-dropdown {
+            display: none;
+            position: absolute;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            margin-left: -200%;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+        }
+
+        .user-dropdown a {
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .user-dropdown a:hover {
+            background-color: #f1f1f1;
+        }
     </style>
 </head>
 

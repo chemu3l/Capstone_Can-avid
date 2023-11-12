@@ -79,7 +79,7 @@ class NewsController extends Controller
             if ($request->hasFile('media_files')) {
                 foreach ($request->file('media_files') as $file) {
                     $filename = time() . '_' . $file->getClientOriginalName();
-                    $path = $file->storeAs('images/news/', $filename, 'public');
+                    $path = $file->storeAs('images/news', $filename, 'public');
                     $mediaUrls[] = $path;
                 }
             }
@@ -153,7 +153,7 @@ class NewsController extends Controller
                 if ($this->deleteNewsMedia($news)) {
                     foreach ($request->file('media_files') as $file) {
                         $filename = time() . '_' . $file->getClientOriginalName();
-                        $path = $file->storeAs('images/news/', $filename, 'public');
+                        $path = $file->storeAs('images/news', $filename, 'public');
                         $mediaUrls[] = $path;
                     }
                     $news->news_images = json_encode($mediaUrls);
