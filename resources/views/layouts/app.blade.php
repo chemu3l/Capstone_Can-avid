@@ -30,13 +30,6 @@
     <link rel="stylesheet" href="{{ asset('css/settings.css') }}">
     <link rel="stylesheet" href="{{ asset('css/navbar.css') }}">
     <link rel="stylesheet" href="{{ asset('css/menu_class.css') }}">
-    {{-- <link rel="stylesheet" href="{{ asset('css/GuestCSS/guestannouncement.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/GuestCSS/events.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/guest_welcome.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/GuestCSS/news.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/GuestCSS/view_event.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/GuestCSS/department.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/GuestCSS/view_news.css') }}"> --}}
     <style>
         .container_management {
             background-color: #1e7e34;
