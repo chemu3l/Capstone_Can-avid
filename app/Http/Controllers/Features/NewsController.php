@@ -55,15 +55,6 @@ class NewsController extends Controller
     public function store(Request $request)
     {
         try {
-            $validate = $request->validate([
-                'news' => 'required|string|max:12',
-                'news_description' => 'required|string|min:12',
-                'news_update' => 'required|date',
-                'media_files.*' => 'required|file|mimes:jpeg,png,jpg,gif,mp4|max:2048',
-            ]);
-            if (!$validate) {
-                return redirect()->route('news.create')->with('error', 'Failed to add News!');
-            }
             $news = new News();
             $news->news = $request->input('news');
             $news->news_description = $request->input('news_description');
@@ -75,6 +66,7 @@ class NewsController extends Controller
             } else {
                 $news->status = "Posted";
             }
+
             $mediaUrls = [];
             if ($request->hasFile('media_files')) {
                 foreach ($request->file('media_files') as $file) {
