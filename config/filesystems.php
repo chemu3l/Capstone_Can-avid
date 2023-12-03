@@ -49,7 +49,7 @@ return [
         ],
 
         'public' => [
-            'driver' => 's3',
+            'driver' => 'public',
             'root' => storage_path('app/public'),
             'url' => env('APP_URL').'/storage',
             'visibility' => 'public',
