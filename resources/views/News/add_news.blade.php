@@ -35,7 +35,7 @@
                     id="news_update"required>
             </div>
 
-            <input type="file" name="media_files[]" accept="image/*, video/*" multiple required>
+            <input type="file" name="media_files[]" accept="image/*, video/*" required>
             <span class="text-danger">
                 @error('media_files')
                     {{ $message }}
