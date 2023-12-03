@@ -1,230 +1,147 @@
 @extends('welcome')
 
 @section('content')
-    <div class="news-content">
+
+    <div class="carousel-wrap">
         <div class="headers_text_title">
             News
         </div>
-        <div class="news-container">
-            <div id="news-carousel">
-                @if ($news)
-                    @foreach ($news as $new)
-                        @if ($new->news_images)
-                            <figure>
-                                @if (Str::contains($new->firstMediaUrl, ['.jpg', '.jpeg', '.png', '.gif']))
-                                    <a href="{{ asset('storage/' . $new->firstMediaUrl) }}" data-lightbox="news-gallery">
-                                        <img src="{{ asset('storage/' . $new->firstMediaUrl) }}" alt="Image">
-                                    </a>
-                                @else
-                                    <a href="{{ asset('storage/' . $new->firstMediaUrl) }}" data-lightbox="news-gallery">
-                                        <video controls>
-                                            <source src="{{ asset('storage/' . $new->firstMediaUrl) }}" type="video/mp4">
-                                            Your browser does not support the video tag.
-                                        </video>
-                                    </a>
-                                @endif
-                                <a href="{{ route('show_news', ['news_id' => $new->news]) }}" id="news_a">
-                                    <h3 id="news-title">{{ $new->news }}</h3>
-                                </a>
-                            </figure>
-                        @endif
-                    @endforeach
-                @endif
-            </div>
+        <div class="btn-wrap">
+            <button class="prev-button" style="margin-top: 20px;" aria-label="Previous Item">Prev</button>
+            <button class="next-button" aria-label="Next Item">Next</button>
+        </div>
+        <div class="carousel">
+            @foreach ($news as $new)
+                <div style="background-color:#1E7E34;">
+                    <h1>{{ $new->news }}</h1>
+                    <p>{{ $new->news_description }}</p>
+                    @if ($new->news_images)
+                        @foreach (json_decode($new->news_images) as $mediaUrl)
+                            @if (Str::contains($mediaUrl, ['.jpg', '.jpeg', '.png', '.gif']))
+                                <img src="{{ asset('storage/' . $mediaUrl) }}" alt="Image"
+                                    style="height:50%; margin-top:10px;">
+                            @else
+                                <div class="video-container">
+                                    <video controls>
+                                        <source src="{{ asset('storage/' . $mediaUrl) }}" type="video/mp4">
+                                        Your browser does not support the video tag.
+                                    </video>
+                                </div>
+                            @endif
+                        @endforeach
+                    @endif
+                </div>
+            @endforeach
         </div>
     </div>
     <script>
-        /* 3d Carousel image slider */
+        function getCurrentSlideIndex() {
+            var activeSlide = document.querySelector('.carousel div.active');
+            return activeSlide ? Array.from(activeSlide.parentNode.children).indexOf(activeSlide) : 0;
+        }
 
-        (function(window) {
-            'use strict';
+        function setSlideWidth() {
+            const carousel = document.querySelector('.carousel');
+            const slides = document.querySelectorAll('.carousel div');
+            const width = parseInt(getComputedStyle(document.querySelector('.carousel-wrap')).width);
+            const slideMargin = parseInt(getComputedStyle(slides[getCurrentSlideIndex()]).marginLeft) + parseInt(
+                getComputedStyle(slides[getCurrentSlideIndex()]).marginRight);
+            slides.forEach(slide => slide.style.width = (width - slideMargin) + "px");
+            carousel.style.transform =
+                `translateX(${-1 * (width * getCurrentSlideIndex() + slideMargin * getCurrentSlideIndex())}px)`;
+        }
 
+        function showSlide(index) {
+            const slides = document.querySelectorAll('.carousel div');
+            const carousel = document.querySelector('.carousel');
+            slides.forEach(slide => slide.classList.remove('active'));
+            slides[index].classList.add('active');
+            currentSlideIndex = index;
+            const slideMargin = parseInt(getComputedStyle(slides[getCurrentSlideIndex()]).marginLeft) + parseInt(
+                getComputedStyle(slides[getCurrentSlideIndex()]).marginRight);
+            const slideWidth = parseInt(getComputedStyle(slides[getCurrentSlideIndex()]).width);
+            carousel.style.transform = `translateX(${-1 * (slideWidth * index + slideMargin * index)}px)`;
+        }
 
-            /* Carousel constructor class */
+        function initSlider() {
+            const slides = document.querySelectorAll('.carousel div');
+            const carousel = document.querySelector('.carousel');
+            const prevButton = document.querySelector('.prev-button');
+            const nextButton = document.querySelector('.next-button');
+            let startX, currentX;
 
-            var Carousel = function(el, options) {
-                var that = this;
+            prevButton.addEventListener('click', showPreviousSlide);
+            nextButton.addEventListener('click', showNextSlide);
+            document.addEventListener('keydown', handleKeyDown);
+            carousel.addEventListener('mousedown', handleDragStart);
+            carousel.addEventListener('mousemove', handleDragOngoing);
+            carousel.addEventListener('mouseup', handleDragEnd);
+            carousel.addEventListener('touchstart', handleDragStart);
+            carousel.addEventListener('touchmove', handleDragOngoing);
+            carousel.addEventListener('touchend', handleDragEnd);
+            carousel.addEventListener('touchcancel', handleDragEnd);
 
-                this._settings = options || {};
+            function showPreviousSlide() {
+                showSlide((getCurrentSlideIndex() - 1 + slides.length) % slides.length);
+            }
 
-                // options
-                this._settings.startingFace = this._settings.startingFace || 1;
-                this._settings.autoplay = this._settings.autoplay || false;
-                this._settings.slideshowInterval = this._settings.slideshowInterval || 3000;
+            function showNextSlide() {
+                showSlide((getCurrentSlideIndex() + 1) % slides.length);
+            }
 
-                this._element = document.getElementById(el);
-                this._dragArea = document.body;
-                this._navButtons = document.querySelectorAll('.navigation-control');
-                this._panelCount = this._element.children.length;
-                this._theta = 0;
-                this._currentFace = 0;
-                this._segmentSize = 360 / this._panelCount;
-                this._lastDragX = null;
-                this._autoplayTimeout = null;
-
-
-                var i = 0,
-                    j = 0,
-                    len = this._element.children.length,
-                    buttonLen = this._navButtons.length;
-
-                for (; i < len; i++) {
-
-                    this._element.children[i].style['transform'] =
-                        'rotateY( ' + (i * (this._segmentSize)) + 'deg )' +
-                        'translateZ( ' + this._getTranslateZ() + 'px )';
+            function handleKeyDown(event) {
+                if (event.key === 'ArrowRight') {
+                    showNextSlide();
+                } else if (event.key === 'ArrowLeft') {
+                    showPreviousSlide();
                 }
+            }
 
-                for (; j < buttonLen; j++) {
-                    this._navButtons[j].addEventListener('click', function(event) {
+            function handleDragStart(event) {
+                event.preventDefault();
+                startX = (event.type === 'touchstart') ? event.touches[0].clientX : event.clientX;
+            }
 
-                        var value = event.target.getAttribute('data-increment');
-                        that._rotateWheel(value);
-                    }, false);
+            function handleDragOngoing(event) {
+                event.preventDefault();
+                if (!startX) return;
+                currentX = (event.type === 'touchmove') ? event.touches[0].clientX : event.clientX;
+                const distanceX = currentX - startX;
+                carousel.style.transform = `translateX(${(event.clientX * (1 / slides.length) * -1)}px)`;
+            }
+
+            function handleDragEnd(event) {
+                event.preventDefault();
+                if (!startX) return;
+                currentX = event.clientX;
+                if (currentX > startX) {
+                    showPreviousSlide();
+                } else if (currentX < startX) {
+                    showNextSlide();
                 }
+                startX = currentX = null;
+            }
 
-                this._element.addEventListener('touchmove', function(e) {
-                    e.preventDefault();
-                    var currentX = e.touches[0].clientX;
-                    var dragValue = currentX > that._lastDragX ? 1 : -1;
+            slides.forEach(slide => {
+                slide.addEventListener('mousedown', handleDragStart);
+                slide.addEventListener('mousemove', handleDragOngoing);
+                slide.addEventListener('mouseup', handleDragEnd);
+                slide.addEventListener('touchstart', handleDragStart);
+                slide.addEventListener('touchmove', handleDragOngoing);
+                slide.addEventListener('touchend', handleDragEnd);
+                slide.addEventListener('touchcancel', handleDragEnd);
+            });
 
-                    that._dragRotate(dragValue);
-                    that._lastDragX = currentX;
-                });
+            showSlide(0);
+            setSlideWidth();
 
+            document.querySelector('.carousel-wrap').style.visibility = "visible";
+        }
 
-                this._element.addEventListener('touchend', function(e) {
-                    that._theta = Math.round(that._theta / that._segmentSize) * that._segmentSize;
-                    that._rotateWheel(0);
-                });
-
-
-                this._rotateWheel(this._settings.startingFace);
-
-                if (this._settings.autoplay) {
-                    this.play();
-                }
-            };
-
-
-
-
-            /* Returns translateZ value based on size and panel count */
-
-            Carousel.prototype._getTranslateZ = function() {
-                return Math.round((this._element.children[0].clientWidth / 2) / Math.tan(Math.PI / this
-                    ._panelCount));
-            };
-
-
-
-            /* Returns number of front facing slide in gallery */
-
-            Carousel.prototype._getFaceNumber = function(angle) {
-                if (angle > 360 || angle < -359) {
-                    return this._getFaceNumber((Math.abs(angle)) - 360);
-                } else {
-                    if (this._theta < 1) {
-                        return Math.abs(this._panelCount / (360 / angle)) + 1;
-                    } else {
-                        return Math.abs(this._panelCount / (360 / angle));
-                    }
-                }
-            };
-
-
-
-            /* Sets the correct opacity for face positions */
-
-            Carousel.prototype._checkOpacity = function() {
-                var face = Math.round(this._getFaceNumber(this._theta));
-
-                var position = this._theta > 0 ? (this._panelCount + 1) - face : face;
-                var newPos = position === (this._panelCount + 1) ? 1 : position;
-
-                // hide out of sight faces
-                var i = 0,
-                    len = this._element.children.length;
-
-                for (; i < len; i++) {
-                    this._element.children[i].style['opacity'] = 0.1;
-                    this._element.children[i].className = 'background-panel';
-                }
-
-                var main = this._element.children[newPos - 1];
-                var leftSide = this._element.children[newPos > this._panelCount - 1 ? 0 : newPos];
-                var rightSide = this._element.children[newPos - 2 < 0 ? this._panelCount - 1 : newPos - 2];
-
-                // change opacity for active panels
-                main.style['opacity'] = 1;
-                leftSide.style['opacity'] = 0.5;
-                rightSide.style['opacity'] = 0.5;
-
-                // add classes for custome styles
-                main.className = 'main-panel';
-                rightSide.className = 'right side-panel';
-                leftSide.className = 'left side-panel';
-            };
-
-
-
-            /* Rotate wheel by increment value */
-
-            /* Only use 1 or -1 */
-
-            Carousel.prototype._rotateWheel = function(value) {
-                var increment = parseInt(value);
-
-                this._theta += (360 / this._panelCount) * increment * -1;
-
-                this._element.style['transform'] =
-                    'translateZ(-' + this._getTranslateZ() + 'px)' +
-                    'rotateY(' + this._theta + 'deg)';
-
-                this._checkOpacity();
-            };
-
-
-            /* Drag carousel */
-
-            Carousel.prototype._dragRotate = function(distance) {
-                this._theta += distance * 10;
-
-                this._element.style[transforms['webkitTransform']] =
-                    'translateZ(-' + this._getTranslateZ() + 'px)' +
-                    'rotateY(' + this._theta + 'deg)';
-                this._element.style[transforms['MozTransform']] =
-                    'translateZ(-' + this._getTranslateZ() + 'px)' +
-                    'rotateY(' + this._theta + 'deg)';
-
-                this._checkOpacity();
-            };
-
-
-            /* Play Slide Show */
-
-            Carousel.prototype.play = function() {
-                var that = this;
-                clearInterval(this._autoplayTimeout);
-                this._autoplayTimeout = setInterval(function() {
-                    that._rotateWheel(1);
-                }, this._settings.slideshowInterval);
-            };
-
-
-            /* Stop Slide Show */
-
-            Carousel.prototype.stop = function() {
-                clearInterval(this._autoplayTimeout);
-            };
-
-            window.mgrCarousel = Carousel;
-
-        }(window));
-
-        var carousel = new mgrCarousel('news-carousel', {
-            autoplay: true
+        document.addEventListener('DOMContentLoaded', function() {
+            initSlider();
         });
-    </script>
 
+        window.addEventListener('resize', setSlideWidth);
+    </script>
 @endsection

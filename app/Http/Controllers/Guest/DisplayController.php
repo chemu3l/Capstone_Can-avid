@@ -74,14 +74,7 @@ class DisplayController extends Controller
         return view('guest_layout.departments', ['filteredData' => $filteredData, 'department' => $selectedDepartment]);
     }
     public function guestNews(){
-        $news = News::where('status', 'Posted')->get(['news', 'news_description', 'news_images']);
-
-        // Extract the first media URL from each news item and add it as a property
-        $news->each(function ($item) {
-            $mediaUrls = json_decode($item->news_images);
-            $item->firstMediaUrl = reset($mediaUrls);
-        });
-
+        $news = News::where('status', 'Posted')->get();
         return view('guest_layout.news', compact('news'));
     }
     public function showNews($news_id)
