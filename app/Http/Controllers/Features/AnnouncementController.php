@@ -106,7 +106,7 @@ class AnnouncementController extends Controller
             $history = new LogsController();
             $history->store($historyRequest);
             if ($announcements->save()) {
-                return redirect()->back()->with('success', 'Added Announcements!');
+                return redirect()->route('announcements.index')->with('success', 'Added Announcements!');
             } else {
                 return redirect()->route('announcements.create')->with('error', 'Failed to add Announcements!');
             }

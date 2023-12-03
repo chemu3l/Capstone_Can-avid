@@ -82,13 +82,15 @@ class NewsController extends Controller
                     $path = $file->storeAs('images/news', $filename, 'public');
                     $mediaUrls[] = $path;
                 }
+            }else {
+                return redirect()->route('news.create')->with('error', 'Please Add some image or a video');
             }
             $news->news_images = json_encode($mediaUrls);
             $news->profile_id = $request->input('personnel_added');
             $historyRequest = new Request([
                 'action' => 'Store',
                 'type' => 'News',
-                'oldData' => null,
+                'oldData' => $news->news,
                 'newData' => $request->input('news'),
                 'date' => date('Y-m-d H:i:s')
             ]);
