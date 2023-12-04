@@ -8,7 +8,7 @@
         <div class="row">
             @foreach ($careers as $career)
                 <div class="col-md-3" style="margin-left: 5%; margin-top: 10px;">
-                    <div class="card-body-career" style="background-color: #1A5D1A; border-radius:5%; color: white;">
+                    <div class="card-body-career" style="background-color: #1A5D1A; border-radius:5%; color: white; padding-left: 10px;">
                         <h3 class="card-title-career">{{ $career->career_position }}</h3>
                         <h5 class="card-subtitle mb-2 text-muted">
                             {{ date('m-d-Y', strtotime($career->career_uploaded)) }}
