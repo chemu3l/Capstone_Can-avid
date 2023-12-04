@@ -15,9 +15,11 @@
                         </h5>
                         <p class="card-text">{{ $career->career_description }}</p>
                         <span>{{ $career->career_requirements }}</span><br>
+                        <center>
                         <a href="{{ route('applicants.create', ['career_id' => $career->id]) }}"
                             style="border-color: black;" class="btn btn-success">Apply
                             Now</a>
+                        </center>
                     </div>
                 </div>
             @endforeach
