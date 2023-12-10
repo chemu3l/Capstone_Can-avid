@@ -96,7 +96,7 @@
             border-top-left-radius: 20px;
             height: 100%;
             width: 300px;
-            background-color: rgb(8, 88, 12);
+            background-color: rgb(0, 60, 8);
             display: flex;
             flex-direction: column;
             justify-content: space-around;
@@ -104,11 +104,49 @@
         }
 
         .ul_management li a {
+            background-image: linear-gradient(to right,
+                    rgba(248, 0, 0, 0.894),
+                    rgb(116, 232, 108) 50%,
+                    #f1f1f1 50%);
+            background-size: 200% 100%;
+            background-position: -100%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            transition: all 0.3s ease-in-out;
             text-decoration: none;
             color: white;
             text-transform: uppercase;
             font-weight: bold;
         }
+
+        .ul_management li a:before {
+            content: '';
+            background: #f7f7f7;
+            display: block;
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            width: 0;
+            height: 3px;
+        }
+
+        .ul_management li a:hover {
+            background-position: 0;
+        }
+
+        .ul_management li a:hover::before {
+            width: 100%;
+        }
+
+
+        /*
+
+        .ul_management li a {
+            text-decoration: none;
+            color: white;
+            text-transform: uppercase;
+            font-weight: bold;
+        } */
 
         .item1 {
             background-color: #285430;

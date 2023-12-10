@@ -5,9 +5,9 @@
         <div class="header-tables-page" style="display: flex; justify-content: space-between; align-items: center;">
             <a href="{{ route('announcements.create') }}" class="btn btn-info btn-lg" style="background-color: green;">Add Announcement</a>
             <h1>Announcement Table </h1>
-            <form action="{{ route('announcement_Filter') }}" method="GET" id="searchForm" style="display: flex; align-items: center;">
+            <form action="{{ route('announcement_Filter') }}" class="search-form" method="GET" id="searchForm" style="display: flex; align-items: center;">
                 <input type="text" name="search" placeholder="Search..." style="margin-right: 10px;">
-                <button type="submit" style="background-color: #56C46F">Search</button>
+                <button type="submit" style="background-color: #56C46F"><i class="fa fa-search"></i></button>
             </form>
         </div>
 
