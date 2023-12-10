@@ -33,6 +33,9 @@
 .card:hover #required_user {
     color: #77FF63;
 }
+#EnterYourLoginPassword{
+    color: #7CB342;
+}
 .btn:hover {
     background: #16ff00;
     border-radius: 5px;

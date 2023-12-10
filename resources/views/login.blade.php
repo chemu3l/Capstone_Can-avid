@@ -19,7 +19,7 @@
                         <div class="card-body p-5 text-center">
                             <div class="mb-md-5 mt-md-4 pb-5">
                                 <h2 class="fw-bold mb-2 text-uppercase" style="color: #A4FF90">Login</h2>
-                                <p class="text-black-5 mb-10" id="required_user">Please enter your login and password!</p>
+                                <p class="text-red-50 mb-10" id="EnterYourLoginPassword">Please enter your login and password!</p>
                                 <form action="{{ route('check_user') }}" method="post" id="form-login">
                                     @if (Session::get('fail'))
                                         <div class="alert alert-danger">
