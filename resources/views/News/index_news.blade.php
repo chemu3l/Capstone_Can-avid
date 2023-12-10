@@ -19,53 +19,53 @@
             <h1>News Table </h1>
             <form action="{{ route('news_Filter') }}" method="GET" id="searchForm">
                 <input type="text" name="search" placeholder="Search...">
-                <button type="submit">Search</button>
+                <button type="submit" style="background-color: #56C46F">Search</button>
             </form>
         </div>
         <table style="background-color: #A8DF8E; font-size: 12px; width: 100%; border-collapse: collapse; ">
             <thead>
                 <tr>
-                    <th scope="col">News Title</th>
-                    <th scope="col">News Description</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">News Updated</th>
-                    <th scope="col">News Uploaded</th>
-                    <th scope="col">
+                    <th scope="col" style="padding:10px;">News Title</th>
+                    <th scope="col" style="padding:10px;">News Description</th>
+                    <th scope="col" style="padding:10px;">Status</th>
+                    <th scope="col" style="padding:10px;">News Updated</th>
+                    <th scope="col" style="padding:10px;">News Uploaded</th>
+                    <th scope="col" style="padding:10px;">
                         <center>News Images</center>
                     </th>
-                    <th scope="col">Personnel Added</th>
-                    <th scope="col">EDIT</th>
-                    <th scope="col">VIEW</th>
-                    <th scope="col">DELETE</th>
+                    <th scope="col" style="padding:10px;">Personnel Added</th>
+                    <th scope="col" style="padding:10px;">EDIT</th>
+                    <th scope="col" style="padding:10px;">VIEW</th>
+                    <th scope="col" style="padding:10px;">DELETE</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($news as $new)
                     <tr>
-                        <td>{{ $new->news }}</td>
-                        <td>{{ $new->news_description }}</td>
+                        <td style="padding:10px;">{{ $new->news }}</td>
+                        <td style="padding:10px;">{{ $new->news_description }}</td>
                         @if ($new->status == 'Posted')
-                            <td>
+                            <td style="padding:10px;">
                                 <div style="background-color: #7A9D54">
                                     <center>{{ $new->status }}</center>
                                 </div>
                             </td>
                         @elseif ($new->status == 'Registrar Verified')
-                            <td>
+                            <td style="padding:10px;">
                                 <div style="background-color: #EEE2DE">
                                     <center>{{ $new->status }}</center>
                                 </div>
                             </td>
                         @else
-                            <td>
+                            <td style="padding:10px;">
                                 <div style="background-color: #4F709C">
                                     <center>{{ $new->status }}</center>
                                 </div>
                             </td>
                         @endif
-                        <td>{{ date('m-d-Y', strtotime($new->news_updated)) }}</td>
-                        <td>{{ date('m-d-Y', strtotime($new->news_uploaded)) }}</td>
-                        <td>
+                        <td style="padding:10px;">{{ date('m-d-Y', strtotime($new->news_updated)) }}</td>
+                        <td style="padding:10px;">{{ date('m-d-Y', strtotime($new->news_uploaded)) }}</td>
+                        <td style="padding:10px;">
                             <center>
                                 @if ($new->news_images)
                                     @foreach (json_decode($new->news_images) as $mediaUrl)
@@ -84,16 +84,16 @@
                                 @endif
                             </center>
                         </td>
-                        <td>{{ $new->profile->name }}</td>
-                        <td>
+                        <td style="padding:10px;">{{ $new->profile->name }}</td>
+                        <td style="padding:10px;">
                             <a href="{{ route('news.edit', $new) }}"
                                 class="btn btn-primary"style="background-color: green">EDIT</a>
                         </td>
-                        <td>
+                        <td style="padding:10px;">
                             <a href="{{ route('news.show', $new) }}"
                                 class="btn btn-primary"style="background-color: green">VIEW</a>
                         </td>
-                        <td>
+                        <td style="padding:10px;">
                             <form action="{{ route('news.destroy', $new) }}" method="POST">
                                 @csrf
                                 @method('DELETE')

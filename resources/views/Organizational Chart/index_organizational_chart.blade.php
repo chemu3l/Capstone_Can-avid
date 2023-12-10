@@ -22,23 +22,23 @@
         <table style="background-color: #A8DF8E; font-size: 12px; width: 100%; border-collapse: collapse; ">
             <thead>
                 <tr>
-                    <th scope="col">Added by:</th>
-                    <th scope="col">Added at:</th>
-                    <th scope="col">VIEW</th>
-                    <th scope="col">DELETE</th>
+                    <th scope="col" style="padding:10px;">Added by:</th>
+                    <th scope="col" style="padding:10px;">Added at:</th>
+                    <th scope="col" style="padding:10px;">VIEW</th>
+                    <th scope="col" style="padding:10px;">DELETE</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($organizations as $organizational_chart)
                     <tr>
-                        <td>{{ $organizational_chart->profile->name }}</td>
-                        <td>{{ $organizational_chart->uploaded_at }}</td>
+                        <td style="padding:10px;">{{ $organizational_chart->profile->name }}</td>
+                        <td style="padding:10px;">{{ $organizational_chart->uploaded_at }}</td>
 
-                        <td>
+                        <td style="padding:10px;">
                             <a href="{{ route('organizational_chart.show', $organizational_chart) }}"
                                 class="btn btn-primary" style="background-color: green">VIEW</a>
                         </td>
-                        <td>
+                        <td style="padding:10px;">
                             <form action="{{ route('organizational_chart.destroy', $organizational_chart) }}"
                                 method="POST">
                                 @csrf

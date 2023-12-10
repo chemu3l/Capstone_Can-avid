@@ -16,33 +16,33 @@
             <h1>Applicants Table </h1>
             <form action="{{ route('applicant_Filter') }}" method="GET" id="searchForm" style="margin-buttom:20px;">
                 <input type="text" name="search" placeholder="Search...">
-                <button type="submit">Search</button>
+                <button type="submit" style="background-color: #56C46F">Search</button>
             </form>
         </div>
-        
+
         <table style="background-color: #A8DF8E; font-size: 12px; width: 100%; border-collapse: collapse;">
             <thead>
                 <tr>
-                    <th scope="col">Applicants Name</th>
-                    <th scope="col">Applicants Email</th>
-                    <th scope="col">Job Applied</th>
-                    <th scope="col">Date Applied</th>
-                    <th scope="col">VIEW</th>
-                    <th scope="col">DELETE</th>
+                    <th scope="col" style="padding:10px;">Applicants Name</th>
+                    <th scope="col" style="padding:10px;">Applicants Email</th>
+                    <th scope="col" style="padding:10px;">Job Applied</th>
+                    <th scope="col" style="padding:10px;">Date Applied</th>
+                    <th scope="col" style="padding:10px;">VIEW</th>
+                    <th scope="col" style="padding:10px;">DELETE</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($applicants as $applicant)
                     <tr>
-                        <td>{{ $applicant->applicant_name }}</td>
-                        <td>{{ $applicant->applicant_email }}</td>
-                        <td>{{ $applicant->career->career_position }}</td>
-                        <td>{{ date('m-d-Y', strtotime($applicant->date_applied)) }}</td>
-                        <td>
+                        <td style="padding:10px;">{{ $applicant->applicant_name }}</td>
+                        <td style="padding:10px;">{{ $applicant->applicant_email }}</td>
+                        <td style="padding:10px;">{{ $applicant->career->career_position }}</td>
+                        <td style="padding:10px;">{{ date('m-d-Y', strtotime($applicant->date_applied)) }}</td>
+                        <td style="padding:10px;">
                             <a href="{{ route('applicants.show', $applicant) }}" class="btn btn-primary">VIEW
                                 Application</a>
                         </td>
-                        <td>
+                        <td style="padding:10px;">
                             <form action="{{ route('applicants.destroy', $applicant) }}" method="POST">
                                 @csrf
                                 @method('DELETE')

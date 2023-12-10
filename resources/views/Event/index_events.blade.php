@@ -18,56 +18,55 @@
             <h1>Events Table </h1>
             <form action="{{ route('event_Filter') }}" method="GET" id="searchForm">
                 <input type="text" name="search" placeholder="Search...">
-                <button type="submit">Search</button>
+                <button type="submit" style="background-color: #56C46F">Search</button>
             </form>
         </div>
-        <table
-            style="background-color: #A8DF8E; font-size: 12px; width: 100%; border-collapse: collapse; padding-right:40%; ">
+        <table style="background-color: #A8DF8E; font-size: 12px; width: 100%; border-collapse: collapse; padding-right:40%;">
             <thead>
                 <tr>
-                    <th scope="col">Events Title</th>
-                    <th scope="col">Events Description</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Events Uploaded</th>
-                    <th scope="col">Events Started</th>
-                    <th scope="col">Events End</th>
-                    <th scope="col">
+                    <th scope="col" style="padding:10px;">Events Title</th>
+                    <th scope="col" style="padding:10px;">Events Description</th>
+                    <th scope="col" style="padding:10px;">Status</th>
+                    <th scope="col" style="padding:10px;">Events Uploaded</th>
+                    <th scope="col" style="padding:10px;">Events Started</th>
+                    <th scope="col" style="padding:10px;">Events End</th>
+                    <th scope="col" style="padding:10px;">
                         <center>Events Images</center>
                     </th>
-                    <th scope="col">Personnel Added</th>
-                    <th scope="col">EDIT</th>
-                    <th scope="col">VIEW</th>
-                    <th scope="col">DELETE</th>
+                    <th scope="col" style="padding:10px;">Personnel Added</th>
+                    <th scope="col" style="padding:10px;">EDIT</th>
+                    <th scope="col" style="padding:10px;">VIEW</th>
+                    <th scope="col" style="padding:10px;">DELETE</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($events as $event)
                     <tr>
-                        <td>{{ $event->events }}</td>
-                        <td>{{ $event->events_description }}</td>
+                        <td style="padding:10px;">{{ $event->events }}</td>
+                        <td style="padding:10px;">{{ $event->events_description }}</td>
                         @if ($event->status == 'Posted')
-                            <td>
+                            <td style="padding:10px;">
                                 <div style="background-color: #7A9D54">
                                     <center>{{ $event->status }}</center>
                                 </div>
                             </td>
                         @elseif ($event->status == 'Registrar Verified')
-                            <td>
+                            <td style="padding:10px;">
                                 <div style="background-color: #EEE2DE">
                                     <center>{{ $event->status }}</center>
                                 </div>
                             </td>
                         @else
-                            <td>
+                            <td style="padding:10px;">
                                 <div style="background-color: #4F709C">
                                     <center>{{ $event->status }}</center>
                                 </div>
                             </td>
                         @endif
-                        <td>{{ date('m-d-Y', strtotime($event->events_uploaded)) }}</td>
-                        <td>{{ date('m-d-Y', strtotime($event->events_started)) }}</td>
-                        <td>{{ date('m-d-Y', strtotime($event->events_end)) }}</td>
-                        <td>
+                        <td style="padding:10px;">{{ date('m-d-Y', strtotime($event->events_uploaded)) }}</td>
+                        <td style="padding:10px;">{{ date('m-d-Y', strtotime($event->events_started)) }}</td>
+                        <td style="padding:10px;">{{ date('m-d-Y', strtotime($event->events_end)) }}</td>
+                        <td style="padding:10px;">
                             <center>
                                 @if ($event->events_images)
                                     @foreach (json_decode($event->events_images) as $mediaUrl)
@@ -86,16 +85,16 @@
                                 @endif
                             </center>
                         </td>
-                        <td>{{ $event->profile->name }}</td>
-                        <td>
+                        <td style="padding:10px;">{{ $event->profile->name }}</td>
+                        <td style="padding:10px;">
                             <a href="{{ route('events.edit', $event) }}" class="btn btn-primary"
                                 style="background-color: green">EDIT</a>
                         </td>
-                        <td>
+                        <td style="padding:10px;">
                             <a href="{{ route('events.show', $event) }}" class="btn btn-primary"
                                 style="background-color: green">VIEW</a>
                         </td>
-                        <td>
+                        <td style="padding:10px;">
                             <form action="{{ route('events.destroy', $event) }}" method="POST">
                                 @csrf
                                 @method('DELETE')

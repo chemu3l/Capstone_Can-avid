@@ -19,7 +19,7 @@
             <h1>User Table</h1>
             <form action="{{ route('user_Filter') }}" method="GET" id="searchForm" class="search-form">
                 <input type="text" name="search" placeholder="Search...">
-                <button type="submit">Search</button>
+                <button type="submit" style="background-color: #56C46F">Search</button>
             </form>
         </div>
 
@@ -32,7 +32,7 @@
                     <p>No users found.</p>
                 @endif
                 <select id="departmentSelect"
-                    style="width: 90%; background-color:#285430; color: black; border-color: #285430; font-size: 12px;">
+                    style="width: 90%; background-color:#285430; color: white; border-color: #285430; font-size: 12px;">
                     <option value="Mathematics">By Mathematics Department</option>
                     <option value="Science">By Science Department</option>
                     <option value="English">By English Department</option>
@@ -89,34 +89,34 @@
         <table style="background-color: #A8DF8E; font-size: 12px; width: 100%; border-collapse: collapse; ">
             <thead>
                 <tr>
-                    <th scope="col">Email</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Age</th>
-                    <th scope="col">Gender</th>
-                    <th scope="col">Position</th>
-                    <th scope="col">Department</th>
-                    <th scope="col">Role</th>
-                    <th scope="col">Phone Number</th>
-                    <th scope="col">
+                    <th scope="col" style="padding:10px;">Email</th>
+                    <th scope="col" style="padding:10px;">Name</th>
+                    <th scope="col" style="padding:10px;">Age</th>
+                    <th scope="col" style="padding:10px;">Gender</th>
+                    <th scope="col" style="padding:10px;">Position</th>
+                    <th scope="col" style="padding:10px;">Department</th>
+                    <th scope="col" style="padding:10px;">Role</th>
+                    <th scope="col" style="padding:10px;">Phone Number</th>
+                    <th scope="col" style="padding:10px;">
                         <center>images</center>
                     </th>
-                    <th scope="col">EDIT</th>
-                    <th scope="col">VIEW</th>
-                    <th scope="col">DELETE</th>
+                    <th scope="col" style="padding:10px;">EDIT</th>
+                    <th scope="col" style="padding:10px;">VIEW</th>
+                    <th scope="col" style="padding:10px;">DELETE</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($profiles as $profile)
                     <tr>
-                        <td>{{ $profile->user->email }}</td>
-                        <td>{{ $profile->name }}</td>
-                        <td>{{ $profile->age }}</td>
-                        <td>{{ $profile->gender }}</td>
-                        <td>{{ $profile->position }}</td>
-                        <td>{{ $profile->department }}</td>
-                        <td>{{ $profile->user->role }}</td>
-                        <td>{{ $profile->phone_number }}</td>
-                        <td>
+                        <td style="padding:10px;">{{ $profile->user->email }}</td>
+                        <td style="padding:10px;">{{ $profile->name }}</td>
+                        <td style="padding:10px;">{{ $profile->age }}</td>
+                        <td style="padding:10px;">{{ $profile->gender }}</td>
+                        <td style="padding:10px;">{{ $profile->position }}</td>
+                        <td style="padding:10px;">{{ $profile->department }}</td>
+                        <td style="padding:10px;">{{ $profile->user->role }}</td>
+                        <td style="padding:10px;">{{ $profile->phone_number }}</td>
+                        <td style="padding:10px;">
                             @if ($profile->images)
                                 <img src="{{ asset('storage/' . $profile->images) }}" alt="Profile Image"
                                     style="max-width: 50px; border-radius: 50%;">
@@ -124,15 +124,15 @@
                                 No Image
                             @endif
                         </td>
-                        <td>
+                        <td style="padding:10px;">
                             <a href="{{ route('users.edit', $profile) }}" class="btn btn-primary"
                                 style="background-color: green; color:white;">EDIT</a>
                         </td>
-                        <td>
+                        <td style="padding:10px;">
                             <a href="{{ route('users.show', $profile) }}" class="btn btn-primary"
                                 style="background-color: green">VIEW</a>
                         </td>
-                        <td>
+                        <td style="padding:10px;">
                             <form action="{{ route('users.destroy', $profile) }}" method="POST">
                                 @csrf
                                 @method('DELETE')

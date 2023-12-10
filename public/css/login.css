@@ -31,7 +31,7 @@
     color: white;
 }
 .card:hover #required_user {
-    color: black;
+    color: #77FF63;
 }
 .btn:hover {
     background: #16ff00;
