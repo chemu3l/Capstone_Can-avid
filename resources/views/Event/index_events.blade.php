@@ -29,7 +29,7 @@
                     <th scope="col" style="padding:10px;">Status</th>
                     <th scope="col" style="padding:10px;">Uploaded</th>
                     <th scope="col" style="padding:10px;">Started</th>
-                    <th scope="col" style="padding:10px;">End</th>
+                    {{-- <th scope="col" style="padding:10px;">End</th> --}}
                     <th scope="col" style="padding:10px;">
                         <center>Images</center>
                     </th>
@@ -88,18 +88,18 @@
                         <td style="padding:10px;">{{ $event->profile->name }}</td>
                         <td style="padding:10px;">
                             <a href="{{ route('events.edit', $event) }}" class="btn btn-primary"
-                                style="background-color: green">EDIT</a>
+                                style="background-color: green">Edit</a>
                         </td>
                         <td style="padding:10px;">
                             <a href="{{ route('events.show', $event) }}" class="btn btn-primary"
-                                style="background-color: green">VIEW</a>
+                                style="background-color: green">View</a>
                         </td>
                         <td style="padding:10px;">
                             <form action="{{ route('events.destroy', $event) }}" method="POST">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger"
-                                    onclick="return confirm('Are you sure you want to delete this Event?')">DELETE</button>
+                                    onclick="return confirm('Are you sure you want to delete this Event?')">Delete</button>
                             </form>
                         </td>
                     </tr>

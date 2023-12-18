@@ -11,8 +11,8 @@
                 <p> {{ $announcement->announcements_who }}</p>
                 <p> {{ $announcement->announcements_when }}</p>
                 <p> {{ $announcement->announcements_where }}</p>
-                <p> {{ $announcement->announcements_why }}</p>
-                <p> {{ $announcement->announcements_how }}</p>
+                {{-- <p> {{ $announcement->announcements_why }}</p>
+                <p> {{ $announcement->announcements_how }}</p> --}}
                 <p> {{ $announcement->profile->name }}</p>
                 <p> {{ $announcement->announcements_uploaded }}</p>
             </div>

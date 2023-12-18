@@ -56,7 +56,7 @@
                     @enderror
                 </span>
             </div>
-            <div class="form-group">
+            {{-- <div class="form-group">
                 <label for="events_end">Events End:</label>
                 <input type="date" class="form-control @error('events_end') is-invalid @enderror"name="events_end"
                     id="events_end" value="{{ old('events_end') }}"required>
@@ -65,7 +65,7 @@
                         {{ $message }}
                     @enderror
                 </span>
-            </div>
+            </div> --}}
             <input type="file" name="media_files[]" accept="image/*, video/*" multiple required>
             <span class="text-danger">
                 @error('media_files')

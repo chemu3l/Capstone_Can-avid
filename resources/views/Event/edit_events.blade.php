@@ -59,11 +59,11 @@
                 <input type="date" class="form-control @error('events_started') is-invalid @enderror"
                     name="events_started" value="{{ $event->events_started }}">
             </div>
-            <div class="form-group">
+            {{-- <div class="form-group">
                 <label for="events_end">Events End:</label>
                 <input type="date" class="form-control @error('events_end') is-invalid @enderror" name="events_end"
                     value="{{ $event->events_end }}">
-            </div>
+            </div> --}}
             @if ($event->events_images)
                 @foreach (json_decode($event->events_images) as $mediaUrl)
                     @if (Str::contains($mediaUrl, ['.jpg', '.jpeg', '.png', '.gif']))

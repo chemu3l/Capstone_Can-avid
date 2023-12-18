@@ -31,7 +31,7 @@
                     <th scope="col" style="padding:10px;">Updated</th>
                     <th scope="col" style="padding:10px;">Uploaded</th>
                     <th scope="col" style="padding:10px;">
-                        <center>News Images</center>
+                        <center>Images</center>
                     </th>
                     <th scope="col" style="padding:10px;">Personnel Added</th>
                     <th scope="col" style="padding:10px;">Edit</th>
@@ -87,18 +87,18 @@
                         <td style="padding:10px;">{{ $new->profile->name }}</td>
                         <td style="padding:10px;">
                             <a href="{{ route('news.edit', $new) }}"
-                                class="btn btn-primary"style="background-color: green">EDIT</a>
+                                class="btn btn-primary"style="background-color: green">Edit</a>
                         </td>
                         <td style="padding:10px;">
                             <a href="{{ route('news.show', $new) }}"
-                                class="btn btn-primary"style="background-color: green">VIEW</a>
+                                class="btn btn-primary"style="background-color: green">View</a>
                         </td>
                         <td style="padding:10px;">
                             <form action="{{ route('news.destroy', $new) }}" method="POST">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger"
-                                    onclick="return confirm('Are you sure you want to delete this News?')">DELETE</button>
+                                    onclick="return confirm('Are you sure you want to delete this News?')">Delete</button>
                             </form>
                         </td>
                     </tr>

@@ -71,7 +71,7 @@
                     @enderror
                 </span>
             </div>
-            <div class="form-group">
+            {{-- <div class="form-group">
                 <label for="announcements_why">Why:</label>
                 <input type="text" class="form-control @error('announcements_why') is-invalid @enderror"
                     name="announcements_why" id="announcements_why"required>
@@ -80,8 +80,8 @@
                         {{ $message }}
                     @enderror
                 </span>
-            </div>
-            <div class="form-group">
+            </div> --}}
+            {{-- <div class="form-group">
                 <label for="announcements_how">How:</label>
                 <input type="text" class="form-control @error('announcements_how') is-invalid @enderror"
                     name="announcements_how" id="announcements_how"required>
@@ -90,7 +90,7 @@
                         {{ $message }}
                     @enderror
                 </span>
-            </div>
+            </div> --}}
 
             <div class="form-group">
                 <input type="hidden" class="form-control @error('profile_id') is-invalid @enderror" name="profile_id"

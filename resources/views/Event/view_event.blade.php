@@ -9,7 +9,7 @@
                 <h1>{{ $event->events }}</h1>
                 <p> {{ $event->events_description }}</p>
                 <p> {{ $event->events_started }}</p>
-                <p> {{ $event->events_end }}</p>
+                {{-- <p> {{ $event->events_end }}</p> --}}
                 <p> {{ $event->events_uploaded }}</p>
                 <p> {{ $event->profile->name }}</p>
             </div>
