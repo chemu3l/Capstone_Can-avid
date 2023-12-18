@@ -13,26 +13,26 @@
 
         <table style="background-color: #A8DF8E; font-size: 12px; width: 100; max-height: 300px; overflow-x:scroll; -ms-overflow-style:none;">
             <thead>
-                <tr>
+                {{-- <tr>
                     <th colspan="7"
                         style="border-color: #EEE2DE; border-size: 200px; text-align: center; border: 2px solid green; font-weight: bold; text-transform:uppercase; max-height: 100px;">
                         Announcement</th>
-                </tr>
+                </tr> --}}
                 <tr>
                     <th scope="col"><center>Title<center></th>
                     <th scope="col"><center>What<center></th>
                     <th scope="col"><center>Who<center></th>
                     <th scope="col"><center>When<center></th>
                     <th scope="col"><center>Where<center></th>
-                    <th scope="col"><center>Why<center></th>
-                    <th scope="col"><center>How<center></th>
+                    {{-- <th scope="col"><center>Why<center></th>
+                    <th scope="col"><center>How<center></th> --}}
                     <th scope="col"><center>Status<center></th>
                     <th scope="col"><center>Uploaded<center></th>
                     <th scope="col"><center>Personnel Added<center></th>
-                    <th scope="col"><center>Announcement Images</center></th>
-                    <th scope="col"><center>EDIT<center></th>
-                    <th scope="col"><center>VIEW<center></th>
-                    <th scope="col"><center>DELETE<center></th>
+                    <th scope="col"><center>Images</center></th>
+                    <th scope="col"><center>Edit<center></th>
+                    <th scope="col"><center>View<center></th>
+                    <th scope="col"><center>Delete<center></th>
                 </tr>
             </thead>
             <tbody>
@@ -44,8 +44,8 @@
                             <td  style="border: 1px solid #7A9D54; padding: 10px; white-space: normal; width: 10px; word-wrap: break-word; overflow-wrap: break-word;">{{ $announcement->announcements_who }}</td>
                             <td  style="border: 1px solid #7A9D54; padding: 10px; white-space: normal; width: 10px; word-wrap: break-word; overflow-wrap: break-word;">{{ date('m-d-Y', strtotime($announcement->announcements_when)) }}</td>
                             <td  style="border: 1px solid #7A9D54; padding: 10px; white-space: normal; width: 10px; word-wrap: break-word; overflow-wrap: break-word;">{{ $announcement->announcements_where }}</td>
-                            <td  style="border: 1px solid #7A9D54; padding: 10px; white-space: normal; width: 10px; word-wrap: break-word; overflow-wrap: break-word;">{{ $announcement->announcements_why }}</td>
-                            <td  style="border: 1px solid #7A9D54; padding: 10px; white-space: normal; width: 10px; word-wrap: break-word; overflow-wrap: break-word;">{{ $announcement->announcements_how }}</td>
+                            {{-- <td  style="border: 1px solid #7A9D54; padding: 10px; white-space: normal; width: 10px; word-wrap: break-word; overflow-wrap: break-word;">{{ $announcement->announcements_why }}</td>
+                            <td  style="border: 1px solid #7A9D54; padding: 10px; white-space: normal; width: 10px; word-wrap: break-word; overflow-wrap: break-word;">{{ $announcement->announcements_how }}</td> --}}
                             @if ($announcement->status == 'Posted')
                             <td  style="border: 1px solid #7A9D54; padding: 10px; white-space: normal; width: 10px; word-wrap: break-word; overflow-wrap: break-word;">
                                 <div style="background-color: #7A9D54">

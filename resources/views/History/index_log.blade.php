@@ -17,7 +17,7 @@
                     <th scope="col" style="padding:10px;">Type</th>
                     <th scope="col" style="padding:10px;">Changed from</th>
                     <th scope="col" style="padding:10px;">Changed into</th>
-                    <th scope="col" style="padding:10px;">Activity by</th>
+                    <th scope="col" style="padding:10px;">Personnel Involved</th>
                     <th scope="col" style="padding:10px;">Date</th>
                 </tr>
             </thead>

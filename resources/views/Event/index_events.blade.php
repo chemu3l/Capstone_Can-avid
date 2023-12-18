@@ -24,19 +24,19 @@
         <table style="background-color: #A8DF8E; font-size: 12px; width: 100%; border-collapse: collapse; padding-right:40%;">
             <thead>
                 <tr>
-                    <th scope="col" style="padding:10px;">Events Title</th>
-                    <th scope="col" style="padding:10px;">Events Description</th>
+                    <th scope="col" style="padding:10px;">Title</th>
+                    <th scope="col" style="padding:10px;">Description</th>
                     <th scope="col" style="padding:10px;">Status</th>
-                    <th scope="col" style="padding:10px;">Events Uploaded</th>
-                    <th scope="col" style="padding:10px;">Events Started</th>
-                    <th scope="col" style="padding:10px;">Events End</th>
+                    <th scope="col" style="padding:10px;">Uploaded</th>
+                    <th scope="col" style="padding:10px;">Started</th>
+                    <th scope="col" style="padding:10px;">End</th>
                     <th scope="col" style="padding:10px;">
-                        <center>Events Images</center>
+                        <center>Images</center>
                     </th>
                     <th scope="col" style="padding:10px;">Personnel Added</th>
-                    <th scope="col" style="padding:10px;">EDIT</th>
-                    <th scope="col" style="padding:10px;">VIEW</th>
-                    <th scope="col" style="padding:10px;">DELETE</th>
+                    <th scope="col" style="padding:10px;">Edit</th>
+                    <th scope="col" style="padding:10px;">View</th>
+                    <th scope="col" style="padding:10px;">Delete</th>
                 </tr>
             </thead>
             <tbody>

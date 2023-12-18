@@ -25,15 +25,15 @@
             style="background-color: #A8DF8E; font-size: 12px; width: 100%; border-collapse: collapse; padding-right:40%;">
             <thead>
                 <tr>
-                    <th scope="col" style="padding:10px;">Career Position</th>
-                    <th scope="col" style="padding:10px;">Career Description</th>
-                    <th scope="col" style="padding:10px;">Career Uploaded</th>
-                    <th scope="col" style="padding:10px;">Career Requirements</th>
+                    <th scope="col" style="padding:10px;">Position</th>
+                    <th scope="col" style="padding:10px;">Description</th>
+                    <th scope="col" style="padding:10px;">Uploaded</th>
+                    <th scope="col" style="padding:10px;">Requirements</th>
                     <th scope="col" style="padding:10px;">Status</th>
-                    <th scope="col" style="padding:10px;">Career Uploader</th>
-                    <th scope="col" style="padding:10px;">EDIT</th>
-                    <th scope="col" style="padding:10px;">VIEW</th>
-                    <th scope="col" style="padding:10px;">DELETE</th>
+                    <th scope="col" style="padding:10px;">Uploader</th>
+                    <th scope="col" style="padding:10px;">Edit</th>
+                    <th scope="col" style="padding:10px;">View</th>
+                    <th scope="col" style="padding:10px;">Delete</th>
                 </tr>
             </thead>
             <tbody>

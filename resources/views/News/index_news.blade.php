@@ -25,18 +25,18 @@
         <table style="background-color: #A8DF8E; font-size: 12px; width: 100%; border-collapse: collapse; ">
             <thead>
                 <tr>
-                    <th scope="col" style="padding:10px;">News Title</th>
-                    <th scope="col" style="padding:10px;">News Description</th>
+                    <th scope="col" style="padding:10px;">Title</th>
+                    <th scope="col" style="padding:10px;">Description</th>
                     <th scope="col" style="padding:10px;">Status</th>
-                    <th scope="col" style="padding:10px;">News Updated</th>
-                    <th scope="col" style="padding:10px;">News Uploaded</th>
+                    <th scope="col" style="padding:10px;">Updated</th>
+                    <th scope="col" style="padding:10px;">Uploaded</th>
                     <th scope="col" style="padding:10px;">
                         <center>News Images</center>
                     </th>
                     <th scope="col" style="padding:10px;">Personnel Added</th>
-                    <th scope="col" style="padding:10px;">EDIT</th>
-                    <th scope="col" style="padding:10px;">VIEW</th>
-                    <th scope="col" style="padding:10px;">DELETE</th>
+                    <th scope="col" style="padding:10px;">Edit</th>
+                    <th scope="col" style="padding:10px;">View</th>
+                    <th scope="col" style="padding:10px;">Delete</th>
                 </tr>
             </thead>
             <tbody>

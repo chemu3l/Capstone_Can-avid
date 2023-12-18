@@ -23,12 +23,12 @@
         <table style="background-color: #A8DF8E; font-size: 12px; width: 100%; border-collapse: collapse;">
             <thead>
                 <tr>
-                    <th scope="col" style="padding:10px;">Applicants Name</th>
-                    <th scope="col" style="padding:10px;">Applicants Email</th>
-                    <th scope="col" style="padding:10px;">Job Applied</th>
-                    <th scope="col" style="padding:10px;">Date Applied</th>
-                    <th scope="col" style="padding:10px;">VIEW</th>
-                    <th scope="col" style="padding:10px;">DELETE</th>
+                    <th scope="col" style="padding:10px;">Name</th>
+                    <th scope="col" style="padding:10px;">Email</th>
+                    <th scope="col" style="padding:10px;">Position</th>
+                    <th scope="col" style="padding:10px;">Date</th>
+                    <th scope="col" style="padding:10px;">View</th>
+                    <th scope="col" style="padding:10px;">Delete</th>
                 </tr>
             </thead>
             <tbody>
@@ -39,7 +39,7 @@
                         <td style="padding:10px;">{{ $applicant->career->career_position }}</td>
                         <td style="padding:10px;">{{ date('m-d-Y', strtotime($applicant->date_applied)) }}</td>
                         <td style="padding:10px;">
-                            <a href="{{ route('applicants.show', $applicant) }}" class="btn btn-primary">VIEW
+                            <a href="{{ route('applicants.show', $applicant) }}" class="btn btn-primary">View
                                 Application</a>
                         </td>
                         <td style="padding:10px;">
@@ -47,7 +47,7 @@
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger"
-                                    onclick="return confirm('Are you sure you want to delete this application?')">DELETE</button>
+                                    onclick="return confirm('Are you sure you want to delete this application?')">Delete</button>
                             </form>
                         </td>
                     </tr>

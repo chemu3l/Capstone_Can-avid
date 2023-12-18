@@ -24,8 +24,8 @@
                 <tr>
                     <th scope="col" style="padding:10px;">Added by:</th>
                     <th scope="col" style="padding:10px;">Added at:</th>
-                    <th scope="col" style="padding:10px;">VIEW</th>
-                    <th scope="col" style="padding:10px;">DELETE</th>
+                    <th scope="col" style="padding:10px;">View</th>
+                    <th scope="col" style="padding:10px;">Delete</th>
                 </tr>
             </thead>
             <tbody>

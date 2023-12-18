@@ -19,7 +19,7 @@
                     <th scope="col" style="padding:10px;">Date to Get</th>
                     <th scope="col" style="padding:10px;">Requester Email</th>
                     <th scope="col" style="padding:10px;">Requested At</th>
-                    <th scope="col" style="padding:10px;">DELETE</th>
+                    <th scope="col" style="padding:10px;">Delete</th>
                 </tr>
             </thead>
             <tbody>
