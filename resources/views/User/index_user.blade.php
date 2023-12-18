@@ -16,7 +16,7 @@
         <div class="header-tables-page"  style="display: flex; justify-content: space-between; align-items: center;">
             <a href="{{ route('users.create') }}" class="btn btn-info btn-lg" style="background-color: green; color:white;">Add
                 User</a>
-            <h1>User Table</h1>
+            {{-- <h1>User</h1> --}}
             <form action="{{ route('user_Filter') }}" method="GET" id="searchForm" class="search-form">
                 <input type="text" name="search" placeholder="Search...">
                 <button type="submit" style="background-color: #56C46F">Search</button>
@@ -25,7 +25,7 @@
 
         <div class="sub2">
             <div class="item1">
-                <p class="heading2">Total Users by:</p>
+                <p class="heading2">Total users by:</p>
                 @if (count($profiles) > 0)
                     <p class="value_management" id="profileCountByDepartment">{{ count($profiles) }}</p>
                 @else
@@ -47,7 +47,7 @@
             </div>
 
             <div class="item2">
-                <p class="heading2">Total Users by Gender</p>
+                <p class="heading2">Total users by Gender</p>
                 @if (count($profiles) > 0)
                     <p class="value_management" id="profileCountByGender">{{ count($profiles) }}</p>
                 @else
@@ -62,7 +62,7 @@
 
 
             <div class="item3">
-                <p class="heading2">Total Users by Role</p>
+                <p class="heading2">Total users by Role</p>
                 @if (count($profiles) > 0)
                     <p class="value_management" id="profileCountByRole">{{ count($profiles) }}</p>
                 @else
@@ -77,7 +77,7 @@
                 </select>
             </div>
             <div class="item4">
-                <p class="heading2">Total</p>
+                <p class="heading2">Overall Total Users</p>
                 @if (count($profiles) > 0)
                     <p class="value_management">{{ count($profiles) }}</p>
                 @else

@@ -15,7 +15,7 @@
         <div class="header-tables-page"  style="display: flex; justify-content: space-between; align-items: center;">
             <a href="{{ route('events.create') }}" class="btn btn-info btn-lg"
                 style="background-color: green; margin-bottom:3%">Add Events</a>
-            <h1>Events Table </h1>
+            {{-- <h1>Events Table </h1> --}}
             <form action="{{ route('event_Filter') }}" method="GET" id="searchForm">
                 <input type="text" name="search" placeholder="Search...">
                 <button type="submit" style="background-color: #56C46F">Search</button>

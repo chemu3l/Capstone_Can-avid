@@ -16,7 +16,7 @@
                     <th scope="col" style="padding:10px;">Document</th>
                     <th scope="col" style="padding:10px;">Student Name</th>
                     <th scope="col" style="padding:10px;">Requester Name</th>
-                    <th scope="col" style="padding:10px;">Date to Get</th>
+                    {{-- <th scope="col" style="padding:10px;">Date to Get</th> --}}
                     <th scope="col" style="padding:10px;">Requester Email</th>
                     <th scope="col" style="padding:10px;">Requested At</th>
                     <th scope="col" style="padding:10px;">Delete</th>
@@ -29,7 +29,7 @@
                         <td style="padding:10px;">{{ $request->Document }}</td>
                         <td style="padding:10px;">{{ $request->Student_Name }}</td>
                         <td style="padding:10px;">{{ $request->Requester_Name }}</td>
-                        <td style="padding:10px;">{{ $request->Date_to_Get }}</td>
+                        {{-- <td style="padding:10px;">{{ $request->Date_to_Get }}</td> --}}
                         <td style="padding:10px;">{{ $request->Requester_Email }}</td>
                         <td style="padding:10px;">{{ date('m-d-Y', strtotime($request->Requested_at)) }}</td>
                         <td style="padding:10px;">

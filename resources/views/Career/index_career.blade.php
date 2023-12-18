@@ -15,7 +15,7 @@
         <div class="header-tables-page" style="display: flex; justify-content: space-between; align-items: center;">
             <a href="{{ route('careers.create') }}" class="btn btn-info btn-lg"
                 style="background-color: green; margin-bottom:3%;">Add Career</a>
-            <h1>Career Table</h1>
+            {{-- <h1>Career Table</h1> --}}
             <form action="{{ route('career_Filter') }}" method="GET" id="searchForm">
                 <input type="text" name="search" placeholder="Search...">
                 <button type="submit" style="background-color: #56C46F">Search</button>

@@ -16,7 +16,7 @@
             <a href="{{ route('news.create') }}" class="btn btn-info btn-lg"
                 style="background-color: green; margin-bottom:3%">Add
                 News</a>
-            <h1>News Table </h1>
+            {{-- <h1>News</h1> --}}
             <form action="{{ route('news_Filter') }}" method="GET" id="searchForm">
                 <input type="text" name="search" placeholder="Search...">
                 <button type="submit" style="background-color: #56C46F">Search</button>
