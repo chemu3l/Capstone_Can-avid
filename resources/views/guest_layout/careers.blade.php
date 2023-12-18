@@ -14,7 +14,7 @@
                             {{ date('m-d-Y', strtotime($career->career_uploaded)) }}
                         </h5>
                         <p class="card-text">{{ $career->career_description }}</p>
-                        <span>{{ $career->career_requirements }}</span><br>
+                        <span>{{ $career->career_requirements }}</span><br><br>
                         <center>
                         <a href="{{ route('applicants.create', ['career_id' => $career->id]) }}"
                             style="border-color: black;" class="btn btn-success">Apply
