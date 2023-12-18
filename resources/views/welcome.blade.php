@@ -458,7 +458,7 @@
                     <a class="dropdown-item" href="{{ route('guest_news') }}">News</a>
                     <a class="dropdown-item" href="{{ route('guest_career') }}">Careers</a>
                     <a class="dropdown-item" href="{{ route('display_departments') }}">Departments</a>
-                    <a class="dropdown-item" href="{{ route('guest_chart') }}">Organizational Chart</a>
+                    <a class="dropdown-item" href="{{ route('guest_chart') }}">Organizational Structure</a>
                     <a class="dropdown-item" href="{{ route('requests.create') }}">Request Document</a>
                     <a class="dropdown-item" href="{{ route('school-calendar') }}">School Calendar</a>
                 </div>

@@ -3,7 +3,7 @@
 @section('content')
 
     <div class="carousel-wrap">
-        <div class="headers_text_title">
+        <div class="headers_text_title", style="font-size: 50px;">
             Announcements
         </div>
         <div class="btn-wrap">

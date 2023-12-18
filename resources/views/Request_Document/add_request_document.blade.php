@@ -1,7 +1,7 @@
 @extends('welcome')
 
 @section('content')
-    <div class="headers_text_request">
+    <div class="headers_text_request", style="font-size: 50px;">
         Request Document
     </div>
     <div class="menu_class">

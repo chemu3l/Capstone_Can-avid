@@ -1,7 +1,7 @@
 @extends('welcome')
 
 @section('content')
-    <div class="headers_text_title">
+    <div class="headers_text_title", style="font-size:50px;">
         Careers
     </div>
     <div class="menu_class">
