@@ -80,7 +80,7 @@ class NewsController extends Controller
             $news->news_images = json_encode($mediaUrls);
             $news->profile_id = $request->input('personnel_added');
             $historyRequest = new Request([
-                'action' => 'Store',
+                'action' => 'Stored',
                 'type' => 'News',
                 'oldData' => $news->news,
                 'newData' => $request->input('news'),
@@ -164,7 +164,7 @@ class NewsController extends Controller
             }
             $news->profile_id = $request->input('personnel_added', $news->profile_id);
             $historyRequest = new Request([
-                'action' => 'Update',
+                'action' => 'Updated',
                 'type' => 'News',
                 'oldData' => $news->news,
                 'newData' => $request->input('news'),
@@ -194,7 +194,7 @@ class NewsController extends Controller
             if ($news) {
                 if ($this->deleteNewsMedia($news)) {
                     $historyRequest = new Request([
-                        'action' => 'Delete',
+                        'action' => 'Deleted',
                         'type' => 'News',
                         'oldData' => null,
                         'newData' => $news->news,

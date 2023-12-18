@@ -90,7 +90,7 @@ class EventController extends Controller
             $event->profile_id = $request->input('personnel_added');
 
             $historyRequest = new Request([
-                'action' => 'Store',
+                'action' => 'Stored',
                 'type' => 'Event',
                 'oldData' => null,
                 'newData' => $event->events,
@@ -141,7 +141,7 @@ class EventController extends Controller
                 return redirect()->route('events.edit')->with('fail', 'Event not found.');
             }
             $historyRequest = new Request([
-                'action' => 'Update',
+                'action' => 'Updated',
                 'type' => 'Event',
                 'oldData' => $event->events,
                 'newData' => $request->input('events'),
@@ -198,7 +198,7 @@ class EventController extends Controller
             if ($event) {
                 if ($this->deleteEventMedia($event)) {
                     $historyRequest = new Request([
-                        'action' => 'Delete',
+                        'action' => 'Deleted',
                         'type' => 'Event',
                         'oldData' => null,
                         'newData' => $event->events,

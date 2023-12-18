@@ -97,7 +97,7 @@ class AnnouncementController extends Controller
             $announcements->announcements_images = json_encode($mediaUrls);
             $announcements->profile_id = $request->input('profile_id');
             $historyRequest = new Request([
-                'action' => 'Store',
+                'action' => 'Stored',
                 'type' => 'Announcement',
                 'oldData' => $announcements->announcements,
                 'newData' => $request->input('announcements'),
@@ -184,7 +184,7 @@ class AnnouncementController extends Controller
             }
             $announcement->profile_id = $request->input('profile_id', $announcement->profile_id);
             $historyRequest = new Request([
-                'action' => 'Update',
+                'action' => 'Updated',
                 'type' => 'Announcement',
                 'oldData' => $announcement->announcements,
                 'newData' => $request->input('announcements'),
@@ -216,7 +216,7 @@ class AnnouncementController extends Controller
             } else {
                 if ($this->deleteAnnouncementMedia($announcement)) {
                     $historyRequest = new Request([
-                        'action' => 'Delete',
+                        'action' => 'Deleted',
                         'type' => 'Announcement',
                         'oldData' => null,
                         'newData' => $announcement->announcements,

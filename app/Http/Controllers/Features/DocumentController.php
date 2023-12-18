@@ -118,7 +118,7 @@ class DocumentController extends Controller
             if (Auth::check()) {
                 if ($document) {
                     $historyRequest = new Request([
-                        'action' => 'Delete',
+                        'action' => 'Deleted',
                         'type' => 'Request',
                         'oldData' => null,
                         'newData' => $document->Requester_Name,

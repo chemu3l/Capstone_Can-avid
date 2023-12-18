@@ -114,7 +114,7 @@ class FeedbackController extends Controller
             if (Auth::check()) {
                 if ($feedback) {
                     $historyRequest = new Request([
-                        'action' => 'Delete',
+                        'action' => 'Deleted',
                         'type' => 'Feedback',
                         'oldData' => null,
                         'newData' => $feedback->name,

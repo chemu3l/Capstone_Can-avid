@@ -25,7 +25,7 @@
 
         <div class="sub2">
             <div class="item1">
-                <p class="heading2">Total Users</p>
+                <p class="heading2">Total Users by:</p>
                 @if (count($profiles) > 0)
                     <p class="value_management" id="profileCountByDepartment">{{ count($profiles) }}</p>
                 @else
@@ -33,16 +33,16 @@
                 @endif
                 <select id="departmentSelect"
                     style="width: 90%; background-color:#285430; color: white; border-color: #285430; font-size: 12px;">
-                    <option value="Mathematics">By Mathematics Department</option>
-                    <option value="Science">By Science Department</option>
-                    <option value="English">By English Department</option>
-                    <option value="Filipino">By Filipino Department</option>
-                    <option value="EdukPanlipunan">By E.S.P & Araling Panlipunan Department</option>
-                    <option value="Tle">By TLE Department</option>
-                    <option value="Mapeh">By Mapeh Department</option>
-                    <option value="SHS">By Senior High School Department</option>
-                    <option value="ALS">By Alternative Learning System Department</option>
-                    <option value="Non-teaching">By Non-Teaching Department</option>
+                    <option value="Mathematics">Mathematics Department</option>
+                    <option value="Science">Science Department</option>
+                    <option value="English">English Department</option>
+                    <option value="Filipino">Filipino Department</option>
+                    <option value="EdukPanlipunan">E.S.P & Araling Panlipunan Department</option>
+                    <option value="Tle">TLE Department</option>
+                    <option value="Mapeh">Mapeh Department</option>
+                    <option value="SHS">Senior High School Department</option>
+                    <option value="ALS">Alternative Learning System Department</option>
+                    <option value="Non-teaching">Non-Teaching Department</option>
                 </select>
             </div>
 
@@ -77,7 +77,7 @@
                 </select>
             </div>
             <div class="item4">
-                <p class="heading2">Total Users</p>
+                <p class="heading2">Total</p>
                 @if (count($profiles) > 0)
                     <p class="value_management">{{ count($profiles) }}</p>
                 @else
@@ -98,11 +98,11 @@
                     <th scope="col" style="padding:10px;">Role</th>
                     <th scope="col" style="padding:10px;">Phone Number</th>
                     <th scope="col" style="padding:10px;">
-                        <center>images</center>
+                        <center>Images</center>
                     </th>
-                    <th scope="col" style="padding:10px;">EDIT</th>
-                    <th scope="col" style="padding:10px;">VIEW</th>
-                    <th scope="col" style="padding:10px;">DELETE</th>
+                    <th scope="col" style="padding:10px;">Edit</th>
+                    <th scope="col" style="padding:10px;">View</th>
+                    <th scope="col" style="padding:10px;">Delete</th>
                 </tr>
             </thead>
             <tbody>

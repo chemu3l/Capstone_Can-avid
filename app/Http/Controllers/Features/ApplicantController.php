@@ -134,7 +134,7 @@ class ApplicantController extends Controller
                 $storagePath = str_replace('storage/', '', $image);
                 Storage::disk('public')->delete($storagePath);
                 $historyRequest = new Request([
-                    'action' => 'Delete',
+                    'action' => 'Deleted',
                     'type' => 'Applicant',
                     'oldData' => null,
                     'newData' => $applicant->applicant_name,

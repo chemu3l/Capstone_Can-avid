@@ -55,7 +55,7 @@ class Organizational_ChartController extends Controller
                 }
                 $member->profile_id = Auth::user()->profile->id;
                 $historyRequest = new Request([
-                    'action' => 'Store',
+                    'action' => 'Stored',
                     'type' => 'Organizational Chart',
                     'oldData' => null,
                     'newData' => 'Added Organizational Picture',
@@ -132,7 +132,7 @@ class Organizational_ChartController extends Controller
             try {
                 if ($organizational_chart) {
                     $historyRequest = new Request([
-                        'action' => 'Delete',
+                        'action' => 'Deleted',
                         'type' => 'Organizational Chart',
                         'oldData' => null,
                         'newData' => 'Deleted organizational picture',

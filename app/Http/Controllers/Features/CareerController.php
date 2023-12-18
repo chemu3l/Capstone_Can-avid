@@ -76,7 +76,7 @@ class CareerController extends Controller
             }
             $careers->profile_id = Auth::user()->profile->id;
             $historyRequest = new Request([
-                'action' => 'Store',
+                'action' => 'Stored',
                 'type' => 'Career',
                 'oldData' => null,
                 'newData' => $request->input('career_position'),
@@ -137,7 +137,7 @@ class CareerController extends Controller
 
             $career->profile_id = Auth::user()->profile->id;
             $historyRequest = new Request([
-                'action' => 'Update',
+                'action' => 'Updated',
                 'type' => 'Career',
                 'oldData' => $career->career_position,
                 'newData' => $request->input('career_position'),
@@ -167,7 +167,7 @@ class CareerController extends Controller
             if (Auth::check()) {
                 if ($career) {
                     $historyRequest = new Request([
-                        'action' => 'Delete',
+                        'action' => 'Deleted',
                         'type' => 'Career',
                         'oldData' => null,
                         'newData' => $career->career_position,
