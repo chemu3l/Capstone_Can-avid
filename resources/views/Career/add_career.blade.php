@@ -17,7 +17,7 @@
         <form action="{{ route('careers.store') }}" method="post" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
-                <label for="career_position">Career Position:</label>
+                <label for="career_position">Position:</label>
                 <input type="text" class="form-control @error('career_position') is-invalid @enderror"
                     name="career_position" required>
             </div>
@@ -25,12 +25,12 @@
                 <h6>--------------------------------------------------------------------------------------------</h6>
             </center>
             <div class="form-group">
-                <label for="career_description">Career Description:</label>
+                <label for="career_description">Description:</label>
                 <input type="text" class="form-control @error('career_description') is-invalid @enderror"
                     name="career_description" required>
             </div>
             <div class="form-group">
-                <label for="career_requirements">Career Requirements:</label>
+                <label for="career_requirements">Requirements:</label>
                 <input type="text" class="form-control @error('career_requirements') is-invalid @enderror"
                     name="career_requirements" required>
             </div>

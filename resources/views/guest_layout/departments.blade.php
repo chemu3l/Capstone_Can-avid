@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <div class="headers_text_title">
+    <div class="headers_text_title", style="font-size:50px;">
         Department
     </div>
     @if (session('success'))

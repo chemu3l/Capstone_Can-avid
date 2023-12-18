@@ -17,9 +17,9 @@
                     <p>What: {{ $announcement->announcements_what }}</p>
                     <p>Who: {{ $announcement->announcements_who }}</p>
                     <p>When: {{ $announcement->announcements_when }}</p>
-                    <p>How: {{ $announcement->announcements_how }}</p>
+                    {{-- <p>How: {{ $announcement->announcements_how }}</p> --}}
                     <p>Where: {{ $announcement->announcements_where }}</p>
-                    <p>Why: {{ $announcement->announcements_where }}</p>
+                    {{-- <p>Why: {{ $announcement->announcements_where }}</p> --}}
                     @if ($announcement->announcements_images)
                         @foreach (json_decode($announcement->announcements_images) as $mediaUrl)
                         {{-- @php

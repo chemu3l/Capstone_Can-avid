@@ -34,7 +34,7 @@
             </div>
             <div class="form-group">
 
-                <label for="events_description">Events Description:</label>
+                <label for="events_description">Description:</label>
                 <input type="text"
                     class="form-control @error('events_description') is-invalid @enderror"name="events_description"
                     id="events_description" value="{{ old('events_description') }}"
@@ -46,7 +46,7 @@
                 </span>
             </div>
             <div class="form-group">
-                <label for="events_started">Events Started:</label>
+                <label for="events_started">Started:</label>
                 <input type="date"
                     class="form-control @error('events_started') is-invalid @enderror"name="events_started"
                     id="events_started" value="{{ old('events_started') }}"required>

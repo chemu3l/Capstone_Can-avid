@@ -11,7 +11,7 @@
                 <div class="slide active">
                     <h3>{{ $event->events }}</h3>
                     <h6>Started at: {{ $event->events_started }}</h6>
-                    <h6>Ended at: {{ $event->events_uploaded }}</h6>
+                    {{-- <h6>Ended at: {{ $event->events_uploaded }}</h6> --}}
                     <p id="event_description">{{ $event->events_description }}</p>
                     <a href="{{ route('show_event', $event) }}" class="btn btn-primary"
                         style="background-color: green; width: 50%; margin-left: 25%;">Show More</a>

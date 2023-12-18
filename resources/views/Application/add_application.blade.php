@@ -29,7 +29,7 @@
                     name="applicant_email" required>
             </div>
             <div class="form-group">
-                <label for="applicant_resume">Resume:</label>
+                <label for="applicant_resume">Resume / Diploma / Birth Certificate:</label>
                 <input type="file" class="form-control @error('applicant_resume') is-invalid @enderror"
                     name="applicant_resume" required>
             </div>
