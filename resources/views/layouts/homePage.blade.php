@@ -6,7 +6,7 @@
     </div>
     <!-- About Section -->
     <div class="about-us" id="about">
-        <h3 class="about-us-header">About Us</h3>
+        <h3 class="about-us-header">Introducing Can-avid National High School</h3>
         <p style="text-align: center;">
             THE LAURELS OF CAN-AVID NATIONAL HIGH SCHOOL FROM YEARS OF HARDWORK:
             TOP PERFORMING SCHOOL WITH A HEART

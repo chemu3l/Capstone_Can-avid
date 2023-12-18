@@ -462,8 +462,8 @@
                     <a class="dropdown-item" href="{{ route('requests.create') }}">Request Document</a>
                     <a class="dropdown-item" href="{{ route('school-calendar') }}">School Calendar</a>
                 </div>
-                <a class="navigation" href="{{ route('admission') }}">ADMISSION</a>
-                <a class="navigation" href="{{ route('login') }}">LOGIN</a>
+                <a class="navigation" href="{{ route('admission') }}">Admission</a>
+                <a class="navigation" href="{{ route('login') }}">Login</a>
             </div>
         </div>
     </nav>
